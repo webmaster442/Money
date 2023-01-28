@@ -15,6 +15,11 @@ namespace Money
             AnsiConsole.MarkupLine($"[green]Successfully exported {count} items to file:\r\n {file}[/]");
         }
 
+        public static void ImportSuccessfull(object count, string file)
+        {
+            AnsiConsole.MarkupLine($"[green]Successfully imported {count} items to file:\r\n {file}[/]");
+        }
+
         public static void PrintException(IOException ex)
         {
             AnsiConsole.WriteException(ex);

@@ -18,6 +18,7 @@ app.Configure(config =>
 {
     config.AddCommand<AddCommand>("add");
     config.AddCommand<ExportCommand>("export");
+    config.AddCommand<ImportCommand>("import");
 }); 
 
 return app.Run(args);

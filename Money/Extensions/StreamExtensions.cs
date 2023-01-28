@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
+﻿using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
-using System.Threading.Tasks;
-
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Money.Extensions
 {
@@ -23,6 +16,12 @@ namespace Money.Extensions
         public static void WriteJson<T>(this Stream stream, T value)
         {
             JsonSerializer.Serialize(stream, value, Settings);
+        }
+
+        public static T ReadJson<T>(this Stream stream)
+        {
+            return JsonSerializer.Deserialize<T>(stream, Settings) 
+                ?? throw new InvalidDataException("Invalid data in json");
         }
     }
 }
