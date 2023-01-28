@@ -9,7 +9,7 @@ namespace Money.Data.Serialization
 
         public string Description { get; set; }
 
-        public decimal Ammount { get; set; }
+        public double Ammount { get; set; }
 
         public DateTime AddedOn { get; set; }
 

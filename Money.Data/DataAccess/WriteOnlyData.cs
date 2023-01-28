@@ -30,7 +30,7 @@ namespace Money.Data.DataAccess
 
         }
 
-        public ulong Insert(decimal ammount, string text, DateOnly date)
+        public ulong Insert(double ammount, string text, DateOnly date)
         {
             using (MoneyContext db = ConnectDatabase())
             {

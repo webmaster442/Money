@@ -15,7 +15,7 @@ namespace Money.CommandsSettings
 
         [Description("Ammount of money spent")]
         [CommandArgument(0, "[amount]")]
-        public decimal Ammount { get; init; }
+        public double Ammount { get; init; }
 
         [Description("Spending time")]
         [CommandOption("-d|--date")]

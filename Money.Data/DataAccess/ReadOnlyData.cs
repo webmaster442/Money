@@ -20,7 +20,33 @@ namespace Money.Data.DataAccess
         {
             using (var db = ConnectDatabase())
             {
-                return db.Spendings.Select(x => _mapper.ToExport(x)).ToList();
+                return db
+                    .Spendings
+                    .Select(x => _mapper.ToExport(x))
+                    .ToList();
+            }
+        }
+
+        public Statistics GetStatistics(DateOnly start, DateOnly end)
+        {
+            using (var db = ConnectDatabase())
+            {
+                var data = db
+                    .Spendings
+                    .Where(x => x.Date >= start)
+                    .Where(x => x.Date <= end)
+                    .ToList();
+
+                var dates = data
+                    .GroupBy(x => x.Date)
+                    .ToDictionary(x => x.Key, x => x.Sum(x => x.Ammount));
+
+                return new Statistics
+                {
+                    SumPerDay = dates,
+                    Count = data.Count,
+                };
+
             }
         }
     }
