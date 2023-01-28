@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Money", "Money\Money.csproj", "{2BC26EF7-FC82-4278-A44E-FB7D754A092A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Money.Data", "Money.Data\Money.Data.csproj", "{D66B4154-EACA-4D12-A959-E768B8D96359}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2BC26EF7-FC82-4278-A44E-FB7D754A092A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BC26EF7-FC82-4278-A44E-FB7D754A092A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BC26EF7-FC82-4278-A44E-FB7D754A092A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BC26EF7-FC82-4278-A44E-FB7D754A092A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D66B4154-EACA-4D12-A959-E768B8D96359}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D66B4154-EACA-4D12-A959-E768B8D96359}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D66B4154-EACA-4D12-A959-E768B8D96359}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D66B4154-EACA-4D12-A959-E768B8D96359}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5A7942B6-0108-4994-8208-957057F63BC4}
+	EndGlobalSection
+EndGlobal

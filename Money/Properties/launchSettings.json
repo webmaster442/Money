@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Money": {
+      "commandName": "Project",
+      "commandLineArgs": "export foo.dat"
+    }
+  }
+}
