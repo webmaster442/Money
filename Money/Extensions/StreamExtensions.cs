@@ -20,7 +20,7 @@ namespace Money.Extensions
 
         public static T ReadJson<T>(this Stream stream)
         {
-            return JsonSerializer.Deserialize<T>(stream, Settings) 
+            return JsonSerializer.Deserialize<T>(stream, Settings)
                 ?? throw new InvalidDataException("Invalid data in json");
         }
     }

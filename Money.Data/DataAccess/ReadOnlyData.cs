@@ -16,7 +16,7 @@ namespace Money.Data.DataAccess
         public IList<ExportRow> Export(DateOnly? start = null, DateOnly? end = null)
         {
             using MoneyContext db = ConnectDatabase();
-            var query = db
+            IQueryable<Spending> query = db
                 .Spendings
                 .Include(s => s.Category)
                 .AsQueryable();
@@ -30,9 +30,9 @@ namespace Money.Data.DataAccess
             return query.Select(spending => new ExportRow
             {
                 Date = spending.Date,
-                Description= spending.Description,
-                AddedOn= spending.AddedOn,
-                Ammount= spending.Ammount,
+                Description = spending.Description,
+                AddedOn = spending.AddedOn,
+                Ammount = spending.Ammount,
                 CategoryName = spending.Category.Description
             }).ToList();
         }

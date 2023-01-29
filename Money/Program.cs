@@ -55,6 +55,6 @@ app.Configure(config =>
     config
         .AddCommand<StatCommand>("stat")
         .WithDescription("Display statistics about spendings");
-}); 
+});
 
 return app.Run(args);

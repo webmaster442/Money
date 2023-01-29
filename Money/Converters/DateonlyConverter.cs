@@ -9,7 +9,7 @@ namespace Money.Converters
         {
             if (value is string stringValue)
             {
-                if (DateOnly.TryParse(stringValue, out var parsed))
+                if (DateOnly.TryParse(stringValue, out DateOnly parsed))
                 {
                     return parsed;
                 }

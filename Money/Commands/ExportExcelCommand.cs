@@ -23,9 +23,9 @@ namespace Money.Commands
         {
             try
             {
-                var data = _readonlyData.Export(settings.StartDate, settings.EndDate);
+                IList<Data.Dto.ExportRow> data = _readonlyData.Export(settings.StartDate, settings.EndDate);
 
-                using (var srtream = File.Create(settings.FileName))
+                using (FileStream srtream = File.Create(settings.FileName))
                 {
                     srtream.SaveAs(data);
                 }

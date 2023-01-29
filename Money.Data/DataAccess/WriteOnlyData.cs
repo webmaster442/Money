@@ -91,28 +91,28 @@ namespace Money.Data.DataAccess
         public (int createdCategory, int createdEntry) Import(IList<ExportRow> rows)
         {
             int createdCategory = 0;
-            foreach (var category in rows.Select(x => x.CategoryName.ToLower()).Distinct())
+            foreach (string? category in rows.Select(x => x.CategoryName.ToLower()).Distinct())
             {
-                if (TryCreateCategory(category, out var _))
+                if (TryCreateCategory(category, out ulong _))
                     ++createdCategory;
             }
 
-            using var db = ConnectDatabase();
+            using MoneyContext db = ConnectDatabase();
 
-            var categories = db.Categories.ToDictionary(x => x.Description, x => x);
+            Dictionary<string, Category> categories = db.Categories.ToDictionary(x => x.Description, x => x);
 
-            var bulk = rows.Select(row => new Spending
+            IEnumerable<Spending> bulk = rows.Select(row => new Spending
             {
                 Date = row.Date,
                 Description = row.Description,
-                AddedOn= row.AddedOn,
-                Ammount= row.Ammount,
+                AddedOn = row.AddedOn,
+                Ammount = row.Ammount,
                 Category = categories[row.CategoryName],
                 Id = CreateId(DateTime.UtcNow.ToBinary()),
             });
 
             db.Spendings.AddRange(bulk);
-            int createdEntry =  db.SaveChanges();
+            int createdEntry = db.SaveChanges();
 
             return (createdCategory, createdEntry);
         }

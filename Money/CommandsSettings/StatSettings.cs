@@ -25,7 +25,7 @@ namespace Money.CommandsSettings
 
         public StatSettings()
         {
-            var (firstDay, lastDay) = DateTime.Now.GetMonthDays();
+            (DateOnly firstDay, DateOnly lastDay) = DateTime.Now.GetMonthDays();
             StartDate = firstDay;
             EndDate = lastDay;
         }

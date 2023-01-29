@@ -9,8 +9,8 @@
 
         public static (DateOnly firstDay, DateOnly lastDay) GetMonthDays(this DateTime date)
         {
-            var firstDay = new DateOnly(date.Year, date.Month, 1);
-            var lastDay = firstDay.AddMonths(1).AddDays(-1);
+            DateOnly firstDay = new DateOnly(date.Year, date.Month, 1);
+            DateOnly lastDay = firstDay.AddMonths(1).AddDays(-1);
             return (firstDay, lastDay);
         }
     }

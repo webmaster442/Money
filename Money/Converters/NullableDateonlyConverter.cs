@@ -12,7 +12,7 @@ namespace Money.Converters
                 if (string.IsNullOrEmpty(stringValue))
                     return null;
 
-                if (DateOnly.TryParse(stringValue, out var parsed))
+                if (DateOnly.TryParse(stringValue, out DateOnly parsed))
                 {
                     return parsed;
                 }

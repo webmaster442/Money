@@ -4,9 +4,9 @@ using System.IO.Compression;
 using Money.CommandsSettings;
 using Money.Data;
 using Money.Data.Dto;
+using Money.Extensions;
 
 using Spectre.Console.Cli;
-using Money.Extensions;
 
 namespace Money.Commands
 {
@@ -25,12 +25,12 @@ namespace Money.Commands
         {
             try
             {
-                using (var srtream = File.OpenRead(settings.FileName))
+                using (FileStream srtream = File.OpenRead(settings.FileName))
                 {
-                    using (var compressed = new GZipStream(srtream, CompressionMode.Decompress))
+                    using (GZipStream compressed = new GZipStream(srtream, CompressionMode.Decompress))
                     {
-                        var data = compressed.ReadJson<List<ExportRow>>();
-                        var (createdCategory, createdEntry) = _writeOnlyData.Import(data);
+                        List<ExportRow> data = compressed.ReadJson<List<ExportRow>>();
+                        (int createdCategory, int createdEntry) = _writeOnlyData.Import(data);
                         Ui.Success($"Imported {createdCategory} categories and {createdEntry} entries");
                         return Constants.Success;
                     }

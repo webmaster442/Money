@@ -1,5 +1,6 @@
-﻿using Money.Converters;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+
+using Money.Converters;
 
 using Spectre.Console;
 using Spectre.Console.Cli;
@@ -21,7 +22,7 @@ namespace Money.CommandsSettings
         public override ValidationResult Validate()
         {
             if (EndDate != null
-                && StartDate != null 
+                && StartDate != null
                 && StartDate.Value > EndDate.Value)
             {
                 return ValidationResult.Error("end date must be bigger than start date");

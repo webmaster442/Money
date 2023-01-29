@@ -35,10 +35,10 @@ namespace Money
 
             AnsiConsole.Clear();
 
-            var header = new Rule($"[orange1]Spendings from {startDate} to {endDate}[/]");
+            Rule header = new Rule($"[orange1]Spendings from {startDate} to {endDate}[/]");
             AnsiConsole.Write(header);
 
-            var table = new Table();
+            Table table = new Table();
             table.AddColumn("Description");
             table.AddColumn("Value");
 
@@ -51,11 +51,11 @@ namespace Money
             AnsiConsole.Write(table);
 
 
-            var catTable = new Table();
+            Table catTable = new Table();
             catTable.AddColumn("Category");
             catTable.AddColumn("Spent money");
 
-            foreach (var item in stats.SumPerCategory)
+            foreach (KeyValuePair<string, double> item in stats.SumPerCategory)
             {
                 catTable.AddRow($"{item.Key}", $"{item.Value:C}");
             }
@@ -65,14 +65,14 @@ namespace Money
 
         public static void DetailedStats(Statistics stats)
         {
-            var header = new Rule($"[orange3]Dayly breakdown[/]");
+            Rule header = new Rule($"[orange3]Dayly breakdown[/]");
             AnsiConsole.Write(header);
 
-            var table = new Table();
+            Table table = new Table();
             table.AddColumn("Date");
             table.AddColumn("Sum spending");
 
-            foreach (var item in stats.SumPerDay)
+            foreach (KeyValuePair<DateOnly, double> item in stats.SumPerDay)
             {
                 table.AddRow($"{item.Key}", $"{item.Value:C}");
             }
@@ -82,10 +82,10 @@ namespace Money
 
         public static void PrintList<T>(IEnumerable<T> list)
         {
-            var header = new Rule($"[green]Available categories[/]");
+            Rule header = new Rule($"[green]Available categories[/]");
             AnsiConsole.Write(header);
             AnsiConsole.WriteLine();
-            foreach (var item in list)
+            foreach (T? item in list)
             {
                 AnsiConsole.WriteLine(item?.ToString() ?? "null");
             }

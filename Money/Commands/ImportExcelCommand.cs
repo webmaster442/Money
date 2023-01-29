@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.IO;
 
 using MiniExcelLibs;
 
@@ -25,10 +24,10 @@ namespace Money.Commands
         {
             try
             {
-                using (var srtream = File.OpenRead(settings.FileName))
+                using (FileStream srtream = File.OpenRead(settings.FileName))
                 {
-                    var data = MiniExcel.Query<ExportRow>(srtream).ToList();
-                    var (createdCategory, createdEntry) = _writeOnlyData.Import(data);
+                    List<ExportRow> data = MiniExcel.Query<ExportRow>(srtream).ToList();
+                    (int createdCategory, int createdEntry) = _writeOnlyData.Import(data);
                     Ui.Success($"Imported {createdCategory} categories and {createdEntry} entries");
                     return Constants.Success;
                 }

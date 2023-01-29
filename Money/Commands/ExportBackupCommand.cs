@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.IO.Compression;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using MiniExcelLibs;
 
 using Money.CommandsSettings;
 using Money.Data;
@@ -30,11 +23,11 @@ namespace Money.Commands
         {
             try
             {
-                var data = _readonlyData.Export(settings.StartDate, settings.EndDate);
+                IList<Data.Dto.ExportRow> data = _readonlyData.Export(settings.StartDate, settings.EndDate);
 
-                using (var stream = File.Create(settings.FileName))
+                using (FileStream stream = File.Create(settings.FileName))
                 {
-                    using (var compressed = new GZipStream(stream, CompressionLevel.SmallestSize, true))
+                    using (GZipStream compressed = new GZipStream(stream, CompressionLevel.SmallestSize, true))
                     {
                         compressed.WriteJson(data);
                     }

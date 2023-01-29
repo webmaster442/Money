@@ -16,9 +16,9 @@ namespace Money.Commands
         {
             try
             {
-                var data = new List<ExportRow>();
+                List<ExportRow> data = new List<ExportRow>();
 
-                using (var srtream = File.Create(settings.FileName))
+                using (FileStream srtream = File.Create(settings.FileName))
                 {
                     srtream.SaveAs(data);
                 }
