@@ -4,6 +4,7 @@
     {
         public int Count { get; set; }
         public required Dictionary<DateOnly, double> SumPerDay { get; set; }
+        public required Dictionary<string, double> SumPerCategory { get; set; }
 
         public int Days => SumPerDay.Count;
 

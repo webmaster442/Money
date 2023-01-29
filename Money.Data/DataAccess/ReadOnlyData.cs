@@ -1,5 +1,4 @@
-﻿using Money.Data.Dto;
-
+﻿
 namespace Money.Data.DataAccess
 {
     public class ReadOnlyData : IReadonlyData
@@ -36,10 +35,15 @@ namespace Money.Data.DataAccess
                 .GroupBy(x => x.Date)
                 .ToDictionary(x => x.Key, x => x.Sum(x => x.Ammount));
 
+            var categoreis = data
+                .GroupBy(x => x.Category.Description)
+                .ToDictionary(x => x.Key, x => x.Sum(x => x.Ammount));
+
             return new Statistics
             {
                 SumPerDay = dates,
                 Count = data.Count,
+                SumPerCategory = categoreis,
             };
         }
     }

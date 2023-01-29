@@ -1,6 +1,4 @@
-﻿using Money.Data.Dto;
-
-namespace Money.Data
+﻿namespace Money.Data
 {
     public interface IReadonlyData
     {
