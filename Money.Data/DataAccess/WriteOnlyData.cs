@@ -1,18 +1,13 @@
 ﻿using System.Security.Cryptography;
 
-using Money.Data.Dto;
 using Money.Data.Entities;
-using Money.Data.Serialization;
 
 namespace Money.Data.DataAccess
 {
     public sealed class WriteOnlyData : IWriteOnlyData
     {
-        private readonly IMapper<SerializableSpending> _mapper;
-
         public WriteOnlyData()
         {
-            _mapper = new SerializableSpendingMapper();
         }
 
         private static MoneyContext ConnectDatabase()
@@ -64,21 +59,6 @@ namespace Money.Data.DataAccess
 
             id = entry.Entity.Id;
             return true;
-        }
-
-        public int Import(IEnumerable<SerializableSpending> toImport)
-        {
-            using MoneyContext db = ConnectDatabase();
-            var toInsert = toImport.Select(spending =>
-            {
-                var entity = _mapper.ToDb(spending);
-                entity.Id = CreateId(DateTime.UtcNow.ToBinary());
-                return entity;
-            });
-
-            db.Spendings.AddRange(toInsert);
-
-            return db.SaveChanges();
         }
 
         public bool TryCreateCategory(string categoryName, out ulong Id)

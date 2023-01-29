@@ -22,8 +22,6 @@ app.Configure(config =>
     {
         category.AddCommand<CategoryAddCommand>("add");
     });
-    config.AddCommand<ExportCommand>("export");
-    config.AddCommand<ImportCommand>("import");
     config.AddCommand<StatCommand>("stat");
 }); 
 

@@ -9,7 +9,6 @@ namespace Money.Data
                        DateOnly date,
                        string category,
                        out ulong id);
-        int Import(IEnumerable<SerializableSpending> toImport);
         bool TryCreateCategory(string categoryName, out ulong id);
     }
 }
