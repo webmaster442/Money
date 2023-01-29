@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
 
-namespace Money.CommandsSettings
+namespace Money.Converters
 {
     internal sealed class DateonlyConverter : TypeConverter
     {
