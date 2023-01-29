@@ -8,14 +8,33 @@ namespace Money.Data.DataAccess
 {
     public class ReadOnlyData : IReadonlyData
     {
-
-        public ReadOnlyData()
-        {
-        }
-
         private static MoneyContext ConnectDatabase()
         {
             return new MoneyContext();
+        }
+
+        public IList<ExcelTableRow> ExcelExport(DateOnly? start = null, DateOnly? end = null)
+        {
+            using MoneyContext db = ConnectDatabase();
+            var query = db
+                .Spendings
+                .Include(s => s.Category)
+                .AsQueryable();
+
+            if (start != null)
+                query = query.Where(x => x.Date >= start);
+
+            if (end != null)
+                query = query.Where(x => x.Date <= end);
+
+            return query.Select(spending => new ExcelTableRow
+            {
+                Date = spending.Date,
+                Description= spending.Description,
+                AddedOn= spending.AddedOn,
+                Ammount= spending.Ammount,
+                CategoryName = spending.Category.Description
+            }).ToList();
         }
 
         public IList<string> GetCategories()
@@ -30,7 +49,7 @@ namespace Money.Data.DataAccess
         public Statistics GetStatistics(DateOnly start, DateOnly end)
         {
             using MoneyContext db = ConnectDatabase();
-            List<Entities.Spending> data = db
+            List<Spending> data = db
                 .Spendings
                 .Include(s => s.Category)
                 .Where(x => x.Date >= start)

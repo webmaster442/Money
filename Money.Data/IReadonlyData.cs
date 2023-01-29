@@ -6,5 +6,6 @@ namespace Money.Data
     {
         IList<string> GetCategories();
         Statistics GetStatistics(DateOnly start, DateOnly end);
+        IList<ExcelTableRow> ExcelExport(DateOnly? start = null, DateOnly? end = null);
     }
 }
