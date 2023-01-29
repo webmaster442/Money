@@ -13,7 +13,7 @@ namespace Money.Data.DataAccess
             return new MoneyContext();
         }
 
-        public IList<ExcelTableRow> ExcelExport(DateOnly? start = null, DateOnly? end = null)
+        public IList<ExportRow> Export(DateOnly? start = null, DateOnly? end = null)
         {
             using MoneyContext db = ConnectDatabase();
             var query = db
@@ -27,7 +27,7 @@ namespace Money.Data.DataAccess
             if (end != null)
                 query = query.Where(x => x.Date <= end);
 
-            return query.Select(spending => new ExcelTableRow
+            return query.Select(spending => new ExportRow
             {
                 Date = spending.Date,
                 Description= spending.Description,

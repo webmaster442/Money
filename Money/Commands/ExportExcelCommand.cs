@@ -23,7 +23,7 @@ namespace Money.Commands
         {
             try
             {
-                var data = _readonlyData.ExcelExport(settings.StartDate, settings.EndDate);
+                var data = _readonlyData.Export(settings.StartDate, settings.EndDate);
 
                 using (var srtream = File.Create(settings.FileName))
                 {
