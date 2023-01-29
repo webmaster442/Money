@@ -19,6 +19,7 @@ app.Configure(config =>
     config.AddCommand<AddCommand>("add");
     config.AddCommand<ExportCommand>("export");
     config.AddCommand<ImportCommand>("import");
+    config.AddCommand<StatCommand>("stat");
 }); 
 
 return app.Run(args);

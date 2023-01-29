@@ -3,7 +3,7 @@ using System.IO.Compression;
 
 using Money.CommandsSettings;
 using Money.Data;
-using Money.Data.Serialization;
+using Money.Data.Dto;
 using Money.Extensions;
 
 using Spectre.Console.Cli;
