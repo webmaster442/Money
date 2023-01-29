@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Xml.Serialization;
 
-namespace Money.Data.Serialization
+namespace Money.Data.Dto
 {
     public class SerializableSpending
     {

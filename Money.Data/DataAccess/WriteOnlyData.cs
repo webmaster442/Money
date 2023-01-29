@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 
+using Money.Data.Dto;
 using Money.Data.Serialization;
 
 namespace Money.Data.DataAccess

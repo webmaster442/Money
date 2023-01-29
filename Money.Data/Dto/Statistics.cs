@@ -1,6 +1,6 @@
 ﻿namespace Money.Data
 {
-    public class Statistics
+    public sealed class Statistics
     {
         public int Count { get; set; }
         public required Dictionary<DateOnly, double> SumPerDay { get; set; }
