@@ -1,4 +1,4 @@
-﻿namespace Money.Data
+﻿namespace Money.Data.Dto
 {
     public sealed class Statistics
     {

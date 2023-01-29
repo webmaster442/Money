@@ -34,7 +34,7 @@ namespace Money.Data.DataAccess
                             out ulong id)
         {
             using MoneyContext db = ConnectDatabase();
-            var cat = db
+            Category? cat = db
                 .Categories
                 .Where(c => c.Description == category.ToLower())
                 .FirstOrDefault();
@@ -45,7 +45,7 @@ namespace Money.Data.DataAccess
                 return false;
             }
 
-            var entry = db.Spendings.Add(new Entities.Spending
+            Spending entity = new Spending
             {
                 Id = CreateId(DateTime.UtcNow.ToBinary()),
                 Date = date,
@@ -53,18 +53,18 @@ namespace Money.Data.DataAccess
                 Ammount = ammount,
                 AddedOn = DateTime.Now,
                 Category = cat,
-            });
+            };
 
-            db.SaveChanges();
+            db.Spendings.Add(entity);
 
-            id = entry.Entity.Id;
-            return true;
+            id = entity.Id;
+            return db.SaveChanges() == 1;
         }
 
         public bool TryCreateCategory(string categoryName, out ulong Id)
         {
             using MoneyContext db = ConnectDatabase();
-            var exists = db
+            bool exists = db
                 .Categories
                 .Where(c => c.Description == categoryName.ToLower())
                 .Any();
@@ -75,7 +75,7 @@ namespace Money.Data.DataAccess
                 return false;
             }
 
-            var toInsert = new Category
+            Category toInsert = new Category
             {
                 Id = CreateId(DateTime.Now.ToBinary()),
                 Description = categoryName.ToLower(),

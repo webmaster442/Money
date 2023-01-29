@@ -1,4 +1,6 @@
 ﻿
+using Money.Data.Dto;
+
 namespace Money.Data.DataAccess
 {
     public class ReadOnlyData : IReadonlyData
@@ -15,7 +17,7 @@ namespace Money.Data.DataAccess
 
         public IList<string> GetCategories()
         {
-            using var db = ConnectDatabase();
+            using MoneyContext db = ConnectDatabase();
             return db
                 .Categories
                 .Select(c => c.Description)
@@ -24,18 +26,18 @@ namespace Money.Data.DataAccess
 
         public Statistics GetStatistics(DateOnly start, DateOnly end)
         {
-            using var db = ConnectDatabase();
-            var data = db
+            using MoneyContext db = ConnectDatabase();
+            List<Entities.Spending> data = db
                 .Spendings
                 .Where(x => x.Date >= start)
                 .Where(x => x.Date <= end)
                 .ToList();
 
-            var dates = data
+            Dictionary<DateOnly, double> dates = data
                 .GroupBy(x => x.Date)
                 .ToDictionary(x => x.Key, x => x.Sum(x => x.Ammount));
 
-            var categoreis = data
+            Dictionary<string, double> categoreis = data
                 .GroupBy(x => x.Category.Description)
                 .ToDictionary(x => x.Key, x => x.Sum(x => x.Ammount));
 
