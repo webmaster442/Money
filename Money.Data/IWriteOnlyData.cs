@@ -4,7 +4,12 @@ namespace Money.Data
 {
     public interface IWriteOnlyData
     {
-        ulong Insert(double ammount, string text, DateOnly date);
+        bool TryInsert(double ammount,
+                       string text,
+                       DateOnly date,
+                       string category,
+                       out ulong id);
         int Import(IEnumerable<SerializableSpending> toImport);
+        bool TryCreateCategory(string categoryName, out ulong id);
     }
 }

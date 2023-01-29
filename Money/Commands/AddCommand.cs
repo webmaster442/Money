@@ -19,9 +19,18 @@ namespace Money.Commands
         public override int Execute([NotNull] CommandContext context,
                                     [NotNull] AddSettings settings)
         {
-            ulong id = _writeOnlyData.Insert(settings.Ammount,
+            bool result = _writeOnlyData.TryInsert(settings.Ammount,
                                             settings.Text,
-                                            settings.Date);
+                                            settings.Date,
+                                            settings.Category,
+                                            out ulong id);
+
+            if (!result)
+            {
+                return Ui.Error($"Category doesn't exist: {settings.Category}.\r\n" +
+                                " Create it first with the category add command");
+            }
+
             Ui.Inserted(id);
             return Constants.Success;
         }

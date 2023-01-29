@@ -31,6 +31,9 @@ namespace Money
                                                DateOnly startDate,
                                                DateOnly endDate)
         {
+
+            AnsiConsole.Clear();
+
             var header = new Rule($"[orange1]Spendings {startDate} {endDate}[/]");
             AnsiConsole.Write(header);
 
@@ -62,6 +65,12 @@ namespace Money
             }
 
             AnsiConsole.Write(table);
+        }
+
+        public static int Error(string message)
+        {
+            AnsiConsole.MarkupLine($"[red]{message}[/]");
+            return Constants.UsageError;
         }
     }
 }

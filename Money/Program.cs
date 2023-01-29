@@ -2,6 +2,7 @@
 
 using Money;
 using Money.Commands;
+using Money.CommandsSettings;
 using Money.Data;
 using Money.Data.DataAccess;
 
@@ -17,6 +18,10 @@ CommandApp app = new CommandApp(registrar);
 app.Configure(config =>
 {
     config.AddCommand<AddCommand>("add");
+    config.AddBranch("category", category =>
+    {
+        category.AddCommand<CategoryAddCommand>("add");
+    });
     config.AddCommand<ExportCommand>("export");
     config.AddCommand<ImportCommand>("import");
     config.AddCommand<StatCommand>("stat");

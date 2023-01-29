@@ -13,6 +13,10 @@ namespace Money.CommandsSettings
         [CommandOption("-t|--text")]
         public string Text { get; init; }
 
+        [Description("Spending category")]
+        [CommandOption("-c|--category")]
+        public string Category { get; set; }
+
         [Description("Ammount of money spent")]
         [CommandArgument(0, "[amount]")]
         public double Ammount { get; init; }
@@ -24,6 +28,7 @@ namespace Money.CommandsSettings
         public AddSettings()
         {
             Text = string.Empty;
+            Category = string.Empty;
             Date = DateTime.Now.ToDateOnly();
         }
 
@@ -31,6 +36,9 @@ namespace Money.CommandsSettings
         {
             if (string.IsNullOrWhiteSpace(Text))
                 return ValidationResult.Error("Text can't be empty");
+
+            if (string.IsNullOrWhiteSpace(Category))
+                return ValidationResult.Error("Category can't be empty");
 
             if (Ammount < 0)
                 return ValidationResult.Error("Amount must be positive");

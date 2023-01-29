@@ -8,6 +8,8 @@ namespace Money.Data
     {
         public DbSet<Spending> Spendings { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
         public string DatabaseFile { get; }
 
         public MoneyContext()
