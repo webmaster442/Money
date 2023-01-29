@@ -21,7 +21,7 @@ namespace Money.CommandsSettings
         [CommandArgument(0, "[amount]")]
         public double Ammount { get; init; }
 
-        [Description("Spending time")]
+        [Description("Spending time. If not set current date & time will be used")]
         [CommandOption("-d|--date")]
         public DateOnly Date { get; init; }
 
