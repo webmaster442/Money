@@ -4,7 +4,7 @@ using Spectre.Console.Cli;
 
 namespace Money.CommandsSettings
 {
-    internal class ImportExportSettingsBase : CommandSettings
+    internal abstract class ImportExportSettingsBase : CommandSettings
     {
         [CommandArgument(1, "[file]")]
         [Description("file name")]

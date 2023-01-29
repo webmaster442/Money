@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Money.Converters
 {
-    internal class NullableDateonlyConverter : TypeConverter
+    internal sealed class NullableDateonlyConverter : TypeConverter
     {
         public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
         {

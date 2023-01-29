@@ -7,7 +7,7 @@ using Spectre.Console.Cli;
 
 namespace Money.Commands
 {
-    internal class CategoryAddCommand : Command<CategorySettings>
+    internal sealed class CategoryAddCommand : Command<CategorySettings>
     {
         private readonly IWriteOnlyData _writeOnlyData;
 

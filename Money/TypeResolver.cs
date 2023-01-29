@@ -2,7 +2,7 @@
 
 namespace Money
 {
-    internal class TypeResolver : ITypeResolver, IDisposable
+    internal sealed class TypeResolver : ITypeResolver, IDisposable
     {
         private readonly IServiceProvider _provider;
 

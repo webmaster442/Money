@@ -1,6 +1,6 @@
 ﻿namespace Money.Data.Entities
 {
-    internal class Category
+    internal sealed class Category
     {
         public ulong Id { get; set; }
         public string Description { get; set; }

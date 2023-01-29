@@ -6,7 +6,7 @@ using Money.Data.Entities;
 
 namespace Money.Data.DataAccess
 {
-    public class ReadOnlyData : IReadonlyData
+    public sealed class ReadOnlyData : IReadonlyData
     {
         private static MoneyContext ConnectDatabase()
         {

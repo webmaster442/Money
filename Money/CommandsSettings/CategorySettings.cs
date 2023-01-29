@@ -5,7 +5,7 @@ using Spectre.Console.Cli;
 
 namespace Money.CommandsSettings
 {
-    internal class CategorySettings : CommandSettings
+    internal sealed class CategorySettings : CommandSettings
     {
         [Description("Category name")]
         [CommandArgument(0, "[category]")]

@@ -4,7 +4,7 @@ using Spectre.Console.Cli;
 
 namespace Money.Commands
 {
-    internal class CategoryListCommand : Command
+    internal sealed class CategoryListCommand : Command
     {
         private readonly IReadonlyData _readonlyData;
 

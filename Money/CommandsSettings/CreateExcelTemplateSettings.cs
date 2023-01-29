@@ -2,7 +2,7 @@
 
 namespace Money.CommandsSettings
 {
-    internal class CreateExcelTemplateSettings : ImportExportSettingsBase
+    internal sealed class CreateExcelTemplateSettings : ImportExportSettingsBase
     {
         public override ValidationResult Validate()
         {

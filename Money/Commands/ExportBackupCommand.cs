@@ -9,7 +9,7 @@ using Spectre.Console.Cli;
 
 namespace Money.Commands
 {
-    internal class ExportBackupCommand : Command<ExportSetting>
+    internal sealed class ExportBackupCommand : Command<ExportSetting>
     {
         private readonly IReadonlyData _readonlyData;
 

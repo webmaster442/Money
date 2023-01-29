@@ -9,7 +9,7 @@ using Spectre.Console.Cli;
 
 namespace Money.Commands
 {
-    internal class ExportExcelCommand : Command<ExportSetting>
+    internal sealed class ExportExcelCommand : Command<ExportSetting>
     {
         private readonly IReadonlyData _readonlyData;
 

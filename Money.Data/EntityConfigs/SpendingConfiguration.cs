@@ -5,7 +5,7 @@ using Money.Data.Entities;
 
 namespace Money.Data.EntityConfigs
 {
-    internal class SpendingConfiguration : IEntityTypeConfiguration<Spending>
+    internal sealed class SpendingConfiguration : IEntityTypeConfiguration<Spending>
     {
         public void Configure(EntityTypeBuilder<Spending> builder)
         {

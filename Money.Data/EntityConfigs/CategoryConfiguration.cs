@@ -5,7 +5,7 @@ using Money.Data.Entities;
 
 namespace Money.Data.EntityConfigs
 {
-    internal class CategoryConfiguration : IEntityTypeConfiguration<Category>
+    internal sealed class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
