@@ -12,21 +12,6 @@ namespace Money
             AnsiConsole.MarkupLine($"[green]Successfully inserted with id: {hex}[/]");
         }
 
-        public static void ExportSuccessfull(int count, string file)
-        {
-            AnsiConsole.MarkupLine($"[green]Successfully exported {count} items to file:\r\n {file}[/]");
-        }
-
-        public static void ImportSuccessfull(object count, string file)
-        {
-            AnsiConsole.MarkupLine($"[green]Successfully imported {count} items to file:\r\n {file}[/]");
-        }
-
-        public static void PrintException(IOException ex)
-        {
-            AnsiConsole.WriteException(ex);
-        }
-
         internal static void BasicStats(Statistics stats,
                                                DateOnly startDate,
                                                DateOnly endDate)
@@ -50,7 +35,7 @@ namespace Money
             AnsiConsole.Write(table);
         }
 
-        internal static void DetailedStats(Statistics stats)
+        public static void DetailedStats(Statistics stats)
         {
             var header = new Rule($"[orange3]Dayly breakdown[/]");
             AnsiConsole.Write(header);
@@ -71,6 +56,17 @@ namespace Money
         {
             AnsiConsole.MarkupLine($"[red]{message}[/]");
             return Constants.UsageError;
+        }
+
+        public static void PrintList<T>(IEnumerable<T> list)
+        {
+            var header = new Rule($"[green]Available categories[/]");
+            AnsiConsole.Write(header);
+            AnsiConsole.WriteLine();
+            foreach (var item in list)
+            {
+                AnsiConsole.WriteLine(item?.ToString() ?? "null");
+            }
         }
     }
 }

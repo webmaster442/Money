@@ -34,14 +34,14 @@ namespace Money.CommandsSettings
 
         public override ValidationResult Validate()
         {
+            if (Ammount <= 0)
+                return ValidationResult.Error("Amount must be positive and greater than 0");
+
             if (string.IsNullOrWhiteSpace(Text))
                 return ValidationResult.Error("Text can't be empty");
 
             if (string.IsNullOrWhiteSpace(Category))
                 return ValidationResult.Error("Category can't be empty");
-
-            if (Ammount < 0)
-                return ValidationResult.Error("Amount must be positive");
 
             return ValidationResult.Success();
         }

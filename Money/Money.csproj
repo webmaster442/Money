@@ -23,8 +23,4 @@
     <ProjectReference Include="..\Money.Data\Money.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Commands\Category\" />
-  </ItemGroup>
-
 </Project>

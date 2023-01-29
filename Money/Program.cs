@@ -21,6 +21,7 @@ app.Configure(config =>
     config.AddBranch("category", category =>
     {
         category.AddCommand<CategoryAddCommand>("add");
+        category.AddCommand<CategoryListCommand>("list");
     });
     config.AddCommand<StatCommand>("stat");
 }); 

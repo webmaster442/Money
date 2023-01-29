@@ -14,6 +14,15 @@ namespace Money.Data.DataAccess
             return new MoneyContext();
         }
 
+        public IList<string> GetCategories()
+        {
+            using var db = ConnectDatabase();
+            return db
+                .Categories
+                .Select(c => c.Description)
+                .ToList();
+        }
+
         public Statistics GetStatistics(DateOnly start, DateOnly end)
         {
             using var db = ConnectDatabase();
