@@ -1,4 +1,6 @@
-﻿using Money.Data.Dto;
+﻿using System.Diagnostics.Contracts;
+
+using Money.Data.Dto;
 
 using Spectre.Console;
 
@@ -19,7 +21,7 @@ namespace Money
 
             AnsiConsole.Clear();
 
-            var header = new Rule($"[orange1]Spendings {startDate} {endDate}[/]");
+            var header = new Rule($"[orange1]Spendings from {startDate} to {endDate}[/]");
             AnsiConsole.Write(header);
 
             var table = new Table();
@@ -33,6 +35,18 @@ namespace Money
             table.AddRow("Average / day", $"{stats.AvgPerDay:C}");
 
             AnsiConsole.Write(table);
+
+
+            var catTable = new Table();
+            catTable.AddColumn("Category");
+            catTable.AddColumn("Spent money");
+
+            foreach (var item in stats.SumPerCategory)
+            {
+                catTable.AddRow($"{item.Key}", $"{item.Value:C}");
+            }
+            AnsiConsole.Write(catTable);
+
         }
 
         public static void DetailedStats(Statistics stats)

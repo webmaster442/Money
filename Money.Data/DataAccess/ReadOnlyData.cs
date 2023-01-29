@@ -1,5 +1,8 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 using Money.Data.Dto;
+using Money.Data.Entities;
 
 namespace Money.Data.DataAccess
 {
@@ -29,6 +32,7 @@ namespace Money.Data.DataAccess
             using MoneyContext db = ConnectDatabase();
             List<Entities.Spending> data = db
                 .Spendings
+                .Include(s => s.Category)
                 .Where(x => x.Date >= start)
                 .Where(x => x.Date <= end)
                 .ToList();

@@ -2,7 +2,7 @@
   "profiles": {
     "Money": {
       "commandName": "Project",
-      "commandLineArgs": "add 1500 -t \"Teszt bejegyzés\" -c \"test\""
+      "commandLineArgs": "stat"
     }
   }
 }
