@@ -31,7 +31,7 @@ namespace Money.Commands
                                 " Create it first with the category add command");
             }
 
-            Ui.Inserted(id);
+            Ui.Success(id);
             return Constants.Success;
         }
     }

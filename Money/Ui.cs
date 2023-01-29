@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-
-using Money.Data.Dto;
+﻿using Money.Data.Dto;
 
 using Spectre.Console;
 
@@ -8,10 +6,26 @@ namespace Money
 {
     internal static class Ui
     {
-        public static void Inserted(ulong id)
+        public static void Success(ulong id)
         {
             string hex = Convert.ToHexString(BitConverter.GetBytes(id));
             AnsiConsole.MarkupLine($"[green]Successfully inserted with id: {hex}[/]");
+        }
+
+        public static void Success(string text)
+        {
+            AnsiConsole.MarkupLine($"[green]{text}[/]");
+        }
+
+        public static int Error(string message)
+        {
+            AnsiConsole.MarkupLine($"[red]{message}[/]");
+            return Constants.UsageError;
+        }
+
+        public static void PrintException(Exception ex)
+        {
+            AnsiConsole.WriteException(ex, ExceptionFormats.ShortenEverything);
         }
 
         internal static void BasicStats(Statistics stats,
@@ -64,12 +78,6 @@ namespace Money
             }
 
             AnsiConsole.Write(table);
-        }
-
-        public static int Error(string message)
-        {
-            AnsiConsole.MarkupLine($"[red]{message}[/]");
-            return Constants.UsageError;
         }
 
         public static void PrintList<T>(IEnumerable<T> list)

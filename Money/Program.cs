@@ -2,7 +2,6 @@
 
 using Money;
 using Money.Commands;
-using Money.CommandsSettings;
 using Money.Data;
 using Money.Data.DataAccess;
 
@@ -22,6 +21,10 @@ app.Configure(config =>
     {
         category.AddCommand<CategoryAddCommand>("add");
         category.AddCommand<CategoryListCommand>("list");
+    });
+    config.AddBranch("export", export =>
+    {
+        export.AddCommand<ExportExcelCommand>("excel");
     });
     config.AddCommand<StatCommand>("stat");
 }); 

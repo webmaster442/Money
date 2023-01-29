@@ -22,7 +22,7 @@ namespace Money.Commands
             if (!_writeOnlyData.TryCreateCategory(settings.CategoryName, out ulong Id))
                 return Ui.Error($"Can't create category {settings.CategoryName}. It allredy exists");
 
-            Ui.Inserted(Id);
+            Ui.Success(Id);
 
             return Constants.Success;
         }
