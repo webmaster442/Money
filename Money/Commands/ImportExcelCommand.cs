@@ -1,10 +1,12 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Data;
+using System.Diagnostics.CodeAnalysis;
 
 using MiniExcelLibs;
 
 using Money.CommandsSettings;
 using Money.Data;
 using Money.Data.Dto;
+using Money.Extensions;
 
 using Spectre.Console.Cli;
 
@@ -26,7 +28,23 @@ namespace Money.Commands
             {
                 using (FileStream srtream = File.OpenRead(settings.FileName))
                 {
-                    List<ExportRow> data = MiniExcel.Query<ExportRow>(srtream).ToList();
+                   var dataTable = MiniExcel.QueryAsDataTable(srtream);
+
+                    List<ExportRow> data = new(dataTable.Rows.Count);
+
+                    foreach (DataRow dataRow in dataTable.Rows)
+                    {
+                        ExportRow row = new ExportRow
+                        {
+                            Date = dataRow[0].ToDateOnly(),
+                            Description = dataRow[1]?.ToString() ?? throw new InvalidProgramException("Description can't be empty"),
+                            Ammount = dataRow[2].ToDouble(),
+                            AddedOn = dataRow[3].ToDateTime(DateTime.Now),
+                            CategoryName = dataRow[4]?.ToString() ?? throw new InvalidProgramException("Category name can't be empty"),
+                        };
+                        data.Add(row);
+                    }
+
                     (int createdCategory, int createdEntry) = _writeOnlyData.Import(data);
                     Ui.Success($"Imported {createdCategory} categories and {createdEntry} entries");
                     return Constants.Success;

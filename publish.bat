@@ -1,0 +1,1 @@
+dotnet publish -c Release --os win --sc true -o publish/win

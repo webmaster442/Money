@@ -107,7 +107,7 @@ namespace Money.Data.DataAccess
                 Description = row.Description,
                 AddedOn = row.AddedOn,
                 Ammount = row.Ammount,
-                Category = categories[row.CategoryName],
+                Category = categories[row.CategoryName.ToLower()],
                 Id = CreateId(DateTime.UtcNow.ToBinary()),
             });
 
