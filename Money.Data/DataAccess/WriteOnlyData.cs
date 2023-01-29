@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 
+using Money.Data.Dto;
 using Money.Data.Entities;
 
 namespace Money.Data.DataAccess
@@ -85,6 +86,35 @@ namespace Money.Data.DataAccess
             Id = toInsert.Id;
 
             return db.SaveChanges() == 1;
+        }
+
+        public (int createdCategory, int createdEntry) Import(IList<ExportRow> rows)
+        {
+            int createdCategory = 0;
+            foreach (var category in rows.Select(x => x.CategoryName.ToLower()).Distinct())
+            {
+                if (TryCreateCategory(category, out var _))
+                    ++createdCategory;
+            }
+
+            using var db = ConnectDatabase();
+
+            var categories = db.Categories.ToDictionary(x => x.Description, x => x);
+
+            var bulk = rows.Select(row => new Spending
+            {
+                Date = row.Date,
+                Description = row.Description,
+                AddedOn= row.AddedOn,
+                Ammount= row.Ammount,
+                Category = categories[row.CategoryName],
+                Id = CreateId(DateTime.UtcNow.ToBinary()),
+            });
+
+            db.Spendings.AddRange(bulk);
+            int createdEntry =  db.SaveChanges();
+
+            return (createdCategory, createdEntry);
         }
     }
 }

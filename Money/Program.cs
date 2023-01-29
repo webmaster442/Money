@@ -25,7 +25,14 @@ app.Configure(config =>
     config.AddBranch("export", export =>
     {
         export.AddCommand<ExportExcelCommand>("excel");
+        export.AddCommand<ExportBackupCommand>("backup");
     });
+    config.AddBranch("import", import =>
+    {
+        import.AddCommand<ImportExcelCommand>("excel");
+        import.AddCommand<ImportBackupCommand>("backup");
+    });
+
     config.AddCommand<StatCommand>("stat");
 }); 
 
