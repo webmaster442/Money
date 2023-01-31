@@ -4,8 +4,8 @@ namespace Money.Data
 {
     public interface IReadonlyData
     {
-        IList<string> GetCategories();
-        Statistics GetStatistics(DateOnly start, DateOnly end);
-        IList<ExportRow> Export(DateOnly? start = null, DateOnly? end = null);
+        Task<List<string>> GetCategoriesAsync();
+        Task<Statistics> GetStatisticsAsync(DateOnly start, DateOnly end);
+        Task<List<ExportRow>> ExportAsync(DateOnly? start = null, DateOnly? end = null);
     }
 }

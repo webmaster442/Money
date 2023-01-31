@@ -2,7 +2,7 @@
 
 namespace Money.Commands
 {
-    internal sealed class AddCommand : Command<AddSettings>
+    internal sealed class AddCommand : AsyncCommand<AddSettings>
     {
         private readonly IWriteOnlyData _writeOnlyData;
 
@@ -11,21 +11,20 @@ namespace Money.Commands
             _writeOnlyData = writeOnlyData;
         }
 
-        public override int Execute([NotNull] CommandContext context,
-                                    [NotNull] AddSettings settings)
+        public override async Task<int> ExecuteAsync([NotNull] CommandContext context,
+                                                     [NotNull] AddSettings settings)
         {
-            bool result = _writeOnlyData.TryInsert(settings.Ammount,
-                                            settings.Text,
-                                            settings.Date,
-                                            settings.Category,
-                                            out ulong id);
+            var result = await _writeOnlyData.InsertAsync(settings.Ammount,
+                                                          settings.Text,
+                                                          settings.Date,
+                                                          settings.Category);
 
-            if (!result)
+            if (!result.success)
             {
                 return Ui.Error(Resources.ErrorCategoryDoesntExist, settings.Category);
             }
 
-            Ui.Success(id);
+            Ui.Success(result.id);
             return Constants.Success;
         }
     }

@@ -2,7 +2,7 @@
 
 namespace Money.Commands
 {
-    internal sealed class CategoryAddCommand : Command<CategorySettings>
+    internal sealed class CategoryAddCommand : AsyncCommand<CategorySettings>
     {
         private readonly IWriteOnlyData _writeOnlyData;
 
@@ -11,13 +11,15 @@ namespace Money.Commands
             _writeOnlyData = writeOnlyData;
         }
 
-        public override int Execute([NotNull] CommandContext context,
-                                    [NotNull] CategorySettings settings)
+        public override async Task<int> ExecuteAsync([NotNull] CommandContext context,
+                                               [NotNull] CategorySettings settings)
         {
-            if (!_writeOnlyData.TryCreateCategory(settings.CategoryName, out ulong id))
+            var result = await _writeOnlyData.CreateCategoryAsync(settings.CategoryName)
+
+            if (!result.success)
                 return Ui.Error(Resources.ErrorCategoryAllreadyExists, settings.CategoryName);
 
-            Ui.Success(id);
+            Ui.Success(result.id);
 
             return Constants.Success;
         }

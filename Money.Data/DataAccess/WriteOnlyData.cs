@@ -1,5 +1,7 @@
 ﻿using System.Security.Cryptography;
 
+using Microsoft.EntityFrameworkCore;
+
 using Money.Data.Dto;
 using Money.Data.Entities;
 
@@ -16,7 +18,7 @@ namespace Money.Data.DataAccess
             return new MoneyContext();
         }
 
-        private ulong CreateId(long currentTime)
+        private static ulong CreateId(long currentTime)
         {
             byte[] buffer = BitConverter.GetBytes(currentTime);
             byte[] random = RandomNumberGenerator.GetBytes(buffer.Length);
@@ -28,22 +30,17 @@ namespace Money.Data.DataAccess
 
         }
 
-        public bool TryInsert(double ammount,
-                            string text,
-                            DateOnly date,
-                            string category,
-                            out ulong id)
+        public async Task<(bool success, ulong id)> InsertAsync(double ammount, string text, DateOnly date, string category)
         {
             using MoneyContext db = ConnectDatabase();
-            Category? cat = db
+            Category? cat = await db
                 .Categories
                 .Where(c => c.Description == category.ToLower())
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (cat == null)
             {
-                id = 0;
-                return false;
+                return (false, 0);
             }
 
             Spending entity = new Spending
@@ -58,22 +55,22 @@ namespace Money.Data.DataAccess
 
             db.Spendings.Add(entity);
 
-            id = entity.Id;
-            return db.SaveChanges() == 1;
+            bool result = await db.SaveChangesAsync() == 1;
+
+            return (result, entity.Id);
         }
 
-        public bool TryCreateCategory(string categoryName, out ulong Id)
+        public async Task<(bool success, ulong id)> CreateCategoryAsync(string categoryName)
         {
             using MoneyContext db = ConnectDatabase();
-            bool exists = db
+            bool exists = await db 
                 .Categories
                 .Where(c => c.Description == categoryName.ToLower())
-                .Any();
+                .AnyAsync();
 
             if (exists)
             {
-                Id = 0;
-                return false;
+                return (false, 0);
             }
 
             Category toInsert = new Category
@@ -83,12 +80,13 @@ namespace Money.Data.DataAccess
             };
 
             db.Categories.Add(toInsert);
-            Id = toInsert.Id;
 
-            return db.SaveChanges() == 1;
+            bool result = await db.SaveChangesAsync() == 1;
+
+            return (result, toInsert.Id);
         }
 
-        public bool TryRenameCategory(string oldCategoryName, string newCategoryName)
+        public async Task<bool> RenameCategoryAsync(string oldCategoryName, string newCategoryName)
         {
             using MoneyContext db = ConnectDatabase();
             Category? cat = db
@@ -102,15 +100,17 @@ namespace Money.Data.DataAccess
             cat.Description = newCategoryName;
 
             db.Categories.Update(cat);
-            return db.SaveChanges() == 1;
+            return await db.SaveChangesAsync() == 1;
         }
 
-        public (int createdCategory, int createdEntry) Import(IList<ExportRow> rows)
+        public async Task<(int createdCategory, int createdEntry)> ImportAsync(IEnumerable<ExportRow> rows)
         {
             int createdCategory = 0;
             foreach (string? category in rows.Select(x => x.CategoryName.ToLower()).Distinct())
             {
-                if (TryCreateCategory(category, out ulong _))
+                var result = await CreateCategoryAsync(category);
+
+                if (result.success)
                     ++createdCategory;
             }
 
@@ -129,7 +129,7 @@ namespace Money.Data.DataAccess
             });
 
             db.Spendings.AddRange(bulk);
-            int createdEntry = db.SaveChanges();
+            int createdEntry = await db.SaveChangesAsync();
 
             return (createdCategory, createdEntry);
         }

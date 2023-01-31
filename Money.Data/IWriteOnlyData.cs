@@ -4,9 +4,9 @@ namespace Money.Data
 {
     public interface IWriteOnlyData
     {
-        bool TryInsert(double ammount, string text, DateOnly date, string category, out ulong id);
-        bool TryCreateCategory(string categoryName, out ulong id);
-        (int createdCategory, int createdEntry) Import(IList<ExportRow> rows);
-        bool TryRenameCategory(string oldCategoryName, string newCategoryName);
+        Task<(bool success, ulong id)> InsertAsync(double ammount, string text, DateOnly date, string category);
+        Task<(bool success, ulong id)> CreateCategoryAsync(string categoryName);
+        Task<bool> RenameCategoryAsync(string oldCategoryName, string newCategoryName);
+        Task<(int createdCategory, int createdEntry)> ImportAsync(IEnumerable<ExportRow> rows);
     }
 }

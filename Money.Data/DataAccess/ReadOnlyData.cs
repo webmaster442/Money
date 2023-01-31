@@ -13,7 +13,7 @@ namespace Money.Data.DataAccess
             return new MoneyContext();
         }
 
-        public IList<ExportRow> Export(DateOnly? start = null, DateOnly? end = null)
+        public Task<List<ExportRow>> ExportAsync(DateOnly? start = null, DateOnly? end = null)
         {
             using MoneyContext db = ConnectDatabase();
             IQueryable<Spending> query = db
@@ -34,27 +34,27 @@ namespace Money.Data.DataAccess
                 AddedOn = spending.AddedOn,
                 Ammount = spending.Ammount,
                 CategoryName = spending.Category.Description
-            }).ToList();
+            }).ToListAsync();
         }
 
-        public IList<string> GetCategories()
+        public Task<List<string>> GetCategoriesAsync()
         {
             using MoneyContext db = ConnectDatabase();
             return db
                 .Categories
                 .Select(c => c.Description)
-                .ToList();
+                .ToListAsync();
         }
 
-        public Statistics GetStatistics(DateOnly start, DateOnly end)
+        public async Task<Statistics> GetStatisticsAsync(DateOnly start, DateOnly end)
         {
             using MoneyContext db = ConnectDatabase();
-            List<Spending> data = db
+            List<Spending> data = await db
                 .Spendings
                 .Include(s => s.Category)
                 .Where(x => x.Date >= start)
                 .Where(x => x.Date <= end)
-                .ToList();
+                .ToListAsync();
 
             Dictionary<DateOnly, double> dates = data
                 .GroupBy(x => x.Date)

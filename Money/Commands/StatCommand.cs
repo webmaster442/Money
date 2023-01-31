@@ -14,7 +14,7 @@ namespace Money.Commands
         public override int Execute([NotNull] CommandContext context,
                                     [NotNull] StatSettings settings)
         {
-            Data.Dto.Statistics stats = _readonlyData.GetStatistics(settings.StartDate, settings.EndDate);
+            Data.Dto.Statistics stats = _readonlyData.GetStatisticsAsync(settings.StartDate, settings.EndDate);
 
             Ui.BasicStats(stats, settings.StartDate, settings.EndDate);
 

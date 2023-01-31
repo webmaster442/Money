@@ -25,7 +25,7 @@ namespace Money.Commands
                     using (GZipStream compressed = new GZipStream(srtream, CompressionMode.Decompress))
                     {
                         List<ExportRow> data = compressed.ReadJson<List<ExportRow>>();
-                        (int createdCategory, int createdEntry) = _writeOnlyData.Import(data);
+                        (int createdCategory, int createdEntry) = _writeOnlyData.ImportAsync(data);
                         Ui.Success(Resources.SuccesImport, createdCategory, createdEntry);
                         return Constants.Success;
                     }

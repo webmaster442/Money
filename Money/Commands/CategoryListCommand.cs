@@ -1,6 +1,6 @@
 ﻿namespace Money.Commands
 {
-    internal sealed class CategoryListCommand : Command
+    internal sealed class CategoryListCommand : AsyncCommand
     {
         private readonly IReadonlyData _readonlyData;
 
@@ -9,9 +9,11 @@
             _readonlyData = readonlyData;
         }
 
-        public override int Execute(CommandContext context)
+        public override async Task<int> ExecuteAsync(CommandContext context)
         {
-            Ui.PrintList(_readonlyData.GetCategories());
+            var categories = await _readonlyData.GetCategoriesAsync();
+
+            Ui.PrintList(categories);
 
             return Constants.Success;
         }

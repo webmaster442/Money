@@ -40,7 +40,7 @@ namespace Money.Commands
                         data.Add(row);
                     }
 
-                    (int createdCategory, int createdEntry) = _writeOnlyData.Import(data);
+                    (int createdCategory, int createdEntry) = _writeOnlyData.ImportAsync(data);
                     Ui.Success(Resources.SuccesImport, createdCategory, createdEntry);
                     return Constants.Success;
                 }
