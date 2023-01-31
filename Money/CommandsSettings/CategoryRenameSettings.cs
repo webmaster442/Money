@@ -11,7 +11,7 @@ namespace Money.CommandsSettings
         public string OldCategoryName { get; set; }
 
         [Description("New category name")]
-        [CommandArgument(1, "[oldcategory]")]
+        [CommandArgument(1, "[newcategory]")]
         public string NewCategoryName { get; set; }
 
         public CategoryRenameSettings()

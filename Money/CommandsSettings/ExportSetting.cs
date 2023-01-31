@@ -7,12 +7,12 @@ namespace Money.CommandsSettings
     internal sealed class ExportSetting : ImportExportSettingsBase
     {
         [CommandArgument(1, "[start]")]
-        [Description("Start date")]
+        [Description("Start date (optional)")]
         [TypeConverter(typeof(NullableDateonlyConverter))]
         public DateOnly? StartDate { get; set; }
 
         [CommandArgument(2, "[end]")]
-        [Description("End date date")]
+        [Description("End date (optional)")]
         [TypeConverter(typeof(NullableDateonlyConverter))]
         public DateOnly? EndDate { get; set; }
 
