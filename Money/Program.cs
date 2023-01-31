@@ -19,7 +19,6 @@ CommandApp app = new CommandApp(registrar);
 app.Configure(config =>
 {
     config.SetApplicationName("money");
-    config.
 
     config
         .AddCommand<AddCommand>("add")
@@ -35,6 +34,9 @@ app.Configure(config =>
         category
             .AddCommand<CategoryListCommand>("list")
             .WithDescription(Resources.CmdCategoryListDescription);
+        category
+            .AddCommand<CategoryRenameCommand>("rename")
+            .WithDescription(Resources.CmdCategoryRenameDescription);
     });
     config.AddBranch("export", export =>
     {

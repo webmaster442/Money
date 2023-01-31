@@ -129,6 +129,9 @@
   <data name="CmdCategoryListDescription" xml:space="preserve">
     <value>List all spending categories</value>
   </data>
+  <data name="CmdCategoryRenameDescription" xml:space="preserve">
+    <value>Rename a category</value>
+  </data>
   <data name="CmdExportBackupDescription" xml:space="preserve">
     <value>Export data to backup format</value>
   </data>
@@ -228,6 +231,9 @@ Create it first with the category add command</value>
   </data>
   <data name="SuccesImport" xml:space="preserve">
     <value>Imported {0} categories and {1} entries</value>
+  </data>
+  <data name="SuccessCategoryRename" xml:space="preserve">
+    <value>Successfully renamed {0} to {1}</value>
   </data>
   <data name="SuccessCreatedImportTemplate" xml:space="preserve">
     <value>Successfully created import template {0}</value>

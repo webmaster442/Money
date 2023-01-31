@@ -16,7 +16,7 @@ namespace Money
         public static void Success(string message, params object[] details)
         {
             string formatted = string.Format(message, details);
-            AnsiConsole.MarkupLine($"[green]{message}[/]");
+            AnsiConsole.MarkupLine($"[green]{formatted}[/]");
         }
 
         public static int Error(string message, params object[] details)

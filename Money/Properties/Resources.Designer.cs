@@ -97,6 +97,15 @@ namespace Money.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rename a category.
+        /// </summary>
+        internal static string CmdCategoryRenameDescription {
+            get {
+                return ResourceManager.GetString("CmdCategoryRenameDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export data to backup format.
         /// </summary>
         internal static string CmdExportBackupDescription {
@@ -391,6 +400,15 @@ namespace Money.Properties {
         internal static string SuccesImport {
             get {
                 return ResourceManager.GetString("SuccesImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully renamed {0} to {1}.
+        /// </summary>
+        internal static string SuccessCategoryRename {
+            get {
+                return ResourceManager.GetString("SuccessCategoryRename", resourceCulture);
             }
         }
         

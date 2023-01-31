@@ -88,6 +88,23 @@ namespace Money.Data.DataAccess
             return db.SaveChanges() == 1;
         }
 
+        public bool TryRenameCategory(string oldCategoryName, string newCategoryName)
+        {
+            using MoneyContext db = ConnectDatabase();
+            Category? cat = db
+                .Categories
+                .Where(c => c.Description == oldCategoryName.ToLower())
+                .FirstOrDefault();
+
+            if (cat == null)
+                return false;
+
+            cat.Description = newCategoryName;
+
+            db.Categories.Update(cat);
+            return db.SaveChanges() == 1;
+        }
+
         public (int createdCategory, int createdEntry) Import(IList<ExportRow> rows)
         {
             int createdCategory = 0;
