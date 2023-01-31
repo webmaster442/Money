@@ -1,4 +1,6 @@
-﻿using Spectre.Console;
+﻿using Money.Properties;
+
+using Spectre.Console;
 
 namespace Money.CommandsSettings
 {
@@ -9,7 +11,7 @@ namespace Money.CommandsSettings
             if (string.IsNullOrEmpty(FileName)
                 || !File.Exists(FileName))
             {
-                return ValidationResult.Error("file name can't be empy and must be an existing file");
+                return ValidationResult.Error(Resources.ErrorFileMustExist);
             }
             return ValidationResult.Success();
         }

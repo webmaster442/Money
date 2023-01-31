@@ -4,6 +4,7 @@ using Money;
 using Money.Commands;
 using Money.Data;
 using Money.Data.DataAccess;
+using Money.Properties;
 
 using Spectre.Console.Cli;
 
@@ -14,47 +15,57 @@ registrations.AddSingleton<IReadonlyData, ReadOnlyData>();
 ITypeRegistrar registrar = new TypeRegistrar(registrations);
 
 CommandApp app = new CommandApp(registrar);
+
 app.Configure(config =>
 {
+    config.SetApplicationName("money");
+    config.
+
     config
         .AddCommand<AddCommand>("add")
-        .WithDescription("Add a spending to the database");
+        .WithDescription(Resources.CmdAddDescription);
 
     config.AddBranch("category", category =>
     {
+        category.SetDescription(Resources.CmdCategoryDescription);
+
         category
             .AddCommand<CategoryAddCommand>("add")
-            .WithDescription("Add a spending category");
+            .WithDescription(Resources.CmdCategoryAddDescription);
         category
             .AddCommand<CategoryListCommand>("list")
-            .WithDescription("List all spending categories");
+            .WithDescription(Resources.CmdCategoryListDescription);
     });
     config.AddBranch("export", export =>
     {
+        export.SetDescription(Resources.CmdExportDescription);
+
         export
             .AddCommand<ExportExcelCommand>("excel")
-            .WithDescription("Export data to excel xlsx file");
+            .WithDescription(Resources.CmdExportExcelDescription);
         export
             .AddCommand<ExportBackupCommand>("backup")
-            .WithDescription("Export data to money backup format");
+            .WithDescription(Resources.CmdExportBackupDescription);
     });
     config.AddBranch("import", import =>
     {
+        import.SetDescription(Resources.CmdImportDescription);
+
         import
             .AddCommand<CreateExcelTemplateCommand>("createtemplate")
-            .WithDescription("Create excel template");
+            .WithDescription(Resources.CmdImportTemplateDescription);
 
         import
             .AddCommand<ImportExcelCommand>("excel")
-            .WithDescription("Import data from excel xlsx file");
+            .WithDescription(Resources.CmdImportExcelDescription);
         import
             .AddCommand<ImportBackupCommand>("backup")
-            .WithDescription("Import data to money backup format");
+            .WithDescription(Resources.CmdImportBackupDescription);
     });
 
     config
         .AddCommand<StatCommand>("stat")
-        .WithDescription("Display statistics about spendings");
+        .WithDescription(Resources.CmdStatDescription);
 });
 
 return app.Run(args);

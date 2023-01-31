@@ -4,6 +4,7 @@ using MiniExcelLibs;
 
 using Money.CommandsSettings;
 using Money.Data.Dto;
+using Money.Properties;
 
 using Spectre.Console.Cli;
 
@@ -22,7 +23,7 @@ namespace Money.Commands
                 {
                     srtream.SaveAs(data);
                 }
-                Ui.Success($"Successfully created import template {settings.FileName}");
+                Ui.Success(Resources.SuccessCreatedImportTemplate, settings.FileName);
                 return Constants.Success;
             }
             catch (Exception ex)

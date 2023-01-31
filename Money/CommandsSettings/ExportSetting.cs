@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 
 using Money.Converters;
+using Money.Properties;
 
 using Spectre.Console;
 using Spectre.Console.Cli;
@@ -25,12 +26,12 @@ namespace Money.CommandsSettings
                 && StartDate != null
                 && StartDate.Value > EndDate.Value)
             {
-                return ValidationResult.Error("end date must be bigger than start date");
+                return ValidationResult.Error(Resources.ErrorDateValidate);
             }
 
             if (string.IsNullOrEmpty(FileName))
             {
-                return ValidationResult.Error("file name can't be empty");
+                return ValidationResult.Error(Resources.ErrorEmptyFileName);
             }
 
             return ValidationResult.Success();

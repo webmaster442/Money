@@ -2,6 +2,7 @@
 
 using Money.Converters;
 using Money.Extensions;
+using Money.Properties;
 
 using Spectre.Console;
 using Spectre.Console.Cli;
@@ -33,7 +34,7 @@ namespace Money.CommandsSettings
         public override ValidationResult Validate()
         {
             if (StartDate > EndDate)
-                return ValidationResult.Error("end date must be bigger than start date");
+                return ValidationResult.Error(Resources.ErrorDateValidate);
 
             return ValidationResult.Success();
         }

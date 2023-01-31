@@ -2,6 +2,7 @@
 
 using Money.CommandsSettings;
 using Money.Data;
+using Money.Properties;
 
 using Spectre.Console.Cli;
 
@@ -27,8 +28,7 @@ namespace Money.Commands
 
             if (!result)
             {
-                return Ui.Error($"Category doesn't exist: {settings.Category}.\r\n" +
-                                " Create it first with the category add command");
+                return Ui.Error(Resources.ErrorCategoryDoesntExist, settings.Category);
             }
 
             Ui.Success(id);

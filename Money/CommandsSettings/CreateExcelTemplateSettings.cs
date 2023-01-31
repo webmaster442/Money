@@ -1,4 +1,6 @@
-﻿using Spectre.Console;
+﻿using Money.Properties;
+
+using Spectre.Console;
 
 namespace Money.CommandsSettings
 {
@@ -8,7 +10,7 @@ namespace Money.CommandsSettings
         {
             if (string.IsNullOrEmpty(FileName))
             {
-                return ValidationResult.Error("file name can't be empty");
+                return ValidationResult.Error(Resources.ErrorEmptyFileName);
             }
 
             return ValidationResult.Success();

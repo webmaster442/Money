@@ -1,4 +1,5 @@
 ﻿using Money.Data.Dto;
+using Money.Properties;
 
 using Spectre.Console;
 
@@ -9,17 +10,20 @@ namespace Money
         public static void Success(ulong id)
         {
             string hex = Convert.ToHexString(BitConverter.GetBytes(id));
-            AnsiConsole.MarkupLine($"[green]Successfully inserted with id: {hex}[/]");
+            AnsiConsole.MarkupLine($"[green]{Resources.InsertSuccess} {hex}[/]");
         }
 
-        public static void Success(string text)
+        public static void Success(string message, params object[] details)
         {
-            AnsiConsole.MarkupLine($"[green]{text}[/]");
+            string formatted = string.Format(message, details);
+            AnsiConsole.MarkupLine($"[green]{message}[/]");
         }
 
-        public static int Error(string message)
+        public static int Error(string message, params object[] details)
         {
-            AnsiConsole.MarkupLine($"[red]{message}[/]");
+            string formatted = string.Format(message, details);
+
+            AnsiConsole.MarkupLine($"[red]{formatted}[/]");
             return Constants.UsageError;
         }
 
@@ -35,25 +39,27 @@ namespace Money
 
             AnsiConsole.Clear();
 
-            Rule header = new Rule($"[orange1]Spendings from {startDate} to {endDate}[/]");
+            string str = string.Format(Resources.StatFromToHeader, startDate, endDate);
+
+            Rule header = new Rule($"[orange1]{str}[/]");
             AnsiConsole.Write(header);
 
             Table table = new Table();
             table.AddColumn("Description");
             table.AddColumn("Value");
 
-            table.AddRow("Spending count", $"{stats.Count}");
-            table.AddRow("Spendings with days", $"{stats.Days}");
-            table.AddRow("Total spending", $"{stats.Sum:C}");
-            table.AddRow("Average / count", $"{stats.AvgPerCount:C}");
-            table.AddRow("Average / day", $"{stats.AvgPerDay:C}");
+            table.AddRow(Resources.StatSpendingCount, $"{stats.Count}");
+            table.AddRow(Resources.StatSpendingWithDays, $"{stats.Days}");
+            table.AddRow(Resources.StatTotalSpending, $"{stats.Sum:C}");
+            table.AddRow(Resources.StatAveragePerCount, $"{stats.AvgPerCount:C}");
+            table.AddRow(Resources.StatAveragePerDay, $"{stats.AvgPerDay:C}");
 
             AnsiConsole.Write(table);
 
 
             Table catTable = new Table();
-            catTable.AddColumn("Category");
-            catTable.AddColumn("Spent money");
+            catTable.AddColumn(Resources.StatCategory);
+            catTable.AddColumn(Resources.StatSpent);
 
             foreach (KeyValuePair<string, double> item in stats.SumPerCategory)
             {
@@ -65,12 +71,12 @@ namespace Money
 
         public static void DetailedStats(Statistics stats)
         {
-            Rule header = new Rule($"[orange3]Dayly breakdown[/]");
+            Rule header = new Rule($"[orange3]{Resources.StatDayly}[/]");
             AnsiConsole.Write(header);
 
             Table table = new Table();
-            table.AddColumn("Date");
-            table.AddColumn("Sum spending");
+            table.AddColumn(Resources.StatDate);
+            table.AddColumn(Resources.StatSumSpending);
 
             foreach (KeyValuePair<DateOnly, double> item in stats.SumPerDay)
             {
@@ -82,7 +88,7 @@ namespace Money
 
         public static void PrintList<T>(IEnumerable<T> list)
         {
-            Rule header = new Rule($"[green]Available categories[/]");
+            Rule header = new Rule($"[green]{Resources.StatCategoryAvailable}[/]");
             AnsiConsole.Write(header);
             AnsiConsole.WriteLine();
             foreach (T? item in list)

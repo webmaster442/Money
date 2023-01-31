@@ -1,8 +1,7 @@
 {
   "profiles": {
     "Money": {
-      "commandName": "Project",
-      "commandLineArgs": "import excel imp.xlsx"
+      "commandName": "Project"
     }
   }
 }

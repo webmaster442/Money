@@ -2,6 +2,8 @@
 using System.Text.Json;
 using System.Text.Unicode;
 
+using Money.Properties;
+
 namespace Money.Extensions
 {
     internal static class StreamExtensions
@@ -21,7 +23,7 @@ namespace Money.Extensions
         public static T ReadJson<T>(this Stream stream)
         {
             return JsonSerializer.Deserialize<T>(stream, Settings)
-                ?? throw new InvalidDataException("Invalid data in json");
+                ?? throw new InvalidDataException(Resources.ErrorInvalidJson);
         }
     }
 }

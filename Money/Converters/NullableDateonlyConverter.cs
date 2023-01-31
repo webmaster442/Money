@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
 
+using Money.Properties;
+
 namespace Money.Converters
 {
     internal sealed class NullableDateonlyConverter : TypeConverter
@@ -18,10 +20,10 @@ namespace Money.Converters
                 }
                 else
                 {
-                    throw new InvalidOperationException($"{stringValue} is not a valid date");
+                    throw new InvalidOperationException($"{stringValue} {Resources.ErrorNotValidDate}");
                 }
             }
-            throw new NotSupportedException("Can't convert value to DateOnly.");
+            throw new NotSupportedException(Resources.ErrorCantConvertDateOnly);
         }
     }
 }

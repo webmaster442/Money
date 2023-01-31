@@ -7,6 +7,7 @@ using Money.CommandsSettings;
 using Money.Data;
 using Money.Data.Dto;
 using Money.Extensions;
+using Money.Properties;
 
 using Spectre.Console.Cli;
 
@@ -46,7 +47,7 @@ namespace Money.Commands
                     }
 
                     (int createdCategory, int createdEntry) = _writeOnlyData.Import(data);
-                    Ui.Success($"Imported {createdCategory} categories and {createdEntry} entries");
+                    Ui.Success(Resources.SuccesImport, createdCategory, createdEntry);
                     return Constants.Success;
                 }
             }

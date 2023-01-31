@@ -4,6 +4,7 @@ using System.IO.Compression;
 using Money.CommandsSettings;
 using Money.Data;
 using Money.Extensions;
+using Money.Properties;
 
 using Spectre.Console.Cli;
 
@@ -32,7 +33,7 @@ namespace Money.Commands
                         compressed.WriteJson(data);
                     }
                 }
-                Ui.Success($"Successfully written {data.Count} entries to {settings.FileName}");
+                Ui.Success(Resources.SuccessExport, data.Count, settings.FileName);
                 return Constants.Success;
             }
             catch (Exception ex)

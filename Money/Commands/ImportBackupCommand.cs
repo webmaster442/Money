@@ -5,6 +5,7 @@ using Money.CommandsSettings;
 using Money.Data;
 using Money.Data.Dto;
 using Money.Extensions;
+using Money.Properties;
 
 using Spectre.Console.Cli;
 
@@ -31,11 +32,9 @@ namespace Money.Commands
                     {
                         List<ExportRow> data = compressed.ReadJson<List<ExportRow>>();
                         (int createdCategory, int createdEntry) = _writeOnlyData.Import(data);
-                        Ui.Success($"Imported {createdCategory} categories and {createdEntry} entries");
+                        Ui.Success(Resources.SuccesImport, createdCategory, createdEntry);
                         return Constants.Success;
                     }
-
-
                 }
             }
             catch (Exception ex)
@@ -46,12 +45,3 @@ namespace Money.Commands
         }
     }
 }
-/*
-                 using (var stream = File.Create(settings.FileName))
-                {
-                    using (var compressed = new GZipStream(stream, CompressionLevel.SmallestSize, true))
-                    {
-                        compressed.WriteJson(data);
-                    }
-                }
- */

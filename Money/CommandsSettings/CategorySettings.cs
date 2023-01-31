@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 
+using Money.Properties;
+
 using Spectre.Console;
 using Spectre.Console.Cli;
 
@@ -19,7 +21,7 @@ namespace Money.CommandsSettings
         public override ValidationResult Validate()
         {
             if (string.IsNullOrEmpty(CategoryName))
-                return ValidationResult.Error("Category name can't be null");
+                return ValidationResult.Error(Resources.ErrorCategoryNameNull);
 
             return ValidationResult.Success();
         }

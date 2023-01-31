@@ -2,6 +2,7 @@
 
 using Money.CommandsSettings;
 using Money.Data;
+using Money.Properties;
 
 using Spectre.Console.Cli;
 
@@ -19,10 +20,10 @@ namespace Money.Commands
         public override int Execute([NotNull] CommandContext context,
                                     [NotNull] CategorySettings settings)
         {
-            if (!_writeOnlyData.TryCreateCategory(settings.CategoryName, out ulong Id))
-                return Ui.Error($"Can't create category {settings.CategoryName}. It allredy exists");
+            if (!_writeOnlyData.TryCreateCategory(settings.CategoryName, out ulong id))
+                return Ui.Error(Resources.ErrorCategoryAllreadyExists, settings.CategoryName);
 
-            Ui.Success(Id);
+            Ui.Success(id);
 
             return Constants.Success;
         }
