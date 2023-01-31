@@ -1,8 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
 
-using Money.Properties;
-
 namespace Money.Converters
 {
     internal sealed class DateonlyConverter : TypeConverter

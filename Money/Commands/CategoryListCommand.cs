@@ -1,8 +1,4 @@
-﻿using Money.Data;
-
-using Spectre.Console.Cli;
-
-namespace Money.Commands
+﻿namespace Money.Commands
 {
     internal sealed class CategoryListCommand : Command
     {

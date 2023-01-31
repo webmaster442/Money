@@ -1,10 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-using Money.CommandsSettings;
-using Money.Data;
-
-using Spectre.Console.Cli;
-
 namespace Money.Commands
 {
     internal sealed class StatCommand : Command<StatSettings>

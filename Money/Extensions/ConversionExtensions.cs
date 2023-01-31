@@ -28,7 +28,7 @@ namespace Money.Extensions
 
         public static DateTime ToDateTime(this object value, DateTime defaultValue)
         {
-            if (value == null || value is DBNull)
+            if (value is null or DBNull)
                 return defaultValue;
 
             if (value is DateTime dt)

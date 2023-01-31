@@ -1,5 +1,4 @@
 ﻿using Money.Data.Dto;
-using Money.Properties;
 
 using Spectre.Console;
 

@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel;
 
-using Spectre.Console.Cli;
-
 namespace Money.CommandsSettings
 {
     internal abstract class ImportExportSettingsBase : CommandSettings

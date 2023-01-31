@@ -2,11 +2,7 @@
 
 using Money;
 using Money.Commands;
-using Money.Data;
 using Money.Data.DataAccess;
-using Money.Properties;
-
-using Spectre.Console.Cli;
 
 ServiceCollection registrations = new ServiceCollection();
 registrations.AddSingleton<IWriteOnlyData, WriteOnlyData>();

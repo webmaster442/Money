@@ -1,6 +1,4 @@
-﻿using Money.Properties;
-
-using Spectre.Console;
+﻿using Spectre.Console;
 
 namespace Money.CommandsSettings
 {

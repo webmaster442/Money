@@ -3,13 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 using MiniExcelLibs;
 
-using Money.CommandsSettings;
-using Money.Data;
 using Money.Data.Dto;
-using Money.Extensions;
-using Money.Properties;
-
-using Spectre.Console.Cli;
 
 namespace Money.Commands
 {
@@ -29,7 +23,7 @@ namespace Money.Commands
             {
                 using (FileStream srtream = File.OpenRead(settings.FileName))
                 {
-                   var dataTable = MiniExcel.QueryAsDataTable(srtream);
+                    DataTable dataTable = MiniExcel.QueryAsDataTable(srtream);
 
                     List<ExportRow> data = new(dataTable.Rows.Count);
 

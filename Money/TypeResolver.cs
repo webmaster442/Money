@@ -1,6 +1,4 @@
-﻿using Spectre.Console.Cli;
-
-namespace Money
+﻿namespace Money
 {
     internal sealed class TypeResolver : ITypeResolver, IDisposable
     {

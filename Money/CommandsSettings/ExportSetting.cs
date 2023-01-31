@@ -1,10 +1,6 @@
 ﻿using System.ComponentModel;
 
-using Money.Converters;
-using Money.Properties;
-
 using Spectre.Console;
-using Spectre.Console.Cli;
 
 namespace Money.CommandsSettings
 {

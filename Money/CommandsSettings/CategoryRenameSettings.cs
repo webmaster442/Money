@@ -1,9 +1,6 @@
 ﻿using System.ComponentModel;
 
-using Money.Properties;
-
 using Spectre.Console;
-using Spectre.Console.Cli;
 
 namespace Money.CommandsSettings
 {
@@ -19,8 +16,8 @@ namespace Money.CommandsSettings
 
         public CategoryRenameSettings()
         {
-            OldCategoryName= string.Empty;
-            NewCategoryName= string.Empty;
+            OldCategoryName = string.Empty;
+            NewCategoryName = string.Empty;
         }
 
         public override ValidationResult Validate()

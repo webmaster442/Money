@@ -2,8 +2,6 @@
 using System.Text.Json;
 using System.Text.Unicode;
 
-using Money.Properties;
-
 namespace Money.Extensions
 {
     internal static class StreamExtensions

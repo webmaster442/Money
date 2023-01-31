@@ -2,11 +2,7 @@
 
 using MiniExcelLibs;
 
-using Money.CommandsSettings;
 using Money.Data.Dto;
-using Money.Properties;
-
-using Spectre.Console.Cli;
 
 namespace Money.Commands
 {

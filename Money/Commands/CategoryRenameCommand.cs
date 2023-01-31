@@ -1,11 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-using Money.CommandsSettings;
-using Money.Data;
-using Money.Properties;
-
-using Spectre.Console.Cli;
-
 namespace Money.Commands
 {
     internal sealed class CategoryRenameCommand : Command<CategoryRenameSettings>

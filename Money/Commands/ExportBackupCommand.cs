@@ -1,13 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO.Compression;
 
-using Money.CommandsSettings;
-using Money.Data;
-using Money.Extensions;
-using Money.Properties;
-
-using Spectre.Console.Cli;
-
 namespace Money.Commands
 {
     internal sealed class ExportBackupCommand : Command<ExportSetting>
