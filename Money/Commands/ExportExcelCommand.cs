@@ -4,7 +4,7 @@ using MiniExcelLibs;
 
 namespace Money.Commands
 {
-    internal sealed class ExportExcelCommand : Command<ExportSetting>
+    internal sealed class ExportExcelCommand : AsyncCommand<ExportSetting>
     {
         private readonly IReadonlyData _readonlyData;
 
@@ -13,12 +13,12 @@ namespace Money.Commands
             _readonlyData = readonlyData;
         }
 
-        public override int Execute([NotNull] CommandContext context,
-                                    [NotNull] ExportSetting settings)
+        public override async Task<int> ExecuteAsync([NotNull] CommandContext context,
+                                                     [NotNull] ExportSetting settings)
         {
             try
             {
-                IList<Data.Dto.ExportRow> data = _readonlyData.ExportAsync(settings.StartDate, settings.EndDate);
+                IList<Data.Dto.ExportRow> data = await _readonlyData.ExportAsync(settings.StartDate, settings.EndDate);
 
                 using (FileStream srtream = File.Create(settings.FileName))
                 {

@@ -2,7 +2,7 @@
 
 namespace Money.Commands
 {
-    internal sealed class CategoryRenameCommand : Command<CategoryRenameSettings>
+    internal sealed class CategoryRenameCommand : AsyncCommand<CategoryRenameSettings>
     {
         private readonly IWriteOnlyData _writeOnlyData;
 
@@ -11,10 +11,12 @@ namespace Money.Commands
             _writeOnlyData = writeOnlyData;
         }
 
-        public override int Execute([NotNull] CommandContext context,
-                                    [NotNull] CategoryRenameSettings settings)
+        public override async Task<int> ExecuteAsync([NotNull] CommandContext context,
+                                                     [NotNull] CategoryRenameSettings settings)
         {
-            if (_writeOnlyData.TryRenameCategory(settings.OldCategoryName, settings.NewCategoryName))
+            bool result = await _writeOnlyData.RenameCategoryAsync(settings.OldCategoryName, settings.NewCategoryName);
+
+            if (result)
             {
                 Ui.Success(Resources.SuccessCategoryRename, settings.OldCategoryName, settings.NewCategoryName);
                 return Constants.Success;

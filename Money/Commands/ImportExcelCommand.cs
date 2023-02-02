@@ -7,7 +7,7 @@ using Money.Data.Dto;
 
 namespace Money.Commands
 {
-    internal sealed class ImportExcelCommand : Command<ImportSetting>
+    internal sealed class ImportExcelCommand : AsyncCommand<ImportSetting>
     {
         private readonly IWriteOnlyData _writeOnlyData;
 
@@ -16,8 +16,8 @@ namespace Money.Commands
             _writeOnlyData = writeOnlyData;
         }
 
-        public override int Execute([NotNull] CommandContext context,
-                                    [NotNull] ImportSetting settings)
+        public override async Task<int> ExecuteAsync([NotNull] CommandContext context,
+                                               [NotNull] ImportSetting settings)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace Money.Commands
                         data.Add(row);
                     }
 
-                    (int createdCategory, int createdEntry) = _writeOnlyData.ImportAsync(data);
+                    (int createdCategory, int createdEntry) = await _writeOnlyData.ImportAsync(data);
                     Ui.Success(Resources.SuccesImport, createdCategory, createdEntry);
                     return Constants.Success;
                 }

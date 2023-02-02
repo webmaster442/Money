@@ -14,7 +14,7 @@ namespace Money.Commands
         public override async Task<int> ExecuteAsync([NotNull] CommandContext context,
                                                [NotNull] CategorySettings settings)
         {
-            var result = await _writeOnlyData.CreateCategoryAsync(settings.CategoryName)
+            var result = await _writeOnlyData.CreateCategoryAsync(settings.CategoryName);
 
             if (!result.success)
                 return Ui.Error(Resources.ErrorCategoryAllreadyExists, settings.CategoryName);

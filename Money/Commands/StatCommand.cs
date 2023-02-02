@@ -2,7 +2,7 @@
 
 namespace Money.Commands
 {
-    internal sealed class StatCommand : Command<StatSettings>
+    internal sealed class StatCommand : AsyncCommand<StatSettings>
     {
         private readonly IReadonlyData _readonlyData;
 
@@ -11,10 +11,11 @@ namespace Money.Commands
             _readonlyData = readonlyData;
         }
 
-        public override int Execute([NotNull] CommandContext context,
-                                    [NotNull] StatSettings settings)
+        public override async Task<int> ExecuteAsync([NotNull] CommandContext context,
+                                               [NotNull] StatSettings settings)
         {
-            Data.Dto.Statistics stats = _readonlyData.GetStatisticsAsync(settings.StartDate, settings.EndDate);
+            Data.Dto.Statistics stats = await _readonlyData.GetStatisticsAsync(settings.StartDate,
+                                                                               settings.EndDate);
 
             Ui.BasicStats(stats, settings.StartDate, settings.EndDate);
 
