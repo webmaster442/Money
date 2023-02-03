@@ -241,4 +241,7 @@ Create it first with the category add command</value>
   <data name="SuccessExport" xml:space="preserve">
     <value>Successfully written {0} entries to {1}</value>
   </data>
+  <data name="WarnWillReplaceDbContents" xml:space="preserve">
+    <value>Warning. Importing a backup will replace the database contents with the contents in the backup. Do you want to continue?</value>
+  </data>
 </root>

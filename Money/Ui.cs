@@ -26,6 +26,11 @@ namespace Money
             return Constants.UsageError;
         }
 
+        public static bool Confirm(string message)
+        {
+           return AnsiConsole.Confirm(message, false);
+        }
+
         public static void PrintException(Exception ex)
         {
             AnsiConsole.WriteException(ex, ExceptionFormats.ShortenEverything);

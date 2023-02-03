@@ -17,33 +17,26 @@ namespace Money.Commands
         }
 
         public override async Task<int> ExecuteAsync([NotNull] CommandContext context,
-                                               [NotNull] ImportSetting settings)
+                                                     [NotNull] ImportSetting settings)
         {
             try
             {
+                int sumCategory = 0;
+                int sumEntry = 0;
                 using (FileStream srtream = File.OpenRead(settings.FileName))
                 {
-                    DataTable dataTable = MiniExcel.QueryAsDataTable(srtream);
-
-                    List<Data.Dto.DataRow> data = new(dataTable.Rows.Count);
-
-                    foreach (System.Data.DataRow dataRow in dataTable.Rows)
+                    var chunks = MiniExcel.Query<Data.Dto.DataRow>(srtream).Chunk(_writeOnlyData.ChunkSize);
+                    foreach (var chunk in chunks)
                     {
-                        Data.Dto.DataRow row = new Data.Dto.DataRow
-                        {
-                            Date = dataRow[0].ToDateOnly(),
-                            Description = dataRow[1]?.ToString() ?? throw new InvalidProgramException("Description can't be empty"),
-                            Ammount = dataRow[2].ToDouble(),
-                            AddedOn = dataRow[3].ToDateTime(DateTime.Now),
-                            CategoryName = dataRow[4]?.ToString() ?? throw new InvalidProgramException("Category name can't be empty"),
-                        };
-                        data.Add(row);
+                        (int createdCategory, int createdEntry) = await _writeOnlyData.ImportAsync(chunk);
+                        sumCategory += createdCategory;
+                        sumEntry += createdEntry;
                     }
-
-                    (int createdCategory, int createdEntry) = await _writeOnlyData.ImportAsync(data);
-                    Ui.Success(Resources.SuccesImport, createdCategory, createdEntry);
-                    return Constants.Success;
                 }
+
+                Ui.Success(Resources.SuccesImport, sumCategory, sumEntry);
+                return Constants.Success;
+
             }
             catch (Exception ex)
             {

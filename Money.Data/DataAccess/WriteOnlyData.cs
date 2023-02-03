@@ -1,7 +1,5 @@
 ﻿using System.Security.Cryptography;
 
-using Microsoft.EntityFrameworkCore;
-
 using Money.Data.Dto;
 using Money.Data.Entities;
 
@@ -9,6 +7,8 @@ namespace Money.Data.DataAccess
 {
     public sealed class WriteOnlyData : DataAccessBase, IWriteOnlyData
     {
+        public int ChunkSize => _ChunkSize;
+
         public WriteOnlyData(IDatabaseFileLocator databaseLocator) : base(databaseLocator)
         {
         }
@@ -25,18 +25,16 @@ namespace Money.Data.DataAccess
 
         }
 
-        public async Task<(bool success, ulong id)> InsertAsync(double ammount, string text, DateOnly date, string category)
+        public async Task<(bool success, ulong id)> InsertAsync(double ammount,
+                                                                string text,
+                                                                DateOnly date,
+                                                                string category)
         {
             using MoneyContext db = ConnectDatabase();
-            Category? cat = await db
-                .Categories
-                .Where(c => c.Description == category.ToLower())
-                .FirstOrDefaultAsync();
+            Category? cat = await GetCategory(db, category);
 
             if (cat == null)
-            {
                 return (false, 0);
-            }
 
             Spending entity = new Spending
             {
@@ -58,15 +56,10 @@ namespace Money.Data.DataAccess
         public async Task<(bool success, ulong id)> CreateCategoryAsync(string categoryName)
         {
             using MoneyContext db = ConnectDatabase();
-            bool exists = await db 
-                .Categories
-                .Where(c => c.Description == categoryName.ToLower())
-                .AnyAsync();
+            bool exists = await GetCategory(db, categoryName) != null;
 
             if (exists)
-            {
                 return (false, 0);
-            }
 
             Category toInsert = new Category
             {
@@ -84,10 +77,7 @@ namespace Money.Data.DataAccess
         public async Task<bool> RenameCategoryAsync(string oldCategoryName, string newCategoryName)
         {
             using MoneyContext db = ConnectDatabase();
-            Category? cat = db
-                .Categories
-                .Where(c => c.Description == oldCategoryName.ToLower())
-                .FirstOrDefault();
+            Category? cat = await GetCategory(db, oldCategoryName);
 
             if (cat == null)
                 return false;
@@ -115,7 +105,7 @@ namespace Money.Data.DataAccess
 
             IEnumerable<Spending> bulk = rows.Select(row => new Spending
             {
-                Date = row.Date,
+                Date = new DateOnly(row.Date.Year, row.Date.Month, row.Date.Year),
                 Description = row.Description,
                 AddedOn = row.AddedOn,
                 Ammount = row.Ammount,
@@ -127,6 +117,17 @@ namespace Money.Data.DataAccess
             int createdEntry = await db.SaveChangesAsync();
 
             return (createdCategory, createdEntry);
+        }
+
+        public Task<int> ClearDb()
+        {
+            using MoneyContext db = ConnectDatabase();
+
+            db.Spendings.RemoveRange(db.Spendings);
+            db.Categories.RemoveRange(db.Categories);
+
+            return db.SaveChangesAsync();
+
         }
     }
 }

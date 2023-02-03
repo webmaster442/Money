@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO.Compression;
+using System.Text;
 
 using Money.Data.Dto;
 
@@ -18,18 +19,51 @@ namespace Money.Commands
         public override async Task<int> ExecuteAsync([NotNull] CommandContext context,
                                                      [NotNull] ImportSetting settings)
         {
+            List<DataRow> buffer = new(_writeOnlyData.ChunkSize);
+            int sumCategory = 0;
+            int sumEntry = 0;
+
+            if (!Ui.Confirm(Resources.WarnWillReplaceDbContents))
+            {
+                return Constants.Aborted;
+            }
+
+            await _writeOnlyData.ClearDb();
+
             try
             {
                 using (FileStream srtream = File.OpenRead(settings.FileName))
                 {
-                    using (GZipStream compressed = new GZipStream(srtream, CompressionMode.Decompress))
+                    using GZipStream compressed = new GZipStream(srtream, CompressionMode.Decompress, true);
+                    using var reader = new StreamReader(compressed, Encoding.UTF8);
+                    string? line;
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        List<DataRow> data = compressed.ReadJson<List<DataRow>>();
-                        (int createdCategory, int createdEntry) = await _writeOnlyData.ImportAsync(data);
-                        Ui.Success(Resources.SuccesImport, createdCategory, createdEntry);
-                        return Constants.Success;
+                        if (string.IsNullOrEmpty(line))
+                            continue;
+
+                        if (buffer.Count > (_writeOnlyData.ChunkSize - 1))
+                        {
+                            (int createdCategory, int createdEntry) = await _writeOnlyData.ImportAsync(buffer);
+                            buffer.Clear();
+                            sumCategory += createdCategory;
+                            sumEntry += createdEntry;
+                        }
+
+                        buffer.Add(DataRow.Parse(line));
                     }
                 }
+
+                if (buffer.Count > 0)
+                {
+                    (int createdCategory, int createdEntry) = await _writeOnlyData.ImportAsync(buffer);
+                    buffer.Clear();
+                    sumCategory += createdCategory;
+                    sumEntry += createdEntry;
+                }
+
+                Ui.Success(Resources.SuccesImport, sumCategory, sumEntry);
+                return Constants.Success;
             }
             catch (Exception ex)
             {

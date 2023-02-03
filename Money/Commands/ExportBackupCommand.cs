@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO.Compression;
+using System.Text;
 
 namespace Money.Commands
 {
@@ -13,20 +14,34 @@ namespace Money.Commands
         }
 
         public override async Task<int> ExecuteAsync([NotNull] CommandContext context,
-                                               [NotNull] ExportSetting settings)
+                                                     [NotNull] ExportSetting settings)
         {
             try
             {
-                IList<Data.Dto.DataRow> data = await _readonlyData.ExportAsync(settings.StartDate, settings.EndDate);
+                int recordCount = await _readonlyData.GetSpendingsCount();
 
                 using (FileStream stream = File.Create(settings.FileName))
                 {
                     using (GZipStream compressed = new GZipStream(stream, CompressionLevel.SmallestSize, true))
                     {
-                        compressed.WriteJson(data);
+                        using (var writer = new StreamWriter(compressed, Encoding.UTF8)) 
+                        {
+                            int pages = (recordCount / _readonlyData.ChunkSize) + 1;
+
+                            int offset = 0;
+                            for (int i = 0; i < pages; i++)
+                            {
+                                var data = await _readonlyData.ExportBackupAsync(offset);
+                                foreach (var row in data.Select(x => x.ToCsvRow()))
+                                {
+                                    writer.Write(row);
+                                }
+                                offset += _readonlyData.ChunkSize;
+                            }
+                        }
                     }
                 }
-                Ui.Success(Resources.SuccessExport, data.Count, settings.FileName);
+                Ui.Success(Resources.SuccessExport, recordCount, settings.FileName);
                 return Constants.Success;
             }
             catch (Exception ex)

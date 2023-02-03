@@ -8,6 +8,8 @@ namespace Money.Data.DataAccess
 {
     public sealed class ReadOnlyData : DataAccessBase, IReadonlyData
     {
+        int IReadonlyData.ChunkSize => _ChunkSize;
+
         public ReadOnlyData(IDatabaseFileLocator databaseLocator) : base(databaseLocator)
         {
         }
@@ -28,7 +30,26 @@ namespace Money.Data.DataAccess
 
             return query.Select(spending => new DataRow
             {
-                Date = spending.Date,
+                Date = spending.Date.ToDateTime(TimeOnly.MinValue),
+                Description = spending.Description,
+                AddedOn = spending.AddedOn,
+                Ammount = spending.Ammount,
+                CategoryName = spending.Category.Description
+            }).ToListAsync();
+        }
+
+        public Task<List<DataRow>> ExportBackupAsync(int startOffset)
+        {
+            using MoneyContext db = ConnectDatabase();
+            var query = db
+                .Spendings
+                .Include(s => s.Category)
+                .Skip(startOffset)
+                .Take(_ChunkSize);
+
+            return query.Select(spending => new DataRow
+            {
+                Date = spending.Date.ToDateTime(TimeOnly.MinValue),
                 Description = spending.Description,
                 AddedOn = spending.AddedOn,
                 Ammount = spending.Ammount,
@@ -69,6 +90,12 @@ namespace Money.Data.DataAccess
                 Count = data.Count,
                 SumPerCategory = categoreis,
             };
+        }
+
+        public Task<int> GetSpendingsCount()
+        {
+            using MoneyContext db = ConnectDatabase();
+            return GetSpendingsCount(db);
         }
     }
 }

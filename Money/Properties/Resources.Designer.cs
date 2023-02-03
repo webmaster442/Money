@@ -429,5 +429,14 @@ namespace Money.Properties {
                 return ResourceManager.GetString("SuccessExport", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning. Importing a backup will replace the database contents with the contents in the backup. Do you want to continue?.
+        /// </summary>
+        internal static string WarnWillReplaceDbContents {
+            get {
+                return ResourceManager.GetString("WarnWillReplaceDbContents", resourceCulture);
+            }
+        }
     }
 }
