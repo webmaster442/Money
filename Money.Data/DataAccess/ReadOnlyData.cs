@@ -6,11 +6,10 @@ using Money.Data.Entities;
 
 namespace Money.Data.DataAccess
 {
-    public sealed class ReadOnlyData : IReadonlyData
+    public sealed class ReadOnlyData : DataAccessBase, IReadonlyData
     {
-        private static MoneyContext ConnectDatabase()
+        public ReadOnlyData(IDatabaseFileLocator databaseLocator) : base(databaseLocator)
         {
-            return new MoneyContext();
         }
 
         public Task<List<ExportRow>> ExportAsync(DateOnly? start = null, DateOnly? end = null)

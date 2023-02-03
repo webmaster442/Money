@@ -7,15 +7,10 @@ using Money.Data.Entities;
 
 namespace Money.Data.DataAccess
 {
-    public sealed class WriteOnlyData : IWriteOnlyData
+    public sealed class WriteOnlyData : DataAccessBase, IWriteOnlyData
     {
-        public WriteOnlyData()
+        public WriteOnlyData(IDatabaseFileLocator databaseLocator) : base(databaseLocator)
         {
-        }
-
-        private static MoneyContext ConnectDatabase()
-        {
-            return new MoneyContext();
         }
 
         private static ulong CreateId(long currentTime)

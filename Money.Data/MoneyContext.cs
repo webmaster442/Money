@@ -10,17 +10,18 @@ namespace Money.Data
 
         public DbSet<Category> Categories { get; set; }
 
-        public string DatabaseFile { get; }
+        private readonly IDatabaseFileLocator _dbLocator;
 
-        public MoneyContext()
+
+        public MoneyContext(IDatabaseFileLocator databaseFileLocator)
         {
-            DatabaseFile = Path.Combine(AppContext.BaseDirectory, "spendings.db");
+            _dbLocator = databaseFileLocator;
             Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite($"Data Source={DatabaseFile}");
+            optionsBuilder.UseSqlite($"Data Source={_dbLocator.DatabasePath}");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -5,6 +5,7 @@ using Money.Commands;
 using Money.Data.DataAccess;
 
 ServiceCollection registrations = new ServiceCollection();
+registrations.AddSingleton<IDatabaseFileLocator, DatabaseFileLocator>();
 registrations.AddSingleton<IWriteOnlyData, WriteOnlyData>();
 registrations.AddSingleton<IReadonlyData, ReadOnlyData>();
 
