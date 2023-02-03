@@ -6,6 +6,6 @@ namespace Money.Data
     {
         Task<List<string>> GetCategoriesAsync();
         Task<Statistics> GetStatisticsAsync(DateOnly start, DateOnly end);
-        Task<List<ExportRow>> ExportAsync(DateOnly? start = null, DateOnly? end = null);
+        Task<List<DataRow>> ExportAsync(DateOnly? start = null, DateOnly? end = null);
     }
 }

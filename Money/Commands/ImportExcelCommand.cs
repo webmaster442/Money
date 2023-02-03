@@ -25,11 +25,11 @@ namespace Money.Commands
                 {
                     DataTable dataTable = MiniExcel.QueryAsDataTable(srtream);
 
-                    List<ExportRow> data = new(dataTable.Rows.Count);
+                    List<Data.Dto.DataRow> data = new(dataTable.Rows.Count);
 
-                    foreach (DataRow dataRow in dataTable.Rows)
+                    foreach (System.Data.DataRow dataRow in dataTable.Rows)
                     {
-                        ExportRow row = new ExportRow
+                        Data.Dto.DataRow row = new Data.Dto.DataRow
                         {
                             Date = dataRow[0].ToDateOnly(),
                             Description = dataRow[1]?.ToString() ?? throw new InvalidProgramException("Description can't be empty"),

@@ -17,7 +17,7 @@ namespace Money.Commands
         {
             try
             {
-                IList<Data.Dto.ExportRow> data = await _readonlyData.ExportAsync(settings.StartDate, settings.EndDate);
+                IList<Data.Dto.DataRow> data = await _readonlyData.ExportAsync(settings.StartDate, settings.EndDate);
 
                 using (FileStream stream = File.Create(settings.FileName))
                 {

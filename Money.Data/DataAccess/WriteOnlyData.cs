@@ -98,7 +98,7 @@ namespace Money.Data.DataAccess
             return await db.SaveChangesAsync() == 1;
         }
 
-        public async Task<(int createdCategory, int createdEntry)> ImportAsync(IEnumerable<ExportRow> rows)
+        public async Task<(int createdCategory, int createdEntry)> ImportAsync(IEnumerable<DataRow> rows)
         {
             int createdCategory = 0;
             foreach (string? category in rows.Select(x => x.CategoryName.ToLower()).Distinct())

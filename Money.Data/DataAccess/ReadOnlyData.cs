@@ -12,7 +12,7 @@ namespace Money.Data.DataAccess
         {
         }
 
-        public Task<List<ExportRow>> ExportAsync(DateOnly? start = null, DateOnly? end = null)
+        public Task<List<DataRow>> ExportAsync(DateOnly? start = null, DateOnly? end = null)
         {
             using MoneyContext db = ConnectDatabase();
             IQueryable<Spending> query = db
@@ -26,7 +26,7 @@ namespace Money.Data.DataAccess
             if (end != null)
                 query = query.Where(x => x.Date <= end);
 
-            return query.Select(spending => new ExportRow
+            return query.Select(spending => new DataRow
             {
                 Date = spending.Date,
                 Description = spending.Description,

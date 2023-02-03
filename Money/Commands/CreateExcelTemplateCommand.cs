@@ -13,7 +13,7 @@ namespace Money.Commands
         {
             try
             {
-                List<ExportRow> data = new List<ExportRow>();
+                List<DataRow> data = new List<DataRow>();
 
                 using (FileStream srtream = File.Create(settings.FileName))
                 {
