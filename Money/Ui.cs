@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+
 using Money.Data.Dto;
 
 using Spectre.Console;
@@ -122,6 +124,19 @@ namespace Money
                 table.AddRow(row);
             }
             AnsiConsole.Write(table);
+        }
+
+        public static bool ShowPage(string[] lines)
+        {
+            Console.Clear();
+
+            foreach (var line in lines)
+            {
+                AnsiConsole.WriteLine(line);
+            }
+
+            AnsiConsole.WriteLine("Press a key to contine or ESC to exit");
+            return Console.ReadKey().Key != ConsoleKey.Escape;
         }
     }
 }

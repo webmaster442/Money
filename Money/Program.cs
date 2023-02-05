@@ -13,6 +13,8 @@ ITypeRegistrar registrar = new TypeRegistrar(registrations);
 
 CommandApp app = new CommandApp(registrar);
 
+app.SetDefaultCommand<ManualCommand>();
+
 app.Configure(config =>
 {
     config.SetApplicationName("money");

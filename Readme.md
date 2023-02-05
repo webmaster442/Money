@@ -5,6 +5,7 @@ A spimple console expense manager software written in C#. It uses EntityFramewor
 ## Usage
 
 ### Add
+
 ```
 DESCRIPTION:
 Add a spending to the database
@@ -21,6 +22,26 @@ OPTIONS:
     -c, --category    Spending category                                         
     -d, --date        Spending time. If not set current date & time will be used
 
+```
+
+### Find
+
+```
+DESCRIPTION:
+Search spendings in the database
+
+USAGE:
+    money find [term] [OPTIONS]
+
+ARGUMENTS:
+    [term]    Search term
+
+OPTIONS:
+    -h, --help         Prints help information                                     
+    -r, --regex                                                                    
+    -s, --startdate    Start date (optional)                                       
+    -e, --enddate      End date (optional)                                         
+    -c, --category     Spending category. When set, only searches in given category
 ```
 
 ### Category add

@@ -305,6 +305,28 @@ namespace Money.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [7mMoney[0m
+        ///
+        ///A spimple console expense manager software written in C#. It uses EntityFramework to store data and for console output Spectre.Console.
+        ///
+        ///[4;93mUsage[0m
+        ///
+        ///[4;94mAdd[0m
+        ///
+        ///[48;2;155;155;155;38;2;30;30;30mDESCRIPTION:[500@[0m
+        ///[48;2;155;155;155;38;2;30;30;30mAdd a spending to the database[500@[0m
+        ///[48;2;155;155;155;38;2;30;30;30mUSAGE:[500@[0m
+        ///[48;2;155;155;155;38;2;30;30;30m    money add [amount] [OPTIONS][500@[0m
+        ///[48;2;155;155;155;38;2;30;30;30mARGUMENTS:[500@[0m
+        ///[48;2;155;155;1 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string readme_render {
+            get {
+                return ResourceManager.GetString("readme_render", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Average / count.
         /// </summary>
         internal static string StatAveragePerCount {
