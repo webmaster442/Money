@@ -105,7 +105,7 @@ namespace Money.Data.DataAccess
 
             IEnumerable<Spending> bulk = rows.Select(row => new Spending
             {
-                Date = new DateOnly(row.Date.Year, row.Date.Month, row.Date.Year),
+                Date = new DateOnly(row.Date.Year, row.Date.Month, row.Date.Day),
                 Description = row.Description,
                 AddedOn = row.AddedOn,
                 Ammount = row.Ammount,

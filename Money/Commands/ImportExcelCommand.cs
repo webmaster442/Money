@@ -23,9 +23,9 @@ namespace Money.Commands
             {
                 int sumCategory = 0;
                 int sumEntry = 0;
-                using (FileStream srtream = File.OpenRead(settings.FileName))
+                using (FileStream stream = File.OpenRead(settings.FileName))
                 {
-                    var chunks = MiniExcel.Query<Data.Dto.DataRow>(srtream).Chunk(_writeOnlyData.ChunkSize);
+                    var chunks = MiniExcel.Query<Data.Dto.DataRow>(stream).Chunk(_writeOnlyData.ChunkSize);
                     foreach (var chunk in chunks)
                     {
                         (int createdCategory, int createdEntry) = await _writeOnlyData.ImportAsync(chunk);
