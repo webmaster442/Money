@@ -53,9 +53,14 @@ namespace Money.Data.DataAccess
             return (result, entity.Id);
         }
 
-        public async Task<(bool success, ulong id)> CreateCategoryAsync(string categoryName)
+        public Task<(bool success, ulong id)> CreateCategoryAsync(string categoryName)
         {
             using MoneyContext db = ConnectDatabase();
+            return CreateCategoryAsync(categoryName, db);
+        }
+
+        private async Task<(bool success, ulong id)> CreateCategoryAsync(string categoryName, MoneyContext db)
+        {
             bool exists = await GetCategory(db, categoryName) != null;
 
             if (exists)
@@ -90,16 +95,16 @@ namespace Money.Data.DataAccess
 
         public async Task<(int createdCategory, int createdEntry)> ImportAsync(IEnumerable<DataRow> rows)
         {
+            using MoneyContext db = ConnectDatabase();
+
             int createdCategory = 0;
             foreach (string? category in rows.Select(x => x.CategoryName.ToLower()).Distinct())
             {
-                var result = await CreateCategoryAsync(category);
+                var result = await CreateCategoryAsync(category, db);
 
                 if (result.success)
                     ++createdCategory;
             }
-
-            using MoneyContext db = ConnectDatabase();
 
             Dictionary<string, Category> categories = db.Categories.ToDictionary(x => x.Description, x => x);
 
