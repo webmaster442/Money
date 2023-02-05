@@ -19,6 +19,12 @@ namespace Money.Data
             Database.EnsureCreated();
         }
 
+        public override void Dispose()
+        {
+            Database.CloseConnection();
+            base.Dispose();
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite($"Data Source={_dbLocator.DatabasePath}");

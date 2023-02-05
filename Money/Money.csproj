@@ -8,6 +8,10 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>..\bin\</OutputPath>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <InternalsVisibleTo Include="Money.Tests"/>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MiniExcel" Version="1.30.0" />

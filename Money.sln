@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Money", "Money\Money.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Money.Data", "Money.Data\Money.Data.csproj", "{D66B4154-EACA-4D12-A959-E768B8D96359}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Money.Tests", "Money.Tests\Money.Tests.csproj", "{86269B8D-436A-4A75-8772-A8B793FA2563}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D66B4154-EACA-4D12-A959-E768B8D96359}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D66B4154-EACA-4D12-A959-E768B8D96359}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D66B4154-EACA-4D12-A959-E768B8D96359}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86269B8D-436A-4A75-8772-A8B793FA2563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86269B8D-436A-4A75-8772-A8B793FA2563}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86269B8D-436A-4A75-8772-A8B793FA2563}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86269B8D-436A-4A75-8772-A8B793FA2563}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
