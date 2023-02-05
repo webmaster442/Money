@@ -133,6 +133,15 @@ namespace Money.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search spendings in the database.
+        /// </summary>
+        internal static string CmdFindDescription {
+            get {
+                return ResourceManager.GetString("CmdFindDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Import data to money backup format.
         /// </summary>
         internal static string CmdImportBackupDescription {
@@ -265,6 +274,15 @@ namespace Money.Properties {
         internal static string ErrorInvalidJson {
             get {
                 return ResourceManager.GetString("ErrorInvalidJson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No search term was given.
+        /// </summary>
+        internal static string ErrorNoSearchTermGiven {
+            get {
+                return ResourceManager.GetString("ErrorNoSearchTermGiven", resourceCulture);
             }
         }
         

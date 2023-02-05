@@ -10,5 +10,6 @@ namespace Money.Data
         Task<List<DataRow>> ExportAsync(DateOnly? start = null, DateOnly? end = null);
         Task<List<DataRow>> ExportBackupAsync(int startOffset);
         Task<int> GetSpendingsCount();
+        Task<List<DataRow>> Find(string what, string? category, DateOnly? startDate, DateOnly? endDate, bool isRegex);
     }
 }

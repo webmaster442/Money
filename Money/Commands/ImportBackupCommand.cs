@@ -16,8 +16,8 @@ namespace Money.Commands
         }
 
 
-        public override async Task<int> ExecuteAsync([NotNull] CommandContext context,
-                                                     [NotNull] ImportSetting settings)
+        public override async Task<int> ExecuteAsync(CommandContext context,
+                                                     ImportSetting settings)
         {
             List<DataRow> buffer = new(_writeOnlyData.ChunkSize);
             int sumCategory = 0;

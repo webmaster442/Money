@@ -8,8 +8,8 @@ namespace Money.Commands
 {
     internal sealed class CreateExcelTemplateCommand : Command<CreateExcelTemplateSettings>
     {
-        public override int Execute([NotNull] CommandContext context,
-                                    [NotNull] CreateExcelTemplateSettings settings)
+        public override int Execute(CommandContext context,
+                                    CreateExcelTemplateSettings settings)
         {
             try
             {

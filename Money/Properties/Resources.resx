@@ -141,6 +141,9 @@
   <data name="CmdExportExcelDescription" xml:space="preserve">
     <value>Export data to excel xlsx file</value>
   </data>
+  <data name="CmdFindDescription" xml:space="preserve">
+    <value>Search spendings in the database</value>
+  </data>
   <data name="CmdImportBackupDescription" xml:space="preserve">
     <value>Import data to money backup format</value>
   </data>
@@ -186,6 +189,9 @@ Create it first with the category add command</value>
   </data>
   <data name="ErrorInvalidJson" xml:space="preserve">
     <value>Invalid data in json</value>
+  </data>
+  <data name="ErrorNoSearchTermGiven" xml:space="preserve">
+    <value>No search term was given</value>
   </data>
   <data name="ErrorNotValidDate" xml:space="preserve">
     <value>is a not valid date.</value>

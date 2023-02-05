@@ -16,8 +16,8 @@ namespace Money.Commands
             _writeOnlyData = writeOnlyData;
         }
 
-        public override async Task<int> ExecuteAsync([NotNull] CommandContext context,
-                                                     [NotNull] ImportSetting settings)
+        public override async Task<int> ExecuteAsync(CommandContext context,
+                                                     ImportSetting settings)
         {
             try
             {

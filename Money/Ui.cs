@@ -1,4 +1,6 @@
-﻿using Money.Data.Dto;
+﻿using System.Reflection;
+
+using Money.Data.Dto;
 
 using Spectre.Console;
 
@@ -99,6 +101,27 @@ namespace Money
             {
                 AnsiConsole.WriteLine(item?.ToString() ?? "null");
             }
+        }
+
+        public static void PrintTable<T>(IEnumerable<T> list)
+        {
+            var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            Table table = new Table();
+            foreach (var property in properties)
+            {
+                table.AddColumn(property.Name);
+            }
+
+            foreach (var item in list)
+            {
+                var row = properties
+                    .Select(x => x.GetValue(item)?.ToString() ?? "null")
+                    .ToArray();
+
+                table.AddRow(row);
+            }
+            AnsiConsole.Write(table);
         }
     }
 }

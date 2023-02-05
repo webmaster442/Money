@@ -11,8 +11,8 @@ namespace Money.Commands
             _readonlyData = readonlyData;
         }
 
-        public override async Task<int> ExecuteAsync([NotNull] CommandContext context,
-                                               [NotNull] StatSettings settings)
+        public override async Task<int> ExecuteAsync(CommandContext context,
+                                               StatSettings settings)
         {
             Data.Dto.Statistics stats = await _readonlyData.GetStatisticsAsync(settings.StartDate,
                                                                                settings.EndDate);

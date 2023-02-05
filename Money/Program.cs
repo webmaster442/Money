@@ -21,6 +21,10 @@ app.Configure(config =>
         .AddCommand<AddCommand>("add")
         .WithDescription(Resources.CmdAddDescription);
 
+    config
+        .AddCommand<FindCommand>("find")
+        .WithDescription(Resources.CmdFindDescription);
+
     config.AddBranch("category", category =>
     {
         category.SetDescription(Resources.CmdCategoryDescription);

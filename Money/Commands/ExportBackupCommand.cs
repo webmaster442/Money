@@ -13,8 +13,8 @@ namespace Money.Commands
             _readonlyData = readonlyData;
         }
 
-        public override async Task<int> ExecuteAsync([NotNull] CommandContext context,
-                                                     [NotNull] ExportSetting settings)
+        public override async Task<int> ExecuteAsync(CommandContext context,
+                                                     ExportSetting settings)
         {
             try
             {

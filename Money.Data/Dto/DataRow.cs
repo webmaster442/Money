@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
+using Money.Data.Entities;
+
 namespace Money.Data.Dto
 {
     public sealed class DataRow
@@ -10,6 +12,15 @@ namespace Money.Data.Dto
         public double Ammount { get; set; }
         public DateTime AddedOn { get; set; }
         public string CategoryName { get; set; }
+
+        internal DataRow(Spending spending)
+        {
+            Date = spending.Date.ToDateTime(TimeOnly.MinValue);
+            Description = spending.Description;
+            AddedOn = spending.AddedOn;
+            Ammount = spending.Ammount;
+            CategoryName = spending.Category.Description;
+        }
 
         public DataRow()
         {

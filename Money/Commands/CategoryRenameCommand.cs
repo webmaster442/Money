@@ -11,8 +11,8 @@ namespace Money.Commands
             _writeOnlyData = writeOnlyData;
         }
 
-        public override async Task<int> ExecuteAsync([NotNull] CommandContext context,
-                                                     [NotNull] CategoryRenameSettings settings)
+        public override async Task<int> ExecuteAsync(CommandContext context,
+                                                     CategoryRenameSettings settings)
         {
             bool result = await _writeOnlyData.RenameCategoryAsync(settings.OldCategoryName, settings.NewCategoryName);
 
