@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using Money.Data.Dto;
 
 namespace Money.Commands
 {
@@ -11,12 +11,11 @@ namespace Money.Commands
             _readonlyData = readonlyData;
         }
 
-        public override async Task<int> ExecuteAsync(CommandContext context,
-                                               StatSettings settings)
+        public override async Task<int> ExecuteAsync(CommandContext context, 
+                                                     StatSettings settings)
         {
-            Data.Dto.Statistics stats = await _readonlyData.GetStatisticsAsync(settings.StartDate,
-                                                                               settings.EndDate);
-
+            Statistics stats = await _readonlyData.GetStatisticsAsync(settings.StartDate, settings.EndDate);
+            
             Ui.BasicStats(stats, settings.StartDate, settings.EndDate);
 
             if (settings.Detailed)
