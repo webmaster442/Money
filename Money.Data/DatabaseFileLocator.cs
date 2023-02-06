@@ -5,8 +5,8 @@ namespace Money.Data
     public sealed class DatabaseFileLocator : IDatabaseFileLocator
     {
         private const string FileName = "money.database.db";
-        private const string OneDriveConsumer = "OneDriveConsumer";
-        private const string OneDriveCommercial = "OneDriveCommercial";
+        private const string OneDriveConsumer = "%OneDriveConsumer%";
+        private const string OneDriveCommercial = "%OneDriveCommercial%";
 
         public string DatabasePath { get; }
 
@@ -27,10 +27,10 @@ namespace Money.Data
         {
             var oneDrive = Environment.ExpandEnvironmentVariables(OneDriveCommercial);
 
-            if (string.IsNullOrEmpty(oneDrive))
+            if (string.IsNullOrEmpty(oneDrive) || oneDrive == OneDriveCommercial)
                 oneDrive = Environment.ExpandEnvironmentVariables(OneDriveConsumer);
 
-            return string.IsNullOrEmpty(oneDrive)
+            return string.IsNullOrEmpty(oneDrive) || oneDrive == OneDriveConsumer
                 ? GetPathDefault()
                 : Path.Combine(oneDrive, FileName);
         }
