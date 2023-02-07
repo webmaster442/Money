@@ -4,6 +4,10 @@ A simple console expense manager software written in C#. It uses EntityFramework
 
 ## Usage
 
+The program is a console application and can be operated via commands, like git.
+
+Selected commands offer Bach mode. In this input mode, the given command will open your text editor where you can specify multiple entries at once for editing.
+
 ### Add
 
 ```
@@ -17,11 +21,11 @@ ARGUMENTS:
     [amount]    Amount of money spent
 
 OPTIONS:
-    -h, --help        Prints help information                                   
-    -t, --text        A short text description of the spending                  
-    -c, --category    Spending category                                         
-    -d, --date        Spending time. If not set current date & time will be used
-
+    -h, --help        Prints help information                             
+    -t, --text        A short text description of the spending            
+    -c, --category    Spending category                                   
+    -d, --date        Spending time. If not set current date will be used 
+    -b, --bach        Bach input. Allows to input multiple entries at once
 ```
 
 ### Find
@@ -57,8 +61,8 @@ ARGUMENTS:
     [category]    Category name
 
 OPTIONS:
-    -h, --help    Prints help information
-
+    -h, --help    Prints help information                             
+    -b, --bach    Bach input. Allows to input multiple entries at once
 ```
 
 ### Category list

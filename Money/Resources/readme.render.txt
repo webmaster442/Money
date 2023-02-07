@@ -4,6 +4,10 @@ A simple console expense manager software written in C#. It uses EntityFramework
 
 [4;93mUsage[0m
 
+The program is a console application and can be operated via commands, like git.
+
+Selected commands offer Bach mode. In this input mode, the given command will open your text editor where you can specify multiple entries at once for editing.
+
 [4;94mAdd[0m
 
 [48;2;155;155;155;38;2;30;30;30mDESCRIPTION:[500@[0m
@@ -13,10 +17,11 @@ A simple console expense manager software written in C#. It uses EntityFramework
 [48;2;155;155;155;38;2;30;30;30mARGUMENTS:[500@[0m
 [48;2;155;155;155;38;2;30;30;30m    [amount]    Amount of money spent[500@[0m
 [48;2;155;155;155;38;2;30;30;30mOPTIONS:[500@[0m
-[48;2;155;155;155;38;2;30;30;30m    -h, --help        Prints help information                                   [500@[0m
-[48;2;155;155;155;38;2;30;30;30m    -t, --text        A short text description of the spending                  [500@[0m
-[48;2;155;155;155;38;2;30;30;30m    -c, --category    Spending category                                         [500@[0m
-[48;2;155;155;155;38;2;30;30;30m    -d, --date        Spending time. If not set current date & time will be used[500@[0m
+[48;2;155;155;155;38;2;30;30;30m    -h, --help        Prints help information                             [500@[0m
+[48;2;155;155;155;38;2;30;30;30m    -t, --text        A short text description of the spending            [500@[0m
+[48;2;155;155;155;38;2;30;30;30m    -c, --category    Spending category                                   [500@[0m
+[48;2;155;155;155;38;2;30;30;30m    -d, --date        Spending time. If not set current date will be used [500@[0m
+[48;2;155;155;155;38;2;30;30;30m    -b, --bach        Bach input. Allows to input multiple entries at once[500@[0m
 
 [4;94mFind[0m
 
@@ -42,7 +47,8 @@ A simple console expense manager software written in C#. It uses EntityFramework
 [48;2;155;155;155;38;2;30;30;30mARGUMENTS:[500@[0m
 [48;2;155;155;155;38;2;30;30;30m    [category]    Category name[500@[0m
 [48;2;155;155;155;38;2;30;30;30mOPTIONS:[500@[0m
-[48;2;155;155;155;38;2;30;30;30m    -h, --help    Prints help information[500@[0m
+[48;2;155;155;155;38;2;30;30;30m    -h, --help    Prints help information                             [500@[0m
+[48;2;155;155;155;38;2;30;30;30m    -b, --bach    Bach input. Allows to input multiple entries at once[500@[0m
 
 [4;94mCategory list[0m
 
