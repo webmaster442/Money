@@ -28,6 +28,13 @@ namespace Money.UserInterface
             return Constants.UsageError;
         }
 
+        public static void Warning(string message, params object[] details)
+        {
+            string formatted = string.Format(message, details);
+
+            AnsiConsole.MarkupLine($"[yellow]{formatted}[/]");
+        }
+
         public static bool Confirm(string message)
         {
             return AnsiConsole.Confirm(message, false);
