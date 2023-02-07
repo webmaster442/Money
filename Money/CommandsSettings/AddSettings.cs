@@ -38,16 +38,13 @@ namespace Money.CommandsSettings
             if (BachMode)
                 return ValidationResult.Success();
 
-            if (Ammount <= 0)
-                return ValidationResult.Error(Resources.ErrorAddNegativeAmmount);
+            ValidationResultBuilder errorbuilder = new();
 
-            if (string.IsNullOrWhiteSpace(Text))
-                return ValidationResult.Error(Resources.ErrorEmptyText);
-
-            if (string.IsNullOrWhiteSpace(Category))
-                return ValidationResult.Error(Resources.ErrorCategoryNameNull);
-
-            return ValidationResult.Success();
+            return errorbuilder
+                .AddIfTrue(() => Ammount <= 0, Resources.ErrorAddNegativeAmmount)
+                .AddIfNullOrWhiteSpace(Text, Resources.ErrorEmptyText)
+                .AddIfNullOrWhiteSpace(Category, Resources.ErrorCategoryNameNull)
+                .Build();
         }
     }
 }

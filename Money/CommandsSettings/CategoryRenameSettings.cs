@@ -22,12 +22,13 @@ namespace Money.CommandsSettings
 
         public override ValidationResult Validate()
         {
-            if (string.IsNullOrEmpty(OldCategoryName)
-                || string.IsNullOrEmpty(NewCategoryName))
-            {
-                return ValidationResult.Error(Resources.ErrorCategoryNameNull);
-            }
-            return ValidationResult.Success();
+            var builder = new ValidationResultBuilder();
+
+            return 
+                builder
+                .AddIfNullOrWhiteSpace(OldCategoryName, Resources.ErrorCategoryNameNull)
+                .AddIfNullOrWhiteSpace(NewCategoryName, Resources.ErrorCategoryNameNull)
+                .Build();
         }
     }
 }
