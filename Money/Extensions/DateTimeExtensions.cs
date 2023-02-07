@@ -18,8 +18,8 @@ namespace Money.Extensions
 
         public static (DateOnly firstDay, DateOnly lastDay) GetWeekDays(this DateTime date, CultureInfo culture)
         {
-            var currentDay = date.DayOfWeek;
-            var startday = culture.DateTimeFormat.FirstDayOfWeek;
+            DayOfWeek currentDay = date.DayOfWeek;
+            DayOfWeek startday = culture.DateTimeFormat.FirstDayOfWeek;
 
             int daysToAdd = 6 - (int)currentDay + (int)startday;
 

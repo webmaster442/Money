@@ -1,9 +1,4 @@
-﻿using System.Data;
-using System.Diagnostics.CodeAnalysis;
-
-using MiniExcelLibs;
-
-using Money.Data.Dto;
+﻿using MiniExcelLibs;
 
 namespace Money.Commands
 {
@@ -25,8 +20,8 @@ namespace Money.Commands
                 int sumEntry = 0;
                 using (FileStream stream = File.OpenRead(settings.FileName))
                 {
-                    var chunks = MiniExcel.Query<Data.Dto.DataRow>(stream).Chunk(_writeOnlyData.ChunkSize);
-                    foreach (var chunk in chunks)
+                    IEnumerable<Data.Dto.DataRow[]> chunks = MiniExcel.Query<Data.Dto.DataRow>(stream).Chunk(_writeOnlyData.ChunkSize);
+                    foreach (Data.Dto.DataRow[] chunk in chunks)
                     {
                         (int createdCategory, int createdEntry) = await _writeOnlyData.ImportAsync(chunk);
                         sumCategory += createdCategory;

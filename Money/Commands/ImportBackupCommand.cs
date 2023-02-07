@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.IO.Compression;
+﻿using System.IO.Compression;
 using System.Text;
 
 using Money.Data.Dto;
@@ -35,7 +34,7 @@ namespace Money.Commands
                 using (FileStream srtream = File.OpenRead(settings.FileName))
                 {
                     using GZipStream compressed = new GZipStream(srtream, CompressionMode.Decompress, true);
-                    using var reader = new StreamReader(compressed, Encoding.UTF8);
+                    using StreamReader reader = new StreamReader(compressed, Encoding.UTF8);
                     string? line;
                     while ((line = reader.ReadLine()) != null)
                     {

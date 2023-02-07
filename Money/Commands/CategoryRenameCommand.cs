@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace Money.Commands
+﻿namespace Money.Commands
 {
     internal sealed class CategoryRenameCommand : AsyncCommand<CategoryRenameSettings>
     {

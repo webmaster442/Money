@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.IO.Compression;
+﻿using System.IO.Compression;
 using System.Text;
 
 namespace Money.Commands
@@ -24,15 +23,15 @@ namespace Money.Commands
                 {
                     using (GZipStream compressed = new GZipStream(stream, CompressionLevel.SmallestSize, true))
                     {
-                        using (var writer = new StreamWriter(compressed, Encoding.UTF8)) 
+                        using (StreamWriter writer = new StreamWriter(compressed, Encoding.UTF8))
                         {
                             int pages = (recordCount / _readonlyData.ChunkSize) + 1;
 
                             int offset = 0;
                             for (int i = 0; i < pages; i++)
                             {
-                                var data = await _readonlyData.ExportBackupAsync(offset);
-                                foreach (var row in data.Select(x => x.ToCsvRow()))
+                                List<Data.Dto.DataRow> data = await _readonlyData.ExportBackupAsync(offset);
+                                foreach (string? row in data.Select(x => x.ToCsvRow()))
                                 {
                                     writer.Write(row);
                                 }

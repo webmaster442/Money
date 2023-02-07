@@ -11,7 +11,7 @@
 
         public override async Task<int> ExecuteAsync(CommandContext context)
         {
-            var categories = await _readonlyData.GetCategoriesAsync();
+            List<string> categories = await _readonlyData.GetCategoriesAsync();
 
             Ui.PrintList(categories);
 

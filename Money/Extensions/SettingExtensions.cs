@@ -4,7 +4,7 @@
     {
         public static void AppendXlsxToFileNameWhenNeeded(this ImportExportSettingsBase settings)
         {
-            var extension = Path.GetExtension(settings.FileName).ToLower();
+            string extension = Path.GetExtension(settings.FileName).ToLower();
             if (string.IsNullOrEmpty(extension) || extension != ".xlsx")
                 settings.FileName = Path.ChangeExtension(settings.FileName, ".xlsx");
         }

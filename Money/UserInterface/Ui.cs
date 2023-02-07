@@ -1,12 +1,10 @@
 ﻿using System.Reflection;
 
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-
 using Money.Data.Dto;
 
 using Spectre.Console;
 
-namespace Money
+namespace Money.UserInterface
 {
     internal static class Ui
     {
@@ -32,7 +30,7 @@ namespace Money
 
         public static bool Confirm(string message)
         {
-           return AnsiConsole.Confirm(message, false);
+            return AnsiConsole.Confirm(message, false);
         }
 
         public static void PrintException(Exception ex)
@@ -107,17 +105,17 @@ namespace Money
 
         public static void PrintTable<T>(IEnumerable<T> list)
         {
-            var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            PropertyInfo[] properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             Table table = new Table();
-            foreach (var property in properties)
+            foreach (PropertyInfo property in properties)
             {
                 table.AddColumn(property.Name);
             }
 
-            foreach (var item in list)
+            foreach (T? item in list)
             {
-                var row = properties
+                string[] row = properties
                     .Select(x => x.GetValue(item)?.ToString() ?? "null")
                     .ToArray();
 
@@ -130,7 +128,7 @@ namespace Money
         {
             Console.Clear();
 
-            foreach (var line in lines)
+            foreach (string line in lines)
             {
                 AnsiConsole.WriteLine(line);
             }

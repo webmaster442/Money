@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-using MiniExcelLibs;
+﻿using MiniExcelLibs;
 
 namespace Money.Commands
 {

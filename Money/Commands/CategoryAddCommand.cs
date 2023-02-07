@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace Money.Commands
+﻿namespace Money.Commands
 {
     internal sealed class CategoryAddCommand : AsyncCommand<CategorySettings>
     {
@@ -14,12 +12,12 @@ namespace Money.Commands
         public override async Task<int> ExecuteAsync(CommandContext context,
                                                CategorySettings settings)
         {
-            var result = await _writeOnlyData.CreateCategoryAsync(settings.CategoryName);
+            (bool success, ulong id) = await _writeOnlyData.CreateCategoryAsync(settings.CategoryName);
 
-            if (!result.success)
+            if (!success)
                 return Ui.Error(Resources.ErrorCategoryAllreadyExists, settings.CategoryName);
 
-            Ui.Success(result.id);
+            Ui.Success(id);
 
             return Constants.Success;
         }
