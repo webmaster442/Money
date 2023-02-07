@@ -17,6 +17,7 @@ namespace Money.CommandsSettings
         public DateOnly EndDate { get; set; }
 
         [CommandOption("-d|--detailed")]
+        [Description("When set, prints daily spending stats")]
         public bool Detailed { get; set; }
 
         public StatSettings()

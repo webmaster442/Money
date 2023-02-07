@@ -6,6 +6,7 @@ namespace Money.CommandsSettings
 {
     internal sealed class FindSettings : CommandSettings
     {
+        [Description("When set, the search term will be handled as regular expression")]
         [CommandOption("-r|--regex")]
         public bool IsRegex { get; set; }
 
@@ -23,7 +24,7 @@ namespace Money.CommandsSettings
         [CommandOption("-c|--category")]
         public string Category { get; set; }
 
-        [Description("Search term")]
+        [Description("Search term to look for in spending description.")]
         [CommandArgument(0, "[term]")]
         public string SearchTerm { get; set; }
 
@@ -42,7 +43,7 @@ namespace Money.CommandsSettings
                 return ValidationResult.Error(Resources.ErrorDateValidate);
             }
 
-            if (string.IsNullOrEmpty(SearchTerm))
+            if (string.IsNullOrWhiteSpace(SearchTerm))
                 return ValidationResult.Error(Resources.ErrorNoSearchTermGiven);
 
             return ValidationResult.Success();

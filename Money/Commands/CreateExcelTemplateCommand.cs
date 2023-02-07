@@ -1,23 +1,23 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-using MiniExcelLibs;
+﻿using MiniExcelLibs;
 
 using Money.Data.Dto;
 
 namespace Money.Commands
 {
-    internal sealed class CreateExcelTemplateCommand : Command<CreateExcelTemplateSettings>
+    internal sealed class CreateExcelTemplateCommand : AsyncCommand<CreateExcelTemplateSettings>
     {
-        public override int Execute(CommandContext context,
-                                    CreateExcelTemplateSettings settings)
+        public override async Task<int> ExecuteAsync(CommandContext context,
+                                                     CreateExcelTemplateSettings settings)
         {
+            settings.AppendXlsxToFileNameWhenNeeded();
+
             try
             {
                 List<DataRow> data = new List<DataRow>();
 
                 using (FileStream srtream = File.Create(settings.FileName))
                 {
-                    srtream.SaveAs(data);
+                    await srtream.SaveAsAsync(data);
                 }
                 Ui.Success(Resources.SuccessCreatedImportTemplate, settings.FileName);
                 return Constants.Success;

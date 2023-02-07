@@ -1,6 +1,6 @@
 [7mMoney[0m
 
-A spimple console expense manager software written in C#. It uses EntityFramework to store data and for console output Spectre.Console.
+A simple console expense manager software written in C#. It uses EntityFramework to store data and for console output Spectre.Console.
 
 [4;93mUsage[0m
 
@@ -11,7 +11,7 @@ A spimple console expense manager software written in C#. It uses EntityFramewor
 [48;2;155;155;155;38;2;30;30;30mUSAGE:[500@[0m
 [48;2;155;155;155;38;2;30;30;30m    money add [amount] [OPTIONS][500@[0m
 [48;2;155;155;155;38;2;30;30;30mARGUMENTS:[500@[0m
-[48;2;155;155;155;38;2;30;30;30m    [amount]    Ammount of money spent[500@[0m
+[48;2;155;155;155;38;2;30;30;30m    [amount]    Amount of money spent[500@[0m
 [48;2;155;155;155;38;2;30;30;30mOPTIONS:[500@[0m
 [48;2;155;155;155;38;2;30;30;30m    -h, --help        Prints help information                                   [500@[0m
 [48;2;155;155;155;38;2;30;30;30m    -t, --text        A short text description of the spending                  [500@[0m
@@ -25,13 +25,13 @@ A spimple console expense manager software written in C#. It uses EntityFramewor
 [48;2;155;155;155;38;2;30;30;30mUSAGE:[500@[0m
 [48;2;155;155;155;38;2;30;30;30m    money find [term] [OPTIONS][500@[0m
 [48;2;155;155;155;38;2;30;30;30mARGUMENTS:[500@[0m
-[48;2;155;155;155;38;2;30;30;30m    [term]    Search term[500@[0m
+[48;2;155;155;155;38;2;30;30;30m    [term]    Search term to look for in spending description[500@[0m
 [48;2;155;155;155;38;2;30;30;30mOPTIONS:[500@[0m
-[48;2;155;155;155;38;2;30;30;30m    -h, --help         Prints help information                                     [500@[0m
-[48;2;155;155;155;38;2;30;30;30m    -r, --regex                                                                    [500@[0m
-[48;2;155;155;155;38;2;30;30;30m    -s, --startdate    Start date (optional)                                       [500@[0m
-[48;2;155;155;155;38;2;30;30;30m    -e, --enddate      End date (optional)                                         [500@[0m
-[48;2;155;155;155;38;2;30;30;30m    -c, --category     Spending category. When set, only searches in given category[500@[0m
+[48;2;155;155;155;38;2;30;30;30m    -h, --help         Prints help information                                        [500@[0m
+[48;2;155;155;155;38;2;30;30;30m    -r, --regex        When set, the search term will be handled as regular expression[500@[0m
+[48;2;155;155;155;38;2;30;30;30m    -s, --startdate    Start date (optional)                                          [500@[0m
+[48;2;155;155;155;38;2;30;30;30m    -e, --enddate      End date (optional)                                            [500@[0m
+[48;2;155;155;155;38;2;30;30;30m    -c, --category     Spending category. When set, only searches in given category   [500@[0m
 
 [4;94mCategory add[0m
 
@@ -134,7 +134,7 @@ A spimple console expense manager software written in C#. It uses EntityFramewor
 [48;2;155;155;155;38;2;30;30;30m    [start]    Start date   [500@[0m
 [48;2;155;155;155;38;2;30;30;30m    [end]      End date date[500@[0m
 [48;2;155;155;155;38;2;30;30;30mOPTIONS:[500@[0m
-[48;2;155;155;155;38;2;30;30;30m    -h, --help        Prints help information[500@[0m
-[48;2;155;155;155;38;2;30;30;30m    -d, --detailed                           [500@[0m
+[48;2;155;155;155;38;2;30;30;30m    -h, --help        Prints help information              [500@[0m
+[48;2;155;155;155;38;2;30;30;30m    -d, --detailed    When set, prints daily spending stats[500@[0m
 
 

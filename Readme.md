@@ -1,6 +1,6 @@
 # Money
 
-A spimple console expense manager software written in C#. It uses EntityFramework to store data and for console output Spectre.Console.
+A simple console expense manager software written in C#. It uses EntityFramework to store data and for console output Spectre.Console.
 
 ## Usage
 
@@ -14,7 +14,7 @@ USAGE:
     money add [amount] [OPTIONS]
 
 ARGUMENTS:
-    [amount]    Ammount of money spent
+    [amount]    Amount of money spent
 
 OPTIONS:
     -h, --help        Prints help information                                   
@@ -34,14 +34,14 @@ USAGE:
     money find [term] [OPTIONS]
 
 ARGUMENTS:
-    [term]    Search term
+    [term]    Search term to look for in spending description
 
 OPTIONS:
-    -h, --help         Prints help information                                     
-    -r, --regex                                                                    
-    -s, --startdate    Start date (optional)                                       
-    -e, --enddate      End date (optional)                                         
-    -c, --category     Spending category. When set, only searches in given category
+    -h, --help         Prints help information                                        
+    -r, --regex        When set, the search term will be handled as regular expression
+    -s, --startdate    Start date (optional)                                          
+    -e, --enddate      End date (optional)                                            
+    -c, --category     Spending category. When set, only searches in given category   
 ```
 
 ### Category add
@@ -190,7 +190,6 @@ ARGUMENTS:
     [end]      End date date
 
 OPTIONS:
-    -h, --help        Prints help information
-    -d, --detailed                           
-
+    -h, --help        Prints help information              
+    -d, --detailed    When set, prints daily spending stats
 ```

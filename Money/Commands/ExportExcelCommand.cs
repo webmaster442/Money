@@ -16,6 +16,8 @@ namespace Money.Commands
         public override async Task<int> ExecuteAsync(CommandContext context,
                                                      ExportSetting settings)
         {
+            settings.AppendXlsxToFileNameWhenNeeded();
+
             try
             {
                 IList<Data.Dto.DataRow> data = await _readonlyData.ExportAsync(settings.StartDate, settings.EndDate);

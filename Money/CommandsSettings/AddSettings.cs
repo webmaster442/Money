@@ -14,11 +14,11 @@ namespace Money.CommandsSettings
         [CommandOption("-c|--category")]
         public string Category { get; set; }
 
-        [Description("Ammount of money spent")]
+        [Description("Amount of money spent")]
         [CommandArgument(0, "[amount]")]
         public double Ammount { get; init; }
 
-        [Description("Spending time. If not set current date & time will be used")]
+        [Description("Spending time. If not set current date will be used")]
         [CommandOption("-d|--date")]
         public DateOnly Date { get; init; }
 
