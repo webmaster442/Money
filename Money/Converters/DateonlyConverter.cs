@@ -1,24 +1,23 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
 
-namespace Money.Converters
+namespace Money.Converters;
+
+internal sealed class DateonlyConverter : TypeConverter
 {
-    internal sealed class DateonlyConverter : TypeConverter
+    public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
     {
-        public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
+        if (value is string stringValue)
         {
-            if (value is string stringValue)
+            if (DateOnly.TryParse(stringValue, out DateOnly parsed))
             {
-                if (DateOnly.TryParse(stringValue, out DateOnly parsed))
-                {
-                    return parsed;
-                }
-                else
-                {
-                    throw new InvalidOperationException($"{stringValue} {Resources.ErrorNotValidDate}");
-                }
+                return parsed;
             }
-            throw new NotSupportedException(Resources.ErrorCantConvertDateOnly);
+            else
+            {
+                throw new InvalidOperationException($"{stringValue} {Resources.ErrorNotValidDate}");
+            }
         }
+        throw new NotSupportedException(Resources.ErrorCantConvertDateOnly);
     }
 }

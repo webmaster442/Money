@@ -2,37 +2,36 @@
 
 using Spectre.Console;
 
-namespace Money.CommandsSettings
+namespace Money.CommandsSettings;
+
+internal sealed class StatSettings : CommandSettings
 {
-    internal sealed class StatSettings : CommandSettings
+    [CommandArgument(0, "[start]")]
+    [Description("Start date")]
+    [TypeConverter(typeof(DateonlyConverter))]
+    public DateOnly StartDate { get; set; }
+
+    [CommandArgument(1, "[end]")]
+    [Description("End date date")]
+    [TypeConverter(typeof(DateonlyConverter))]
+    public DateOnly EndDate { get; set; }
+
+    [CommandOption("-d|--detailed")]
+    [Description("When set, prints daily spending stats")]
+    public bool Detailed { get; set; }
+
+    public StatSettings()
     {
-        [CommandArgument(0, "[start]")]
-        [Description("Start date")]
-        [TypeConverter(typeof(DateonlyConverter))]
-        public DateOnly StartDate { get; set; }
+        (DateOnly firstDay, DateOnly lastDay) = DateTime.Now.GetMonthDays();
+        StartDate = firstDay;
+        EndDate = lastDay;
+    }
 
-        [CommandArgument(1, "[end]")]
-        [Description("End date date")]
-        [TypeConverter(typeof(DateonlyConverter))]
-        public DateOnly EndDate { get; set; }
+    public override ValidationResult Validate()
+    {
+        if (StartDate > EndDate)
+            return ValidationResult.Error(Resources.ErrorDateValidate);
 
-        [CommandOption("-d|--detailed")]
-        [Description("When set, prints daily spending stats")]
-        public bool Detailed { get; set; }
-
-        public StatSettings()
-        {
-            (DateOnly firstDay, DateOnly lastDay) = DateTime.Now.GetMonthDays();
-            StartDate = firstDay;
-            EndDate = lastDay;
-        }
-
-        public override ValidationResult Validate()
-        {
-            if (StartDate > EndDate)
-                return ValidationResult.Error(Resources.ErrorDateValidate);
-
-            return ValidationResult.Success();
-        }
+        return ValidationResult.Success();
     }
 }

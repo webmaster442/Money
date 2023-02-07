@@ -1,49 +1,48 @@
 ﻿
 using System.Diagnostics;
 
-namespace Money.Tests
+namespace Money.Tests;
+
+[TestFixture]
+internal class ImportExcelCommandTest : CommandTestBase<ImportExcelCommand, ImportSetting>
 {
-    [TestFixture]
-    internal class ImportExcelCommandTest : CommandTestBase<ImportExcelCommand, ImportSetting>
+    protected override ImportExcelCommand CreateSut()
     {
-        protected override ImportExcelCommand CreateSut()
+        return new ImportExcelCommand(base.WriteOnlyData);
+    }
+
+    [Test]
+    public async Task Test_Import()
+    {
+        ImportSetting settings = new ImportSetting
         {
-            return new ImportExcelCommand(base.WriteOnlyData);
-        }
+            FileName = DataFiles.ImportData1000,
+        };
 
-        [Test]
-        public async Task Test_Import()
+        int result = await Sut.ExecuteAsync(DefaultContext, settings);
+
+        Assert.Multiple(() =>
         {
-            ImportSetting settings = new ImportSetting
-            {
-                FileName = DataFiles.ImportData1000,
-            };
+            Assert.That(result, Is.EqualTo(0));
+            Assert.That(TestTb.SpendingCount, Is.EqualTo(1000));
+            Assert.That(TestTb.CategoryCount, Is.EqualTo(4));
+        });
+    }
 
-            int result = await Sut.ExecuteAsync(DefaultContext, settings);
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(result, Is.EqualTo(0));
-                Assert.That(TestTb.SpendingCount, Is.EqualTo(1000));
-                Assert.That(TestTb.CategoryCount, Is.EqualTo(4));
-            });
-        }
-
-        [Test]
-        public async Task Test_ImportPerformance()
+    [Test]
+    public async Task Test_ImportPerformance()
+    {
+        ImportSetting settings = new ImportSetting
         {
-            ImportSetting settings = new ImportSetting
-            {
-                FileName = DataFiles.ImportData1000,
-            };
+            FileName = DataFiles.ImportData1000,
+        };
 
 
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            int result = await Sut.ExecuteAsync(DefaultContext, settings);
-            stopwatch.Stop();
+        Stopwatch stopwatch = Stopwatch.StartNew();
+        int result = await Sut.ExecuteAsync(DefaultContext, settings);
+        stopwatch.Stop();
 
-            if (stopwatch.ElapsedMilliseconds > 1700)
-                Assert.Warn("1000k rows took longer than 1700ms");
-        }
+        if (stopwatch.ElapsedMilliseconds > 1700)
+            Assert.Warn("1000k rows took longer than 1700ms");
     }
 }

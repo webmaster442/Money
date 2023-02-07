@@ -1,14 +1,13 @@
-﻿namespace Money.Tests
+﻿namespace Money.Tests;
+
+internal sealed class DataFiles
 {
-    internal sealed class DataFiles
+    public string ImportData1000 { get; }
+
+    public DataFiles()
     {
-        public string ImportData1000 { get; }
+        string folder = Path.Combine(AppContext.BaseDirectory, "Data");
 
-        public DataFiles()
-        {
-            string folder = Path.Combine(AppContext.BaseDirectory, "Data");
-
-            ImportData1000 = Path.Combine(folder, "ImportData1000.xlsx");
-        }
+        ImportData1000 = Path.Combine(folder, "ImportData1000.xlsx");
     }
 }

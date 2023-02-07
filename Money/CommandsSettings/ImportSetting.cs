@@ -1,17 +1,16 @@
 ﻿using Spectre.Console;
 
-namespace Money.CommandsSettings
+namespace Money.CommandsSettings;
+
+internal sealed class ImportSetting : ImportExportSettingsBase
 {
-    internal sealed class ImportSetting : ImportExportSettingsBase
+    public override ValidationResult Validate()
     {
-        public override ValidationResult Validate()
+        if (string.IsNullOrEmpty(FileName)
+            || !File.Exists(FileName))
         {
-            if (string.IsNullOrEmpty(FileName)
-                || !File.Exists(FileName))
-            {
-                return ValidationResult.Error(Resources.ErrorFileMustExist);
-            }
-            return ValidationResult.Success();
+            return ValidationResult.Error(Resources.ErrorFileMustExist);
         }
+        return ValidationResult.Success();
     }
 }

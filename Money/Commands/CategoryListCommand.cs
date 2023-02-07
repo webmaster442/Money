@@ -1,21 +1,20 @@
-﻿namespace Money.Commands
+﻿namespace Money.Commands;
+
+internal sealed class CategoryListCommand : AsyncCommand
 {
-    internal sealed class CategoryListCommand : AsyncCommand
+    private readonly IReadonlyData _readonlyData;
+
+    public CategoryListCommand(IReadonlyData readonlyData)
     {
-        private readonly IReadonlyData _readonlyData;
+        _readonlyData = readonlyData;
+    }
 
-        public CategoryListCommand(IReadonlyData readonlyData)
-        {
-            _readonlyData = readonlyData;
-        }
+    public override async Task<int> ExecuteAsync(CommandContext context)
+    {
+        List<string> categories = await _readonlyData.GetCategoriesAsync();
 
-        public override async Task<int> ExecuteAsync(CommandContext context)
-        {
-            List<string> categories = await _readonlyData.GetCategoriesAsync();
+        Ui.PrintList(categories);
 
-            Ui.PrintList(categories);
-
-            return Constants.Success;
-        }
+        return Constants.Success;
     }
 }

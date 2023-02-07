@@ -1,27 +1,26 @@
-﻿namespace Money.Tests
+﻿namespace Money.Tests;
+
+internal class TestTb : DataAccessBase
 {
-    internal class TestTb : DataAccessBase
+    public TestTb(IDatabaseFileLocator databaseLocator) : base(databaseLocator)
     {
-        public TestTb(IDatabaseFileLocator databaseLocator) : base(databaseLocator)
-        {
-        }
+    }
 
-        public int CategoryCount
+    public int CategoryCount
+    {
+        get
         {
-            get
-            {
-                using MoneyContext db = ConnectDatabase();
-                return db.Categories.Count();
-            }
+            using MoneyContext db = ConnectDatabase();
+            return db.Categories.Count();
         }
+    }
 
-        public int SpendingCount
+    public int SpendingCount
+    {
+        get
         {
-            get
-            {
-                using MoneyContext db = ConnectDatabase();
-                return db.Spendings.Count();
-            }
+            using MoneyContext db = ConnectDatabase();
+            return db.Spendings.Count();
         }
     }
 }

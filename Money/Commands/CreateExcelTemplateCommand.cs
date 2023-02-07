@@ -2,31 +2,30 @@
 
 using Money.Data.Dto;
 
-namespace Money.Commands
+namespace Money.Commands;
+
+internal sealed class CreateExcelTemplateCommand : AsyncCommand<CreateExcelTemplateSettings>
 {
-    internal sealed class CreateExcelTemplateCommand : AsyncCommand<CreateExcelTemplateSettings>
+    public override async Task<int> ExecuteAsync(CommandContext context,
+                                                 CreateExcelTemplateSettings settings)
     {
-        public override async Task<int> ExecuteAsync(CommandContext context,
-                                                     CreateExcelTemplateSettings settings)
+        settings.AppendXlsxToFileNameWhenNeeded();
+
+        try
         {
-            settings.AppendXlsxToFileNameWhenNeeded();
+            List<DataRow> data = new List<DataRow>();
 
-            try
+            using (FileStream srtream = File.Create(settings.FileName))
             {
-                List<DataRow> data = new List<DataRow>();
-
-                using (FileStream srtream = File.Create(settings.FileName))
-                {
-                    await srtream.SaveAsAsync(data);
-                }
-                Ui.Success(Resources.SuccessCreatedImportTemplate, settings.FileName);
-                return Constants.Success;
+                await srtream.SaveAsAsync(data);
             }
-            catch (Exception ex)
-            {
-                Ui.PrintException(ex);
-                return Constants.IoError;
-            }
+            Ui.Success(Resources.SuccessCreatedImportTemplate, settings.FileName);
+            return Constants.Success;
+        }
+        catch (Exception ex)
+        {
+            Ui.PrintException(ex);
+            return Constants.IoError;
         }
     }
 }

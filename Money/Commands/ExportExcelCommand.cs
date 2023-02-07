@@ -1,37 +1,36 @@
 ﻿using MiniExcelLibs;
 
-namespace Money.Commands
+namespace Money.Commands;
+
+internal sealed class ExportExcelCommand : AsyncCommand<ExportSetting>
 {
-    internal sealed class ExportExcelCommand : AsyncCommand<ExportSetting>
+    private readonly IReadonlyData _readonlyData;
+
+    public ExportExcelCommand(IReadonlyData readonlyData)
     {
-        private readonly IReadonlyData _readonlyData;
+        _readonlyData = readonlyData;
+    }
 
-        public ExportExcelCommand(IReadonlyData readonlyData)
+    public override async Task<int> ExecuteAsync(CommandContext context,
+                                                 ExportSetting settings)
+    {
+        settings.AppendXlsxToFileNameWhenNeeded();
+
+        try
         {
-            _readonlyData = readonlyData;
+            IList<Data.Dto.DataRow> data = await _readonlyData.ExportAsync(settings.StartDate, settings.EndDate);
+
+            using (FileStream srtream = File.Create(settings.FileName))
+            {
+                srtream.SaveAs(data);
+            }
+            Ui.Success(Resources.SuccessExport, data.Count, settings.FileName);
+            return Constants.Success;
         }
-
-        public override async Task<int> ExecuteAsync(CommandContext context,
-                                                     ExportSetting settings)
+        catch (Exception ex)
         {
-            settings.AppendXlsxToFileNameWhenNeeded();
-
-            try
-            {
-                IList<Data.Dto.DataRow> data = await _readonlyData.ExportAsync(settings.StartDate, settings.EndDate);
-
-                using (FileStream srtream = File.Create(settings.FileName))
-                {
-                    srtream.SaveAs(data);
-                }
-                Ui.Success(Resources.SuccessExport, data.Count, settings.FileName);
-                return Constants.Success;
-            }
-            catch (Exception ex)
-            {
-                Ui.PrintException(ex);
-                return Constants.IoError;
-            }
+            Ui.PrintException(ex);
+            return Constants.IoError;
         }
     }
 }

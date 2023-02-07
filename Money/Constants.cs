@@ -1,10 +1,9 @@
-﻿namespace Money
+﻿namespace Money;
+
+internal static class Constants
 {
-    internal static class Constants
-    {
-        public const int Success = 0;
-        public const int UsageError = 1;
-        public const int IoError = 2;
-        public const int Aborted = 3;
-    }
+    public const int Success = 0;
+    public const int UsageError = 1;
+    public const int IoError = 2;
+    public const int Aborted = 3;
 }

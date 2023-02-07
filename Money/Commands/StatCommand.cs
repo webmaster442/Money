@@ -1,29 +1,28 @@
 ﻿using Money.Data.Dto;
 
-namespace Money.Commands
+namespace Money.Commands;
+
+internal sealed class StatCommand : AsyncCommand<StatSettings>
 {
-    internal sealed class StatCommand : AsyncCommand<StatSettings>
+    private readonly IReadonlyData _readonlyData;
+
+    public StatCommand(IReadonlyData readonlyData)
     {
-        private readonly IReadonlyData _readonlyData;
+        _readonlyData = readonlyData;
+    }
 
-        public StatCommand(IReadonlyData readonlyData)
+    public override async Task<int> ExecuteAsync(CommandContext context,
+                                                 StatSettings settings)
+    {
+        Statistics stats = await _readonlyData.GetStatisticsAsync(settings.StartDate, settings.EndDate);
+
+        Ui.BasicStats(stats, settings.StartDate, settings.EndDate);
+
+        if (settings.Detailed)
         {
-            _readonlyData = readonlyData;
+            Ui.DetailedStats(stats);
         }
 
-        public override async Task<int> ExecuteAsync(CommandContext context,
-                                                     StatSettings settings)
-        {
-            Statistics stats = await _readonlyData.GetStatisticsAsync(settings.StartDate, settings.EndDate);
-
-            Ui.BasicStats(stats, settings.StartDate, settings.EndDate);
-
-            if (settings.Detailed)
-            {
-                Ui.DetailedStats(stats);
-            }
-
-            return Constants.Success;
-        }
+        return Constants.Success;
     }
 }

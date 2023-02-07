@@ -1,43 +1,42 @@
 ﻿using MiniExcelLibs;
 
-namespace Money.Commands
+namespace Money.Commands;
+
+internal sealed class ImportExcelCommand : AsyncCommand<ImportSetting>
 {
-    internal sealed class ImportExcelCommand : AsyncCommand<ImportSetting>
+    private readonly IWriteOnlyData _writeOnlyData;
+
+    public ImportExcelCommand(IWriteOnlyData writeOnlyData)
     {
-        private readonly IWriteOnlyData _writeOnlyData;
+        _writeOnlyData = writeOnlyData;
+    }
 
-        public ImportExcelCommand(IWriteOnlyData writeOnlyData)
+    public override async Task<int> ExecuteAsync(CommandContext context,
+                                                 ImportSetting settings)
+    {
+        try
         {
-            _writeOnlyData = writeOnlyData;
-        }
-
-        public override async Task<int> ExecuteAsync(CommandContext context,
-                                                     ImportSetting settings)
-        {
-            try
+            int sumCategory = 0;
+            int sumEntry = 0;
+            using (FileStream stream = File.OpenRead(settings.FileName))
             {
-                int sumCategory = 0;
-                int sumEntry = 0;
-                using (FileStream stream = File.OpenRead(settings.FileName))
+                IEnumerable<Data.Dto.DataRow[]> chunks = MiniExcel.Query<Data.Dto.DataRow>(stream).Chunk(_writeOnlyData.ChunkSize);
+                foreach (Data.Dto.DataRow[] chunk in chunks)
                 {
-                    IEnumerable<Data.Dto.DataRow[]> chunks = MiniExcel.Query<Data.Dto.DataRow>(stream).Chunk(_writeOnlyData.ChunkSize);
-                    foreach (Data.Dto.DataRow[] chunk in chunks)
-                    {
-                        (int createdCategory, int createdEntry) = await _writeOnlyData.ImportAsync(chunk);
-                        sumCategory += createdCategory;
-                        sumEntry += createdEntry;
-                    }
+                    (int createdCategory, int createdEntry) = await _writeOnlyData.ImportAsync(chunk);
+                    sumCategory += createdCategory;
+                    sumEntry += createdEntry;
                 }
-
-                Ui.Success(Resources.SuccesImport, sumCategory, sumEntry);
-                return Constants.Success;
-
             }
-            catch (Exception ex)
-            {
-                Ui.PrintException(ex);
-                return Constants.IoError;
-            }
+
+            Ui.Success(Resources.SuccesImport, sumCategory, sumEntry);
+            return Constants.Success;
+
+        }
+        catch (Exception ex)
+        {
+            Ui.PrintException(ex);
+            return Constants.IoError;
         }
     }
 }

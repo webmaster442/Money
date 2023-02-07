@@ -1,53 +1,52 @@
 ﻿using System.IO.Compression;
 using System.Text;
 
-namespace Money.Commands
+namespace Money.Commands;
+
+internal sealed class ExportBackupCommand : AsyncCommand<ExportSetting>
 {
-    internal sealed class ExportBackupCommand : AsyncCommand<ExportSetting>
+    private readonly IReadonlyData _readonlyData;
+
+    public ExportBackupCommand(IReadonlyData readonlyData)
     {
-        private readonly IReadonlyData _readonlyData;
+        _readonlyData = readonlyData;
+    }
 
-        public ExportBackupCommand(IReadonlyData readonlyData)
+    public override async Task<int> ExecuteAsync(CommandContext context,
+                                                 ExportSetting settings)
+    {
+        try
         {
-            _readonlyData = readonlyData;
-        }
+            int recordCount = await _readonlyData.GetSpendingsCount();
 
-        public override async Task<int> ExecuteAsync(CommandContext context,
-                                                     ExportSetting settings)
-        {
-            try
+            using (FileStream stream = File.Create(settings.FileName))
             {
-                int recordCount = await _readonlyData.GetSpendingsCount();
-
-                using (FileStream stream = File.Create(settings.FileName))
+                using (GZipStream compressed = new GZipStream(stream, CompressionLevel.SmallestSize, true))
                 {
-                    using (GZipStream compressed = new GZipStream(stream, CompressionLevel.SmallestSize, true))
+                    using (StreamWriter writer = new StreamWriter(compressed, Encoding.UTF8))
                     {
-                        using (StreamWriter writer = new StreamWriter(compressed, Encoding.UTF8))
-                        {
-                            int pages = (recordCount / _readonlyData.ChunkSize) + 1;
+                        int pages = (recordCount / _readonlyData.ChunkSize) + 1;
 
-                            int offset = 0;
-                            for (int i = 0; i < pages; i++)
+                        int offset = 0;
+                        for (int i = 0; i < pages; i++)
+                        {
+                            List<Data.Dto.DataRow> data = await _readonlyData.ExportBackupAsync(offset);
+                            foreach (string? row in data.Select(x => x.ToCsvRow()))
                             {
-                                List<Data.Dto.DataRow> data = await _readonlyData.ExportBackupAsync(offset);
-                                foreach (string? row in data.Select(x => x.ToCsvRow()))
-                                {
-                                    writer.Write(row);
-                                }
-                                offset += _readonlyData.ChunkSize;
+                                writer.Write(row);
                             }
+                            offset += _readonlyData.ChunkSize;
                         }
                     }
                 }
-                Ui.Success(Resources.SuccessExport, recordCount, settings.FileName);
-                return Constants.Success;
             }
-            catch (Exception ex)
-            {
-                Ui.PrintException(ex);
-                return Constants.IoError;
-            }
+            Ui.Success(Resources.SuccessExport, recordCount, settings.FileName);
+            return Constants.Success;
+        }
+        catch (Exception ex)
+        {
+            Ui.PrintException(ex);
+            return Constants.IoError;
         }
     }
 }
