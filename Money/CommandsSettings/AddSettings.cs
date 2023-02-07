@@ -35,6 +35,9 @@ namespace Money.CommandsSettings
 
         public override ValidationResult Validate()
         {
+            if (BachMode)
+                return ValidationResult.Success();
+
             if (Ammount <= 0)
                 return ValidationResult.Error(Resources.ErrorAddNegativeAmmount);
 
