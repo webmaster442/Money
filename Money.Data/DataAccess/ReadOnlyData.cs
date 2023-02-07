@@ -43,7 +43,7 @@ public sealed class ReadOnlyData : DataAccessBase, IReadonlyData
     public Task<List<DataRow>> ExportBackupAsync(int startOffset)
     {
         using MoneyContext db = ConnectDatabase();
-        var query = db
+        IQueryable<Spending> query = db
             .Spendings
             .Include(s => s.Category)
             .Skip(startOffset)

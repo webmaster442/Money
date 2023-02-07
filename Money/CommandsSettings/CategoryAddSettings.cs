@@ -14,7 +14,7 @@ namespace Money.CommandsSettings
         [CommandOption("-b|--bach")]
         public bool BachMode { get; set; }
 
-        public CategoryAddSettings() 
+        public CategoryAddSettings()
         {
             CategoryName = string.Empty;
         }

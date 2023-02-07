@@ -100,9 +100,9 @@ namespace Money.Data.DataAccess
             int createdCategory = 0;
             foreach (string? category in rows.Select(x => x.CategoryName.ToLower()).Distinct())
             {
-                var result = await CreateCategoryAsync(category, db);
+                (bool success, ulong id) = await CreateCategoryAsync(category, db);
 
-                if (result.success)
+                if (success)
                     ++createdCategory;
             }
 

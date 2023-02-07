@@ -10,7 +10,7 @@ namespace Money.Data.DataAccess
 
         protected const int _ChunkSize = 50;
 
-        protected DataAccessBase(IDatabaseFileLocator databaseLocator) 
+        protected DataAccessBase(IDatabaseFileLocator databaseLocator)
         {
             _databaseLocator = databaseLocator;
         }

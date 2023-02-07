@@ -9,9 +9,9 @@ namespace Money.Data.Dto
         public double Ammount { get; set; }
         public string CategoryName { get; set; }
 
-        public UiDataRow() 
+        public UiDataRow()
         {
-            Description= string.Empty;
+            Description = string.Empty;
             CategoryName = string.Empty;
         }
 

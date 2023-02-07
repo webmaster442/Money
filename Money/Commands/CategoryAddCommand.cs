@@ -9,19 +9,19 @@
             _writeOnlyData = writeOnlyData;
         }
 
-        public override Task<int> ExecuteAsync(CommandContext context, 
+        public override Task<int> ExecuteAsync(CommandContext context,
                                                CategoryAddSettings settings)
         {
-            return settings.BachMode 
-                ? BachMode(settings) 
+            return settings.BachMode
+                ? BachMode(settings)
                 : SingleMode(settings);
         }
 
         private async Task<int> BachMode(CategoryAddSettings settings)
         {
             BachHandler<string> bachHandler = new(Resources.BachCategoryText, parts => parts[0]);
-            var bachInputs = bachHandler.DoBachInput();
-            foreach (var input in bachInputs)
+            IReadOnlyList<string> bachInputs = bachHandler.DoBachInput();
+            foreach (string input in bachInputs)
             {
                 (bool success, ulong id) = await _writeOnlyData.CreateCategoryAsync(input);
 

@@ -10,7 +10,7 @@
         {
             get
             {
-                using var db = ConnectDatabase();
+                using MoneyContext db = ConnectDatabase();
                 return db.Categories.Count();
             }
         }
@@ -19,7 +19,7 @@
         {
             get
             {
-                using var db = ConnectDatabase();
+                using MoneyContext db = ConnectDatabase();
                 return db.Spendings.Count();
             }
         }

@@ -24,7 +24,7 @@ namespace Money.UserInterface
             List<TResult> results = new(lines.Length);
 
             int errorLines = 0;
-            foreach (string line in lines) 
+            foreach (string line in lines)
             {
                 if (string.IsNullOrWhiteSpace(line) || line.StartsWith('#'))
                     continue;
@@ -52,13 +52,13 @@ namespace Money.UserInterface
 
         private static string CreateTempTxtFile()
         {
-            var tempName = Path.GetTempFileName();
+            string tempName = Path.GetTempFileName();
             return Path.ChangeExtension(tempName, ".txt");
         }
 
         private void WriteExplanationText(string fileName)
         {
-            using (var writer = File.CreateText(fileName))
+            using (StreamWriter writer = File.CreateText(fileName))
             {
                 writer.Write(_explanationText);
             }
@@ -66,7 +66,7 @@ namespace Money.UserInterface
 
         private static void RunEditorAndWaitForExit(string fileName)
         {
-            using (var process = new Process())
+            using (Process process = new Process())
             {
                 process.StartInfo.FileName = fileName;
                 process.StartInfo.UseShellExecute = true;
@@ -79,7 +79,7 @@ namespace Money.UserInterface
         {
             if (File.Exists(fileName))
             {
-                File.Delete(fileName); 
+                File.Delete(fileName);
             }
         }
 

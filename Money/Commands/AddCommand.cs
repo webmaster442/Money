@@ -15,7 +15,7 @@ namespace Money.Commands
 
         public override Task<int> ExecuteAsync(CommandContext context, AddSettings settings)
         {
-            return settings.BachMode 
+            return settings.BachMode
                 ? BachMode(settings)
                 : SingleMode(settings);
         }
@@ -34,9 +34,9 @@ namespace Money.Commands
         private async Task<int> BachMode(AddSettings settings)
         {
             BachHandler<UiDataRow> bachHandler = new(Resources.BachSpendingsText, SpendingParser);
-            var bachInputs = bachHandler.DoBachInput();
+            IReadOnlyList<UiDataRow> bachInputs = bachHandler.DoBachInput();
 
-            foreach (var input in bachInputs)
+            foreach (UiDataRow input in bachInputs)
             {
                 (bool success, ulong id) = await _writeOnlyData.InsertAsync(input.Ammount,
                                                                             input.Description,

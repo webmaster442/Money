@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
+﻿using System.Globalization;
 
 using Money.Data.Entities;
 
@@ -43,7 +42,7 @@ namespace Money.Data.Dto
 
         public string ToCsvRow()
         {
-            var c = CultureInfo.InvariantCulture;
+            CultureInfo c = CultureInfo.InvariantCulture;
             return $"{Date.ToString(c)};{Description};{Ammount.ToString(c)};{AddedOn.ToString(c)};{CategoryName}";
         }
     }

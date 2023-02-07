@@ -22,9 +22,9 @@ namespace Money.CommandsSettings
 
         public override ValidationResult Validate()
         {
-            var builder = new ValidationResultBuilder();
+            ValidationResultBuilder builder = new();
 
-            return 
+            return
                 builder
                 .AddIfNullOrWhiteSpace(OldCategoryName, Resources.ErrorCategoryNameNull)
                 .AddIfNullOrWhiteSpace(NewCategoryName, Resources.ErrorCategoryNameNull)

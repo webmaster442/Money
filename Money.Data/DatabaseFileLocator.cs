@@ -19,13 +19,13 @@ namespace Money.Data
 
         private static string GetPathDefault()
         {
-            var folder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string folder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             return Path.Combine(folder, FileName);
         }
 
         private static string GetPathWindows()
         {
-            var oneDrive = Environment.ExpandEnvironmentVariables(OneDriveCommercial);
+            string oneDrive = Environment.ExpandEnvironmentVariables(OneDriveCommercial);
 
             if (string.IsNullOrEmpty(oneDrive) || oneDrive == OneDriveCommercial)
                 oneDrive = Environment.ExpandEnvironmentVariables(OneDriveConsumer);

@@ -14,7 +14,7 @@ namespace Money.Tests
         [Test]
         public async Task Test_Import()
         {
-            var settings = new ImportSetting
+            ImportSetting settings = new ImportSetting
             {
                 FileName = DataFiles.ImportData1000,
             };
@@ -32,7 +32,7 @@ namespace Money.Tests
         [Test]
         public async Task Test_ImportPerformance()
         {
-            var settings = new ImportSetting
+            ImportSetting settings = new ImportSetting
             {
                 FileName = DataFiles.ImportData1000,
             };

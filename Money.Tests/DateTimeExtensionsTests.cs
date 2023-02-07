@@ -16,14 +16,14 @@ namespace Money.Tests
         [TestCase("2023.02.12", "2023.02.06", "2023.02.12")]
         public void TestGetWeekDays_HU(string input, string expectedStart, string expcectedEnd)
         {
-            var result = DateTime.Parse(input).GetWeekDays(new CultureInfo("Hu-hu"));
+            (DateOnly firstDay, DateOnly lastDay) = DateTime.Parse(input).GetWeekDays(new CultureInfo("Hu-hu"));
             DateOnly start = DateOnly.Parse(expectedStart);
             DateOnly end = DateOnly.Parse(expcectedEnd);
-            
+
             Assert.Multiple(() =>
             {
-                Assert.That(result.firstDay, Is.EqualTo(start));
-                Assert.That(result.lastDay, Is.EqualTo(end));
+                Assert.That(firstDay, Is.EqualTo(start));
+                Assert.That(lastDay, Is.EqualTo(end));
             });
         }
 
@@ -36,14 +36,14 @@ namespace Money.Tests
         [TestCase("2023.02.11", "2023.02.05", "2023.02.11")]
         public void TestGetWeekDays_USA(string input, string expectedStart, string expcectedEnd)
         {
-            var result = DateTime.Parse(input).GetWeekDays(new CultureInfo("En-us"));
+            (DateOnly firstDay, DateOnly lastDay) = DateTime.Parse(input).GetWeekDays(new CultureInfo("En-us"));
             DateOnly start = DateOnly.Parse(expectedStart);
             DateOnly end = DateOnly.Parse(expcectedEnd);
 
             Assert.Multiple(() =>
             {
-                Assert.That(result.firstDay, Is.EqualTo(start));
-                Assert.That(result.lastDay, Is.EqualTo(end));
+                Assert.That(firstDay, Is.EqualTo(start));
+                Assert.That(lastDay, Is.EqualTo(end));
             });
         }
     }

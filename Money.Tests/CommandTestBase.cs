@@ -1,7 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
 
-using Money.CommandsSettings;
-
 using Moq;
 
 using Spectre.Console.Cli;
@@ -15,15 +13,15 @@ namespace Money.Tests
         private string _dbFile;
         private Mock<IDatabaseFileLocator> _dbLocator;
 
-        protected ReadOnlyData ReadOnlyData { get; private set; }
-        protected WriteOnlyData WriteOnlyData { get; private set; }
-       
+        protected ReadOnlyData? ReadOnlyData { get; private set; }
+        protected WriteOnlyData? WriteOnlyData { get; private set; }
+
         protected DataFiles DataFiles { get; private set; }
         protected TCommand Sut { get; private set; }
 
         protected CommandContext DefaultContext { get; private set; }
 
-        protected TestTb TestTb { get; private set; }
+        protected TestTb? TestTb { get; private set; }
 
         [SetUp]
         public virtual void Setup()
