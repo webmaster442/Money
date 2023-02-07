@@ -95,7 +95,7 @@ public sealed class ReadOnlyData : DataAccessBase, IReadonlyData
         return GetSpendingsCount(db);
     }
 
-    public Task<List<DataRow>> Find(string what,
+    public Task<List<UiDataRow>> Find(string what,
                                     string? category,
                                     DateOnly? startDate,
                                     DateOnly? endDate,
@@ -128,7 +128,7 @@ public sealed class ReadOnlyData : DataAccessBase, IReadonlyData
         }
 
         return query
-            .Select(spending => new DataRow(spending))
+            .Select(spending => new UiDataRow(spending))
             .ToListAsync();
     }
 }
