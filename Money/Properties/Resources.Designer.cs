@@ -61,6 +61,35 @@ namespace Money.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to # Bach input mode for categories.
+        ///# Enter every category that you wish to add in a new line.
+        ///# When you are finished. Save the file and close the edior
+        ///# Note: blank lines and lines starting with # are ignored
+        ///.
+        /// </summary>
+        internal static string BachCategoryText {
+            get {
+                return ResourceManager.GetString("BachCategoryText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to # Bach input mode for Spendings.
+        ///# Enter every spending that you wish to add in a new line in the following format
+        ///#
+        ///# Date;Ammount;Description;Category
+        ///#
+        ///# When you are finished. Save the file and close the edior
+        ///# Note: blank lines and lines starting with # are ignored
+        ///.
+        /// </summary>
+        internal static string BachSpendingsText {
+            get {
+                return ResourceManager.GetString("BachSpendingsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a spending to the database.
         /// </summary>
         internal static string CmdAddDescription {
@@ -307,7 +336,7 @@ namespace Money.Properties {
         /// <summary>
         ///   Looks up a localized string similar to [7mMoney[0m
         ///
-        ///A spimple console expense manager software written in C#. It uses EntityFramework to store data and for console output Spectre.Console.
+        ///A simple console expense manager software written in C#. It uses EntityFramework to store data and for console output Spectre.Console.
         ///
         ///[4;93mUsage[0m
         ///
@@ -318,11 +347,11 @@ namespace Money.Properties {
         ///[48;2;155;155;155;38;2;30;30;30mUSAGE:[500@[0m
         ///[48;2;155;155;155;38;2;30;30;30m    money add [amount] [OPTIONS][500@[0m
         ///[48;2;155;155;155;38;2;30;30;30mARGUMENTS:[500@[0m
-        ///[48;2;155;155;1 [rest of string was truncated]&quot;;.
+        ///[48;2;155;155;15 [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string readme_render {
+        internal static string ReadmeRender {
             get {
-                return ResourceManager.GetString("readme_render", resourceCulture);
+                return ResourceManager.GetString("ReadmeRender", resourceCulture);
             }
         }
         

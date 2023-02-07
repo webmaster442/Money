@@ -22,6 +22,10 @@ namespace Money.CommandsSettings
         [CommandOption("-d|--date")]
         public DateOnly Date { get; init; }
 
+        [Description("Bach input. Allows to input multiple entries at once")]
+        [CommandOption("-b|--bach")]
+        public bool BachMode { get; set; }
+
         public AddSettings()
         {
             Text = string.Empty;

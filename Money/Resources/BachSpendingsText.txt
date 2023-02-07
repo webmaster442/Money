@@ -1,0 +1,7 @@
+﻿# Bach input mode for Spendings.
+# Enter every spending that you wish to add in a new line in the following format
+#
+# Date;Ammount;Description;Category
+#
+# When you are finished. Save the file and close the edior
+# Note: blank lines and lines starting with # are ignored

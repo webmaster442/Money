@@ -4,7 +4,7 @@
     {
         public override int Execute(CommandContext context)
         {
-            string[] lines = Resources.readme_render.Split('\n', StringSplitOptions.TrimEntries);
+            string[] lines = Resources.ReadmeRender.Split('\n', StringSplitOptions.TrimEntries);
             int chhunkSize = Console.WindowHeight - 2;
 
             foreach (string[] page in lines.Chunk(chhunkSize))

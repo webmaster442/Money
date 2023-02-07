@@ -1,0 +1,4 @@
+﻿# Bach input mode for categories.
+# Enter every category that you wish to add in a new line.
+# When you are finished. Save the file and close the edior
+# Note: blank lines and lines starting with # are ignored

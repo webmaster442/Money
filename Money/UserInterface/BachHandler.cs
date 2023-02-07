@@ -26,8 +26,10 @@ namespace Money.UserInterface
             int errorLines = 0;
             foreach (string line in lines) 
             {
-                string[] parts = line.Split(new char[] { ';', '\t', ' ' },
-                                            StringSplitOptions.RemoveEmptyEntries);
+                if (string.IsNullOrWhiteSpace(line) || line.StartsWith('#'))
+                    continue;
+
+                string[] parts = line.Split(';', StringSplitOptions.RemoveEmptyEntries);
                 try
                 {
                     TResult parsed = _parserDelegate.Invoke(parts);
@@ -77,7 +79,7 @@ namespace Money.UserInterface
         {
             if (File.Exists(fileName))
             {
-                File.Delete(fileName);
+                File.Delete(fileName); 
             }
         }
 
