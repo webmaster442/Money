@@ -60,6 +60,7 @@ public sealed class ReadOnlyData : DataAccessBase, IReadonlyData
         return db
             .Categories
             .Select(c => c.Description)
+            .Order() 
             .ToListAsync();
     }
 
@@ -115,16 +116,15 @@ public sealed class ReadOnlyData : DataAccessBase, IReadonlyData
             query = query.Where(x => x.Date <= endDate);
 
         if (!string.IsNullOrEmpty(category))
-            query = query.Where(x => x.Category.Description == category.ToLower());
+            query = query.Where(x => EF.Functions.Like(x.Category.Description, $"%{category}%"));
 
         if (!isRegex)
         {
-            query = query.Where(x => x.Description.Contains(what.ToLower()));
+            query = query.Where(x => EF.Functions.Like(x.Description, $"%{what}%"));
         }
         else
         {
-            Regex matcher = new(what, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            query = query.Where(x => matcher.IsMatch(x.Description));
+            query = query.Where(x => Regex.IsMatch(x.Description, what));
         }
 
         return query
