@@ -19,7 +19,11 @@ internal sealed class MoneyContext : DbContext
     public MoneyContext(IDatabaseFileLocator databaseFileLocator)
     {
         _dbLocator = databaseFileLocator;
-        Database.Migrate();
+
+        var toMigrate = Database.GetPendingMigrations().Any();
+
+        if (toMigrate)
+            Database.Migrate();
     }
 
     public override void Dispose()

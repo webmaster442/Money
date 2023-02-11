@@ -20,6 +20,10 @@ app.Configure(config =>
     config.SetApplicationName("money");
 
     config
+        .AddCommand<GenTestDataCommand>("gentestdata")
+        .IsHidden();
+
+    config
         .AddCommand<AddCommand>("add")
         .WithDescription(Resources.CmdAddDescription);
 
