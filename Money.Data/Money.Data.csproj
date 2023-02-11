@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="Money.Tests"/>
+    <InternalsVisibleTo Include="Money.Tests" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +20,10 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Money.Core\Money.Core.csproj" />
   </ItemGroup>
 
 </Project>
