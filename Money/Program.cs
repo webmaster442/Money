@@ -55,6 +55,11 @@ app.Configure(config =>
         export
             .AddCommand<ExportBackupCommand>("backup")
             .WithDescription(Resources.CmdExportBackupDescription);
+
+        export
+            .AddCommand<ExportReportCommand>("report")
+            .WithDescription("Export report");
+
     });
     config.AddBranch("import", import =>
     {
