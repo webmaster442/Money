@@ -12,11 +12,14 @@ internal sealed class MoneyContext : DbContext
 
     private readonly IDatabaseFileLocator _dbLocator;
 
+    public MoneyContext() : this(new DatabaseFileLocator())
+    {
+    }
 
     public MoneyContext(IDatabaseFileLocator databaseFileLocator)
     {
         _dbLocator = databaseFileLocator;
-        Database.EnsureCreated();
+        Database.Migrate();
     }
 
     public override void Dispose()
