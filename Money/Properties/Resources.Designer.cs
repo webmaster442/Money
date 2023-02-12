@@ -340,14 +340,14 @@ namespace Money.Properties {
         ///
         ///[4;93mUsage[0m
         ///
+        ///The program is a console application and can be operated via commands, like git.
+        ///
+        ///Selected commands offer Bach mode. In this input mode, the given command will open your text editor where you can specify multiple entries at once for editing.
+        ///
         ///[4;94mAdd[0m
         ///
         ///[48;2;155;155;155;38;2;30;30;30mDESCRIPTION:[500@[0m
-        ///[48;2;155;155;155;38;2;30;30;30mAdd a spending to the database[500@[0m
-        ///[48;2;155;155;155;38;2;30;30;30mUSAGE:[500@[0m
-        ///[48;2;155;155;155;38;2;30;30;30m    money add [amount] [OPTIONS][500@[0m
-        ///[48;2;155;155;155;38;2;30;30;30mARGUMENTS:[500@[0m
-        ///[48;2;155;155;15 [rest of string was truncated]&quot;;.
+        ///[48;2;155;155;155;38;2;30;3 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ReadmeRender {
             get {
@@ -460,6 +460,53 @@ namespace Money.Properties {
         internal static string StatTotalSpending {
             get {
                 return ResourceManager.GetString("StatTotalSpending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to body {
+        ///    font-family: Open Sans, Arial;
+        ///    color: #454545;
+        ///    font-size: 1em;
+        ///    margin: 2em auto;
+        ///    max-width: 1024px;
+        ///    padding: 1em;
+        ///    line-height: 1.4;
+        ///    text-align: justify
+        ///}
+        ///
+        ///a {
+        ///    color: #07a
+        ///}
+        ///
+        ///a:visited {
+        ///    color: #941352
+        ///}
+        ///
+        ///details summary {
+        ///    font-size: 1.5em;
+        ///    margin-bottom: 10px;
+        ///}
+        ///
+        ///table {
+        ///    width: 100%;
+        ///}
+        ///
+        ///td,
+        ///th {
+        ///    text-align: center;
+        ///}
+        ///
+        ///tr:nth-child(even) {
+        ///    background-color: #F5F5F5;
+        ///}
+        ///
+        ///tr:hover {
+        ///    background-color: cor [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string style {
+            get {
+                return ResourceManager.GetString("style", resourceCulture);
             }
         }
         

@@ -1,8 +1,7 @@
 {
   "profiles": {
     "Money": {
-      "commandName": "Project",
-      "commandLineArgs": "gentestdata"
+      "commandName": "Project"
     }
   }
 }
