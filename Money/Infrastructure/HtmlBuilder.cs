@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Numerics;
 using System.Reflection;
 using System.Text;
 
@@ -28,12 +29,28 @@ namespace Money.Core
                 .AppendLine("<div id=\"container\">");
         }
 
+        private static bool IsNumber(object? value)
+        {
+            if (value == null)
+                return false;
+
+            Type objType = value.GetType();
+            objType = Nullable.GetUnderlyingType(objType) ?? objType;
+
+            return objType == typeof(int)
+                || objType == typeof(long)
+                || objType == typeof(float)
+                || objType == typeof(double);
+        }
+
         private static string ToString(object? obj, CultureInfo culture)
         {
+            string? format = IsNumber(obj) ? "N0" : null;
+
             return obj switch
             {
+                IFormattable formattable => formattable.ToString(format, culture),
                 IConvertible convertible => convertible.ToString(culture),
-                IFormattable formattable => formattable.ToString(null, culture),
                 _ => obj?.ToString() ?? "null"
             };
         }

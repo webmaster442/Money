@@ -488,21 +488,14 @@ namespace Money.Properties {
         ///    margin-bottom: 10px;
         ///}
         ///
-        ///table {
-        ///    width: 100%;
-        ///}
+        ///    details summary pre {
+        ///        margin-top: 0px;
+        ///        margin-bottom: 0px;
+        ///        margin-left: 30px;
+        ///    }
         ///
-        ///td,
-        ///th {
-        ///    text-align: center;
-        ///}
-        ///
-        ///tr:nth-child(even) {
-        ///    background-color: #F5F5F5;
-        ///}
-        ///
-        ///tr:hover {
-        ///    background-color: cor [rest of string was truncated]&quot;;.
+        ///    details summary p {
+        ///        margin-top: 0px;        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string style {
             get {
@@ -543,6 +536,15 @@ namespace Money.Properties {
         internal static string SuccessExport {
             get {
                 return ResourceManager.GetString("SuccessExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report successfully written to {0}.
+        /// </summary>
+        internal static string SuccessReport {
+            get {
+                return ResourceManager.GetString("SuccessReport", resourceCulture);
             }
         }
         

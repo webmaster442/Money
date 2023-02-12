@@ -1,7 +1,8 @@
 {
   "profiles": {
     "Money": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "export report report.html"
     }
   }
 }
