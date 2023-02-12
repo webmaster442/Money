@@ -97,6 +97,19 @@ Selected commands offer Bach mode. In this input mode, the given command will op
 [48;2;155;155;155;38;2;30;30;30mOPTIONS:[500@[0m
 [48;2;155;155;155;38;2;30;30;30m    -h, --help    Prints help information[500@[0m
 
+[4;94mExport report[0m
+
+[48;2;155;155;155;38;2;30;30;30mDESCRIPTION:[500@[0m
+[48;2;155;155;155;38;2;30;30;30mExport a report to an html file[500@[0m
+[48;2;155;155;155;38;2;30;30;30mUSAGE:[500@[0m
+[48;2;155;155;155;38;2;30;30;30m    money export report [file] [start] [end] [OPTIONS][500@[0m
+[48;2;155;155;155;38;2;30;30;30mARGUMENTS:[500@[0m
+[48;2;155;155;155;38;2;30;30;30m    [file]     file name            [500@[0m
+[48;2;155;155;155;38;2;30;30;30m    [start]    Start date (optional)[500@[0m
+[48;2;155;155;155;38;2;30;30;30m    [end]      End date (optional)  [500@[0m
+[48;2;155;155;155;38;2;30;30;30mOPTIONS:[500@[0m
+[48;2;155;155;155;38;2;30;30;30m    -h, --help    Prints help information[500@[0m
+
 [4;94mImport backup[0m
 
 [48;2;155;155;155;38;2;30;30;30mDESCRIPTION:[500@[0m

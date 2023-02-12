@@ -131,6 +131,24 @@ OPTIONS:
     -h, --help    Prints help information
 ```
 
+### Export report
+
+```
+DESCRIPTION:
+Export a report to an html file
+
+USAGE:
+    money export report [file] [start] [end] [OPTIONS]
+
+ARGUMENTS:
+    [file]     file name            
+    [start]    Start date (optional)
+    [end]      End date (optional)  
+
+OPTIONS:
+    -h, --help    Prints help information
+```
+
 ### Import backup
 
 ```

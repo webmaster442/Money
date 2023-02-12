@@ -148,6 +148,9 @@
   <data name="CmdExportExcelDescription" xml:space="preserve">
     <value>Export data to excel xlsx file</value>
   </data>
+  <data name="CmdExportReportDescription" xml:space="preserve">
+    <value>Export a report to an html file</value>
+  </data>
   <data name="CmdFindDescription" xml:space="preserve">
     <value>Search spendings in the database</value>
   </data>

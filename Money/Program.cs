@@ -58,7 +58,7 @@ app.Configure(config =>
 
         export
             .AddCommand<ExportReportCommand>("report")
-            .WithDescription("Export report");
+            .WithDescription(Resources.CmdExportReportDescription);
 
     });
     config.AddBranch("import", import =>

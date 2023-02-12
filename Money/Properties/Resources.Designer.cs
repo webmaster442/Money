@@ -162,6 +162,15 @@ namespace Money.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export a report to an html file.
+        /// </summary>
+        internal static string CmdExportReportDescription {
+            get {
+                return ResourceManager.GetString("CmdExportReportDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search spendings in the database.
         /// </summary>
         internal static string CmdFindDescription {
