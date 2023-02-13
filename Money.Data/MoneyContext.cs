@@ -20,7 +20,7 @@ internal sealed class MoneyContext : DbContext
     {
         _dbLocator = databaseFileLocator;
 
-        var toMigrate = Database.GetPendingMigrations().Any();
+        bool toMigrate = Database.GetPendingMigrations().Any();
 
         if (toMigrate)
             Database.Migrate();

@@ -13,9 +13,9 @@ public sealed class WriteOnlyData : DataAccessBase, IWriteOnlyData
     {
     }
 
-    private static ulong CreateId(long currentTime)
+    private static ulong CreateId()
     {
-        byte[] buffer = BitConverter.GetBytes(currentTime);
+        byte[] buffer = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
         byte[] random = RandomNumberGenerator.GetBytes(buffer.Length);
         for (int i = 0; i < buffer.Length; i++)
         {
@@ -38,7 +38,7 @@ public sealed class WriteOnlyData : DataAccessBase, IWriteOnlyData
 
         Spending entity = new Spending
         {
-            Id = CreateId(DateTime.UtcNow.ToBinary()),
+            Id = CreateId(),
             Date = date,
             Description = text,
             Ammount = ammount,
@@ -68,7 +68,7 @@ public sealed class WriteOnlyData : DataAccessBase, IWriteOnlyData
 
         Category toInsert = new Category
         {
-            Id = CreateId(DateTime.Now.ToBinary()),
+            Id = CreateId(),
             Description = categoryName.ToLower(),
         };
 
@@ -93,37 +93,6 @@ public sealed class WriteOnlyData : DataAccessBase, IWriteOnlyData
         return await db.SaveChangesAsync() == 1;
     }
 
-    public async Task<(int createdCategory, int createdEntry)> ImportAsync(IEnumerable<DataRow> rows)
-    {
-        using MoneyContext db = ConnectDatabase();
-
-        int createdCategory = 0;
-        foreach (string? category in rows.Select(x => x.CategoryName.ToLower()).Distinct())
-        {
-            (bool success, ulong id) = await CreateCategoryAsync(category, db);
-
-            if (success)
-                ++createdCategory;
-        }
-
-        Dictionary<string, Category> categories = db.Categories.ToDictionary(x => x.Description, x => x);
-
-        IEnumerable<Spending> bulk = rows.Select(row => new Spending
-        {
-            Date = new DateOnly(row.Date.Year, row.Date.Month, row.Date.Day),
-            Description = row.Description,
-            AddedOn = row.AddedOn,
-            Ammount = row.Ammount,
-            Category = categories[row.CategoryName.ToLower()],
-            Id = CreateId(DateTime.UtcNow.ToBinary()),
-        });
-
-        db.Spendings.AddRange(bulk);
-        int createdEntry = await db.SaveChangesAsync();
-
-        return (createdCategory, createdEntry);
-    }
-
     public Task<int> ClearDb()
     {
         using MoneyContext db = ConnectDatabase();
@@ -133,5 +102,51 @@ public sealed class WriteOnlyData : DataAccessBase, IWriteOnlyData
 
         return db.SaveChangesAsync();
 
+    }
+
+    private async Task<int> CreateCategories(MoneyContext context, IEnumerable<IDataRowBase> rows)
+    {
+        int createdCategories = 0;
+        foreach (string? category in rows.Select(x => x.CategoryName.ToLower()).Distinct())
+        {
+            (bool success, ulong id) = await CreateCategoryAsync(category, context);
+
+            if (success)
+                ++createdCategories;
+        }
+        return createdCategories;
+    }
+
+    public async Task<(int createdCategory, int createdEntry)> ImportAsync(IEnumerable<DataRowExcel> rows)
+    {
+        using MoneyContext db = ConnectDatabase();
+        int categoryCount = await CreateCategories(db, rows);
+
+        Dictionary<string, Category> categories = db.Categories.ToDictionary(x => x.Description, x => x);
+
+        IEnumerable<Spending> bulk = rows
+            .Select(data => DtoAdapter.ToSpending(data, CreateId, categories[data.CategoryName.ToLower()]));
+
+        db.Spendings.AddRange(bulk);
+        int createdEntry = await db.SaveChangesAsync();
+
+        return (categoryCount, createdEntry);
+
+    }
+
+    public async Task<(int createdCategory, int createdEntry)> ImportBackupAsync(IEnumerable<DataRowBackup> rows)
+    {
+        using MoneyContext db = ConnectDatabase();
+        int categoryCount = await CreateCategories(db, rows);
+
+        Dictionary<string, Category> categories = db.Categories.ToDictionary(x => x.Description, x => x);
+
+        IEnumerable<Spending> bulk = rows
+            .Select(data => DtoAdapter.ToSpending(data, CreateId, categories[data.CategoryName.ToLower()]));
+
+        db.Spendings.AddRange(bulk);
+        int createdEntry = await db.SaveChangesAsync();
+
+        return (categoryCount, createdEntry);
     }
 }

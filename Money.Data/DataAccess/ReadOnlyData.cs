@@ -1,4 +1,5 @@
 ﻿
+using System.Data;
 using System.Text.RegularExpressions;
 
 using Microsoft.EntityFrameworkCore;
@@ -16,51 +17,13 @@ public sealed class ReadOnlyData : DataAccessBase, IReadonlyData
     {
     }
 
-    public Task<List<DataRow>> ExportAsync(DateOnly? start = null, DateOnly? end = null)
-    {
-        using MoneyContext db = ConnectDatabase();
-        IQueryable<Spending> query = db
-            .Spendings
-            .Include(s => s.Category)
-            .AsQueryable();
-
-        if (start != null)
-            query = query.Where(x => x.Date >= start);
-
-        if (end != null)
-            query = query.Where(x => x.Date <= end);
-
-        return query.Select(spending => new DataRow
-        {
-            Date = spending.Date.ToDateTime(TimeOnly.MinValue),
-            Description = spending.Description,
-            AddedOn = spending.AddedOn,
-            Ammount = spending.Ammount,
-            CategoryName = spending.Category.Description
-        }).ToListAsync();
-    }
-
-    public Task<List<DataRow>> ExportBackupAsync(int startOffset)
-    {
-        using MoneyContext db = ConnectDatabase();
-        IQueryable<Spending> query = db
-            .Spendings
-            .Include(s => s.Category)
-            .Skip(startOffset)
-            .Take(_ChunkSize);
-
-        return query
-            .Select(spending => new DataRow(spending))
-            .ToListAsync();
-    }
-
     public Task<List<string>> GetCategoriesAsync()
     {
         using MoneyContext db = ConnectDatabase();
         return db
             .Categories
             .Select(c => c.Description)
-            .Order() 
+            .Order()
             .ToListAsync();
     }
 
@@ -96,7 +59,7 @@ public sealed class ReadOnlyData : DataAccessBase, IReadonlyData
         return GetSpendingsCount(db);
     }
 
-    public Task<List<UiDataRow>> Find(string what,
+    public Task<List<DataRowUi>> Find(string what,
                                     string? category,
                                     DateOnly? startDate,
                                     DateOnly? endDate,
@@ -128,7 +91,40 @@ public sealed class ReadOnlyData : DataAccessBase, IReadonlyData
         }
 
         return query
-            .Select(spending => new UiDataRow(spending))
+            .Select(spending => DtoAdapter.ToDataRowUi(spending))
+            .ToListAsync();
+    }
+
+    public Task<List<DataRowExcel>> ExportAsync(DateOnly? start = null, DateOnly? end = null)
+    {
+        using MoneyContext db = ConnectDatabase();
+        IQueryable<Spending> query = db
+            .Spendings
+            .Include(s => s.Category)
+            .AsQueryable();
+
+        if (start != null)
+            query = query.Where(x => x.Date >= start);
+
+        if (end != null)
+            query = query.Where(x => x.Date <= end);
+
+        return query
+            .Select(spending => DtoAdapter.ToDataRowExcel(spending))
+            .ToListAsync();
+    }
+
+    public Task<List<DataRowBackup>> ExportBackupAsync(int startOffset)
+    {
+        using MoneyContext db = ConnectDatabase();
+        IQueryable<Spending> query = db
+            .Spendings
+            .Include(s => s.Category)
+            .Skip(startOffset)
+            .Take(_ChunkSize);
+
+        return query
+            .Select(spending => DtoAdapter.ToDataRowBackup(spending))
             .ToListAsync();
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.IO.Compression;
 using System.Text;
 
+using Money.Data.Dto;
+
 namespace Money.Commands;
 
 internal sealed class ExportBackupCommand : AsyncCommand<ExportSetting>
@@ -30,8 +32,8 @@ internal sealed class ExportBackupCommand : AsyncCommand<ExportSetting>
                         int offset = 0;
                         for (int i = 0; i < pages; i++)
                         {
-                            List<Data.Dto.DataRow> data = await _readonlyData.ExportBackupAsync(offset);
-                            foreach (string? row in data.Select(x => x.ToCsvRow()))
+                            List<DataRowBackup> data = await _readonlyData.ExportBackupAsync(offset);
+                            foreach (string? row in data.Select(DtoAdapter.ToCsvLine))
                             {
                                 writer.Write(row);
                             }

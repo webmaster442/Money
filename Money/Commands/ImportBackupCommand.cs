@@ -18,7 +18,7 @@ internal sealed class ImportBackupCommand : AsyncCommand<ImportSetting>
     public override async Task<int> ExecuteAsync(CommandContext context,
                                                  ImportSetting settings)
     {
-        List<DataRow> buffer = new(_writeOnlyData.ChunkSize);
+        List<DataRowBackup> buffer = new(_writeOnlyData.ChunkSize);
         int sumCategory = 0;
         int sumEntry = 0;
 
@@ -43,19 +43,19 @@ internal sealed class ImportBackupCommand : AsyncCommand<ImportSetting>
 
                     if (buffer.Count > (_writeOnlyData.ChunkSize - 1))
                     {
-                        (int createdCategory, int createdEntry) = await _writeOnlyData.ImportAsync(buffer);
+                        (int createdCategory, int createdEntry) = await _writeOnlyData.ImportBackupAsync(buffer);
                         buffer.Clear();
                         sumCategory += createdCategory;
                         sumEntry += createdEntry;
                     }
 
-                    buffer.Add(DataRow.Parse(line));
+                    buffer.Add(DtoAdapter.FromCsvLine(line));
                 }
             }
 
             if (buffer.Count > 0)
             {
-                (int createdCategory, int createdEntry) = await _writeOnlyData.ImportAsync(buffer);
+                (int createdCategory, int createdEntry) = await _writeOnlyData.ImportBackupAsync(buffer);
                 buffer.Clear();
                 sumCategory += createdCategory;
                 sumEntry += createdEntry;

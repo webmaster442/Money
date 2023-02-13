@@ -13,7 +13,7 @@ internal sealed class CreateExcelTemplateCommand : AsyncCommand<CreateExcelTempl
 
         try
         {
-            List<DataRow> data = new List<DataRow>();
+            List<DataRowExcel> data = new List<DataRowExcel>();
 
             using (FileStream srtream = File.Create(settings.FileName))
             {

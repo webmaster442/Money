@@ -20,8 +20,8 @@ internal sealed class ImportExcelCommand : AsyncCommand<ImportSetting>
             int sumEntry = 0;
             using (FileStream stream = File.OpenRead(settings.FileName))
             {
-                IEnumerable<Data.Dto.DataRow[]> chunks = MiniExcel.Query<Data.Dto.DataRow>(stream).Chunk(_writeOnlyData.ChunkSize);
-                foreach (Data.Dto.DataRow[] chunk in chunks)
+                IEnumerable<Data.Dto.DataRowExcel[]> chunks = MiniExcel.Query<Data.Dto.DataRowExcel>(stream).Chunk(_writeOnlyData.ChunkSize);
+                foreach (Data.Dto.DataRowExcel[] chunk in chunks)
                 {
                     (int createdCategory, int createdEntry) = await _writeOnlyData.ImportAsync(chunk);
                     sumCategory += createdCategory;

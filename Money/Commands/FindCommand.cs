@@ -14,7 +14,7 @@ internal sealed class FindCommand : AsyncCommand<FindSettings>
     public override async Task<int> ExecuteAsync(CommandContext context,
                                            FindSettings settings)
     {
-        List<UiDataRow> data = await _readonlyData.Find(settings.SearchTerm,
+        List<DataRowUi> data = await _readonlyData.Find(settings.SearchTerm,
                                                         settings.Category,
                                                         settings.StartDate,
                                                         settings.EndDate,

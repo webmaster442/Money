@@ -1,5 +1,7 @@
 ﻿using MiniExcelLibs;
 
+using Money.Data.Dto;
+
 namespace Money.Commands;
 
 internal sealed class ExportExcelCommand : AsyncCommand<ExportSetting>
@@ -18,7 +20,7 @@ internal sealed class ExportExcelCommand : AsyncCommand<ExportSetting>
 
         try
         {
-            IList<Data.Dto.DataRow> data = await _readonlyData.ExportAsync(settings.StartDate, settings.EndDate);
+            IList<DataRowExcel> data = await _readonlyData.ExportAsync(settings.StartDate, settings.EndDate);
 
             using (FileStream srtream = File.Create(settings.FileName))
             {

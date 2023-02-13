@@ -1,13 +1,11 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace Money.Extensions;
+﻿namespace Money.Extensions;
 
 internal static class SettingExtensions
 {
     private static string ChangeExtensionIfNeeded(string fileName, string targetExtension)
     {
         string extension = Path.GetExtension(fileName).ToLower();
-        
+
         if (string.IsNullOrEmpty(extension) || extension != targetExtension)
             return Path.ChangeExtension(fileName, targetExtension);
 
@@ -26,13 +24,13 @@ internal static class SettingExtensions
 
     public static void EnsureHasDate(this ExportSetting exportSetting)
     {
-        var month = DateTime.Now.GetMonthDays();
+        (DateOnly firstDay, DateOnly lastDay) = DateTime.Now.GetMonthDays();
 
         if (exportSetting.StartDate == null)
-            exportSetting.StartDate = month.firstDay;
+            exportSetting.StartDate = firstDay;
 
         if (exportSetting.EndDate == null)
-            exportSetting.EndDate = month.lastDay;
+            exportSetting.EndDate = lastDay;
 
     }
 

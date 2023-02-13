@@ -34,22 +34,21 @@ internal class GenTestDataCommand : AsyncCommand
 
         const int count = 100_000;
 
-        var rows = new List<DataRow>(count);
-        for (int i=0; i< count; i++)
+        List<DataRowExcel> rows = new List<DataRowExcel>(count);
+        for (int i = 0; i < count; i++)
         {
-            rows.Add(new DataRow
+            rows.Add(new DataRowExcel
             {
                 Date = RandomDate(DateTime.Now),
-                AddedOn = DateTime.Now,
-                Ammount = Random.Shared.Next(1000, 250_000),
+                Ammount = Random.Shared.Next(1000, 100_000),
                 CategoryName = _categories[Random.Shared.Next(0, _categories.Length)],
                 Description = $"Spending item {i}",
-            }) ;
+            });
         }
 
-        var result = await _writeOnlyData.ImportAsync(rows);
+        (int createdCategory, int createdEntry) = await _writeOnlyData.ImportAsync(rows);
 
-        Ui.Success(Resources.SuccesImport, result.createdCategory, result.createdEntry);
+        Ui.Success(Resources.SuccesImport, createdCategory, createdEntry);
         return Constants.Success;
     }
 }

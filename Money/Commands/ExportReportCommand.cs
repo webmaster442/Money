@@ -15,15 +15,15 @@ internal class ExportReportCommand : AsyncCommand<ExportSetting>
         settings.EnsureHasDate();
         settings.AppendHtmlToFileNameWhenNeeded();
 
-        var stats = await _readonlyData.GetStatisticsAsync(settings.StartDate!.Value,
+        Data.Dto.Statistics stats = await _readonlyData.GetStatisticsAsync(settings.StartDate!.Value,
                                                            settings.EndDate!.Value);
-        var data = await _readonlyData.Find(string.Empty,
+        List<Data.Dto.DataRowUi> data = await _readonlyData.Find(string.Empty,
                                             string.Empty,
                                             settings.StartDate,
                                             settings.EndDate,
                                             false);
 
-        var html = ReportFactory.CreateReport(data,
+        string html = ReportFactory.CreateReport(data,
                                               stats,
                                               settings.StartDate!.Value,
                                               settings.EndDate!.Value);

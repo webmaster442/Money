@@ -20,23 +20,12 @@ internal sealed class AddCommand : AsyncCommand<AddSettings>
             : SingleMode(settings);
     }
 
-    private UiDataRow SpendingParser(string[] parts)
-    {
-        return new UiDataRow
-        {
-            Date = DateOnly.Parse(parts[0], CultureInfo.CurrentUICulture),
-            Ammount = double.Parse(parts[1], CultureInfo.CurrentUICulture),
-            Description = parts[2],
-            CategoryName = parts[3],
-        };
-    }
-
     private async Task<int> BachMode(AddSettings settings)
     {
-        BachHandler<UiDataRow> bachHandler = new(Resources.BachSpendingsText, SpendingParser);
-        IReadOnlyList<UiDataRow> bachInputs = bachHandler.DoBachInput();
+        BachHandler<DataRowUi> bachHandler = new(Resources.BachSpendingsText, DtoAdapter.DataRowUiFromParts);
+        IReadOnlyList<DataRowUi> bachInputs = bachHandler.DoBachInput();
 
-        foreach (UiDataRow input in bachInputs)
+        foreach (DataRowUi input in bachInputs)
         {
             (bool success, ulong id) = await _writeOnlyData.InsertAsync(input.Ammount,
                                                                         input.Description,

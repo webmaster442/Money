@@ -1,24 +1,22 @@
 ﻿using System.Globalization;
-using System.Net;
 
-using Money.Core;
 using Money.Data.Dto;
 
 namespace Money.Infrastructure;
 internal static class ReportFactory
 {
-    private static string HeaderStatistics(IEnumerable<UiDataRow> items, double total)
+    private static string HeaderStatistics(IEnumerable<DataRowUi> items, double total)
     {
         double sum = 0;
         double min = double.MaxValue;
         double max = double.MinValue;
         int count = 0;
 
-        foreach (var item in items) 
+        foreach (DataRowUi item in items)
         {
             ++count;
             sum += item.Ammount;
-            if (item.Ammount < min) 
+            if (item.Ammount < min)
                 min = item.Ammount;
             if (item.Ammount > max)
                 max = item.Ammount;
@@ -37,14 +35,14 @@ internal static class ReportFactory
             $"</p></pre>";
     }
 
-    public static string CreateReport(IEnumerable<UiDataRow> data, 
+    public static string CreateReport(IEnumerable<DataRowUi> data,
                                       Statistics statistics,
                                       DateOnly startDate,
                                       DateOnly endDate)
     {
         HtmlBuilder html = new("Report", CultureInfo.CurrentUICulture);
 
-        var dates = data.GroupBy(x => x.Date);
+        IEnumerable<IGrouping<DateOnly, DataRowUi>> dates = data.GroupBy(x => x.Date);
 
         html.Heading(1, string.Format(Resources.StatFromToHeader, startDate, endDate));
 
@@ -57,7 +55,7 @@ internal static class ReportFactory
             { Resources.StatAveragePerDay, statistics.AvgPerDay.ToString("C0") },
         };
 
-        foreach (var item in statistics.SumPerCategory)
+        foreach (KeyValuePair<string, double> item in statistics.SumPerCategory)
         {
             statTable.Add(item.Key, item.Value.ToString("C0"));
         }
@@ -66,7 +64,7 @@ internal static class ReportFactory
 
         html.Heading(1, "Details");
 
-        foreach (var date in dates)
+        foreach (IGrouping<DateOnly, DataRowUi> date in dates)
         {
             html.Details($"{date.Key} {HeaderStatistics(date, statistics.Sum)}",
                          (content) => content.Table(date));
