@@ -166,6 +166,9 @@
   <data name="CmdImportTemplateDescription" xml:space="preserve">
     <value>Create excel template for importing</value>
   </data>
+  <data name="CmdSettingsDescription" xml:space="preserve">
+    <value>Open program settings in editor...</value>
+  </data>
   <data name="CmdStatDescription" xml:space="preserve">
     <value>Display statistics about spendings</value>
   </data>
@@ -265,6 +268,9 @@ Create it first with the category add command</value>
   </data>
   <data name="SuccessReport" xml:space="preserve">
     <value>Report successfully written to {0}</value>
+  </data>
+  <data name="SuccessSettingsOpen" xml:space="preserve">
+    <value>Opening settings in editor...</value>
   </data>
   <data name="WarnWillReplaceDbContents" xml:space="preserve">
     <value>Warning. Importing a backup will replace the database contents with the contents in the backup. Do you want to continue?</value>

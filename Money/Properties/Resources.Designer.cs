@@ -216,6 +216,15 @@ namespace Money.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open program settings in editor....
+        /// </summary>
+        internal static string CmdSettingsDescription {
+            get {
+                return ResourceManager.GetString("CmdSettingsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Display statistics about spendings.
         /// </summary>
         internal static string CmdStatDescription {
@@ -554,6 +563,15 @@ namespace Money.Properties {
         internal static string SuccessReport {
             get {
                 return ResourceManager.GetString("SuccessReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opening settings in editor....
+        /// </summary>
+        internal static string SuccessSettingsOpen {
+            get {
+                return ResourceManager.GetString("SuccessSettingsOpen", resourceCulture);
             }
         }
         

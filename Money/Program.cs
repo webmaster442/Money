@@ -20,6 +20,10 @@ app.Configure(config =>
     config.SetApplicationName("money");
 
     config
+        .AddCommand<SettingsCommand>("settings")
+        .WithDescription(Resources.CmdSettingsDescription);
+
+    config
         .AddCommand<GenTestDataCommand>("gentestdata")
         .IsHidden();
 
@@ -30,6 +34,10 @@ app.Configure(config =>
     config
         .AddCommand<FindCommand>("find")
         .WithDescription(Resources.CmdFindDescription);
+
+    config
+        .AddCommand<StatCommand>("stat")
+        .WithDescription(Resources.CmdStatDescription);
 
     config.AddBranch("category", category =>
     {
@@ -76,10 +84,6 @@ app.Configure(config =>
             .AddCommand<ImportBackupCommand>("backup")
             .WithDescription(Resources.CmdImportBackupDescription);
     });
-
-    config
-        .AddCommand<StatCommand>("stat")
-        .WithDescription(Resources.CmdStatDescription);
 });
 
-return app.Run(args);
+await app.RunAsync(args);
