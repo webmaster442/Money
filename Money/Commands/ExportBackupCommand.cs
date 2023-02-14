@@ -28,16 +28,13 @@ internal sealed class ExportBackupCommand : AsyncCommand<ExportSetting>
                     using (StreamWriter writer = new StreamWriter(compressed, Encoding.UTF8))
                     {
                         int pages = (recordCount / _readonlyData.ChunkSize) + 1;
-
-                        int offset = 0;
                         for (int i = 0; i < pages; i++)
                         {
-                            List<DataRowBackup> data = await _readonlyData.ExportBackupAsync(offset);
-                            foreach (string? row in data.Select(DtoAdapter.ToCsvLine))
+                            await foreach (var data in _readonlyData.ExportBackupAsync())
                             {
-                                writer.Write(row);
+                                string row = DtoAdapter.ToCsvLine(data);
+                                writer.WriteLine(row);
                             }
-                            offset += _readonlyData.ChunkSize;
                         }
                     }
                 }

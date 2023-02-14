@@ -11,8 +11,6 @@ namespace Money.Data.DataAccess;
 
 public sealed class ReadOnlyData : DataAccessBase, IReadonlyData
 {
-    int IReadonlyData.ChunkSize => _ChunkSize;
-
     public ReadOnlyData(IDatabaseFileLocator databaseLocator) : base(databaseLocator)
     {
     }
@@ -114,17 +112,41 @@ public sealed class ReadOnlyData : DataAccessBase, IReadonlyData
             .ToListAsync();
     }
 
-    public Task<List<DataRowBackup>> ExportBackupAsync(int startOffset)
+    public async IAsyncEnumerable<DataRowBackup> ExportBackupAsync()
+    {
+        using MoneyContext db = ConnectDatabase();
+        IQueryable<Spending> query = db
+            .Spendings
+            .Include(s => s.Category);
+
+        await foreach (var item in query.AsAsyncEnumerable())
+        {
+            yield return DtoAdapter.ToDataRowBackup(item);
+        }
+    }
+
+    public async IAsyncEnumerable<DataRowBackup> ExportBackupAsync(DateTime startDate)
     {
         using MoneyContext db = ConnectDatabase();
         IQueryable<Spending> query = db
             .Spendings
             .Include(s => s.Category)
-            .Skip(startOffset)
-            .Take(_ChunkSize);
+            .Where(s => s.AddedOn >= startDate)
+            .OrderBy(s => s.AddedOn);
 
-        return query
-            .Select(spending => DtoAdapter.ToDataRowBackup(spending))
-            .ToListAsync();
+        await foreach (var item in query.AsAsyncEnumerable())
+        {
+            yield return DtoAdapter.ToDataRowBackup(item);
+        }
+    }
+
+    public Task<DateTime> GetLastInsertDate()
+    {
+        using MoneyContext db = ConnectDatabase();
+
+        return db.Spendings
+            .OrderByDescending(x => x.AddedOn)
+            .Select(x => x.AddedOn)
+            .FirstOrDefaultAsync();
     }
 }

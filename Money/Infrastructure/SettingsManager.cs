@@ -1,12 +1,12 @@
 ﻿using System.Text.Json;
 
 namespace Money.Infrastructure;
-internal static class SettingsManager
+internal class SettingsManager : ISettingsManager
 {
-    public static Settings Load()
+    public Settings Load()
     {
         var contents = File.ReadAllText(FileName);
-        return 
+        return
             JsonSerializer.Deserialize<Settings>(contents, new JsonSerializerOptions
             {
                 WriteIndented = true,
@@ -14,7 +14,7 @@ internal static class SettingsManager
             ?? throw new InvalidOperationException("Settings serialize error");
     }
 
-    public static string FileName
+    public string FileName
     {
         get
         {
@@ -23,7 +23,7 @@ internal static class SettingsManager
         }
     }
 
-    public static void Save(Settings settings)
+    public void Save(Settings settings)
     {
         var contents = JsonSerializer.Serialize<Settings>(settings, new JsonSerializerOptions
         {
