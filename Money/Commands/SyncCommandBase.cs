@@ -47,16 +47,19 @@ internal abstract class SyncCommandBase : AsyncCommand
         return addCode + pushCode + commitCode;
     }
 
-    protected async Task<DateTime> GetLastInsertDateFile(string directory)
+    protected bool TryGetLastInsertDateFile(string directory, out DateTime dateTime)
     {
         var file = Path.Combine(directory, "last.sync");
         if (!File.Exists(file))
         {
-            return DateTime.MinValue;
+            dateTime = DateTime.MinValue;
+            return false;
+ 
         }
 
-        var text = await File.ReadAllTextAsync(file);
+        var text = File.ReadAllText(file);
 
-        return DateTime.Parse(text, CultureInfo.InvariantCulture);
+        dateTime = DateTime.Parse(text, CultureInfo.InvariantCulture);
+        return true;
     }
 }

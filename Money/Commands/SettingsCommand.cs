@@ -5,15 +5,22 @@ using Money.Infrastructure;
 namespace Money.Commands;
 internal class SettingsCommand : Command
 {
+    private readonly ISettingsManager _settingsManager;
+
+    public SettingsCommand(ISettingsManager settingsManager)
+    {
+        _settingsManager = settingsManager;
+    }
+
     public override int Execute(CommandContext context)
     {
-        if (!File.Exists(SettingsManager.FileName))
+        if (!File.Exists(_settingsManager.FileName))
         {
-            SettingsManager.Save(new Settings());
+            _settingsManager.Save(new Settings());
         }
 
         Ui.Success(Resources.SuccessSettingsOpen);
-        OpenEditor(SettingsManager.FileName);
+        OpenEditor(_settingsManager.FileName);
         return Constants.Success;
     }
 

@@ -8,10 +8,10 @@ internal sealed class SyncPushCommand : SyncCommandBase
     private readonly IReadonlyData _readonlyData;
     private readonly Settings _settings;
 
-    public SyncPushCommand(IReadonlyData readonlyData, Settings settings)
+    public SyncPushCommand(IReadonlyData readonlyData, ISettingsManager settingsManager)
     {
         _readonlyData = readonlyData;
-        _settings = settings;
+        _settings = settingsManager.Load();
     }
 
     private async Task WriteToFile(string currentFileName, List<string> rowBuffer)
@@ -22,8 +22,19 @@ internal sealed class SyncPushCommand : SyncCommandBase
 
     public override async Task<int> ExecuteAsync(CommandContext context)
     {
-        DateTime lastOnDisk = await GetLastInsertDateFile(_settings.GitRepoPathUsedForSyncOnDisk);
+        var result = _settings.Validate();
+        if (!result.Successful)
+        {
+            return Ui.Error(result.Message ?? "");
+        }
+
         DateTime lastOnDB = await _readonlyData.GetLastInsertDate();
+
+        if (!TryGetLastInsertDateFile(_settings.GitRepoPathUsedForSyncOnDisk, out DateTime lastOnDisk))
+        {
+            lastOnDisk = await _readonlyData.GetFirstInsertDate();
+        }
+
 
         if (lastOnDB <= lastOnDisk)
         {
@@ -33,14 +44,14 @@ internal sealed class SyncPushCommand : SyncCommandBase
         string lastFileName = $"{lastOnDisk.Year}-{lastOnDisk.Month}-{lastOnDisk.Day}.csv";
         string currentFileName = $"{lastOnDisk.Year}-{lastOnDisk.Month}-{lastOnDisk.Day}.csv";
 
-        List<string> rowBuffer = new(100);
+        List<string> rowBuffer = new(200);
 
         await foreach (var data in _readonlyData.ExportBackupAsync(lastOnDisk))
         {
-            currentFileName = $"{lastOnDisk.Year}-{lastOnDisk.Month}-{lastOnDisk.Day}.csv";
+            currentFileName = $"{data.AddedOn.Year}-{data.AddedOn.Month}-{data.AddedOn.Day}.csv";
             
             if (currentFileName != lastFileName 
-                || rowBuffer.Count > 99)
+                || rowBuffer.Count > 199)
             {
                 await WriteToFile(currentFileName, rowBuffer);
                 rowBuffer.Clear();

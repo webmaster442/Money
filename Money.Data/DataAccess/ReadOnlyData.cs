@@ -11,6 +11,8 @@ namespace Money.Data.DataAccess;
 
 public sealed class ReadOnlyData : DataAccessBase, IReadonlyData
 {
+    int IReadonlyData.ChunkSize => _ChunkSize;
+
     public ReadOnlyData(IDatabaseFileLocator databaseLocator) : base(databaseLocator)
     {
     }
@@ -146,6 +148,16 @@ public sealed class ReadOnlyData : DataAccessBase, IReadonlyData
 
         return db.Spendings
             .OrderByDescending(x => x.AddedOn)
+            .Select(x => x.AddedOn)
+            .FirstOrDefaultAsync();
+    }
+
+    public Task<DateTime> GetFirstInsertDate()
+    {
+        using MoneyContext db = ConnectDatabase();
+
+        return db.Spendings
+            .OrderBy(x => x.AddedOn)
             .Select(x => x.AddedOn)
             .FirstOrDefaultAsync();
     }

@@ -2,7 +2,7 @@
   "profiles": {
     "Money": {
       "commandName": "Project",
-      "commandLineArgs": "export report report.html"
+      "commandLineArgs": "sync push"
     }
   }
 }

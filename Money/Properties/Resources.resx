@@ -172,6 +172,12 @@
   <data name="CmdStatDescription" xml:space="preserve">
     <value>Display statistics about spendings</value>
   </data>
+  <data name="CmdSyncDescription" xml:space="preserve">
+    <value>Sync database with git commands</value>
+  </data>
+  <data name="CmdSyncPushDescription" xml:space="preserve">
+    <value>Push unsyncronized changes to the specified git repository</value>
+  </data>
   <data name="ErrorAddNegativeAmmount" xml:space="preserve">
     <value>Amount must be positive and greater than 0</value>
   </data>
@@ -199,6 +205,15 @@ Create it first with the category add command</value>
   </data>
   <data name="ErrorFileMustExist" xml:space="preserve">
     <value>file name can't be empy and must be an existing file</value>
+  </data>
+  <data name="ErrorFolderDoesntExist" xml:space="preserve">
+    <value>Error: specified git folder for sync doesn't exist.  Run the settings subcommand to check settings.</value>
+  </data>
+  <data name="ErrorFolderNotGitFolder" xml:space="preserve">
+    <value>Error: specified git folder for sync isn't a git repository.  Run the settings subcommand to check settings.</value>
+  </data>
+  <data name="ErrorFolderNotSet" xml:space="preserve">
+    <value>Error: git folder for sync is not set. Run the settings subcommand to set it.</value>
   </data>
   <data name="ErrorInvalidJson" xml:space="preserve">
     <value>Invalid data in json</value>

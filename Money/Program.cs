@@ -3,8 +3,10 @@
 using Money;
 using Money.Commands;
 using Money.Data.DataAccess;
+using Money.Infrastructure;
 
-ServiceCollection registrations = new ServiceCollection();
+ServiceCollection registrations = new();
+registrations.AddSingleton<ISettingsManager, SettingsManager>();
 registrations.AddSingleton<IDatabaseFileLocator, DatabaseFileLocator>();
 registrations.AddSingleton<IWriteOnlyData, WriteOnlyData>();
 registrations.AddSingleton<IReadonlyData, ReadOnlyData>();
@@ -83,6 +85,14 @@ app.Configure(config =>
         import
             .AddCommand<ImportBackupCommand>("backup")
             .WithDescription(Resources.CmdImportBackupDescription);
+    });
+    config.AddBranch("sync", sync =>
+    {
+        sync.SetDescription(Resources.CmdSyncDescription);
+
+        sync
+            .AddCommand<SyncPushCommand>("push")
+            .WithDescription(Resources.CmdSyncPushDescription);
     });
 });
 

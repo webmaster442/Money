@@ -234,6 +234,24 @@ namespace Money.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sync database with git commands.
+        /// </summary>
+        internal static string CmdSyncDescription {
+            get {
+                return ResourceManager.GetString("CmdSyncDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Push unsyncronized changes to the specified git repository.
+        /// </summary>
+        internal static string CmdSyncPushDescription {
+            get {
+                return ResourceManager.GetString("CmdSyncPushDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Amount must be positive and greater than 0.
         /// </summary>
         internal static string ErrorAddNegativeAmmount {
@@ -312,6 +330,33 @@ namespace Money.Properties {
         internal static string ErrorFileMustExist {
             get {
                 return ResourceManager.GetString("ErrorFileMustExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: specified git folder for sync doesn&apos;t exist.  Run the settings subcommand to check settings..
+        /// </summary>
+        internal static string ErrorFolderDoesntExist {
+            get {
+                return ResourceManager.GetString("ErrorFolderDoesntExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: specified git folder for sync isn&apos;t a git repository.  Run the settings subcommand to check settings..
+        /// </summary>
+        internal static string ErrorFolderNotGitFolder {
+            get {
+                return ResourceManager.GetString("ErrorFolderNotGitFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: git folder for sync is not set. Run the settings subcommand to set it..
+        /// </summary>
+        internal static string ErrorFolderNotSet {
+            get {
+                return ResourceManager.GetString("ErrorFolderNotSet", resourceCulture);
             }
         }
         
