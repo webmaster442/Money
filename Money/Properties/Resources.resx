@@ -175,6 +175,9 @@
   <data name="CmdSyncDescription" xml:space="preserve">
     <value>Sync database with git commands</value>
   </data>
+  <data name="CmdSyncPullDescription" xml:space="preserve">
+    <value>Pull syncronized changes from the specified git repository</value>
+  </data>
   <data name="CmdSyncPushDescription" xml:space="preserve">
     <value>Push unsyncronized changes to the specified git repository</value>
   </data>

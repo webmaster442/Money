@@ -93,6 +93,11 @@ app.Configure(config =>
         sync
             .AddCommand<SyncPushCommand>("push")
             .WithDescription(Resources.CmdSyncPushDescription);
+
+        sync
+            .AddCommand<SyncPullCommand>("pull")
+            .WithDescription(Resources.CmdSyncPullDescription);
+
     });
 });
 

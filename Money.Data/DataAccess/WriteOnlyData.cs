@@ -1,5 +1,7 @@
 ﻿using System.Security.Cryptography;
 
+using Microsoft.EntityFrameworkCore;
+
 using Money.Data.Dto;
 using Money.Data.Entities;
 
@@ -139,7 +141,7 @@ public sealed class WriteOnlyData : DataAccessBase, IWriteOnlyData
         using MoneyContext db = ConnectDatabase();
         int categoryCount = await CreateCategories(db, rows);
 
-        Dictionary<string, Category> categories = db.Categories.ToDictionary(x => x.Description, x => x);
+        Dictionary<string, Category> categories = await db.Categories.ToDictionaryAsync(x => x.Description, x => x);
 
         IEnumerable<Spending> bulk = rows
             .Select(data => DtoAdapter.ToSpending(data, CreateId, categories[data.CategoryName.ToLower()]));

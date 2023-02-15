@@ -243,6 +243,15 @@ namespace Money.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pull syncronized changes from the specified git repository.
+        /// </summary>
+        internal static string CmdSyncPullDescription {
+            get {
+                return ResourceManager.GetString("CmdSyncPullDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Push unsyncronized changes to the specified git repository.
         /// </summary>
         internal static string CmdSyncPushDescription {
