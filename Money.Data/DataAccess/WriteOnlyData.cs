@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Money.Data.Dto;
 using Money.Data.Entities;
 
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace Money.Data.DataAccess;
 
 public sealed class WriteOnlyData : DataAccessBase, IWriteOnlyData
@@ -138,17 +140,51 @@ public sealed class WriteOnlyData : DataAccessBase, IWriteOnlyData
 
     public async Task<(int createdCategory, int createdEntry)> ImportBackupAsync(IEnumerable<DataRowBackup> rows)
     {
+        int createdCategory = 0;
+        int createdEntry = 0;
         using MoneyContext db = ConnectDatabase();
-        int categoryCount = await CreateCategories(db, rows);
+        Dictionary<string, Category> categories = await db.Categories.ToDictionaryAsync(x => x.Description.ToLower(), x => x);
 
-        Dictionary<string, Category> categories = await db.Categories.ToDictionaryAsync(x => x.Description, x => x);
+        int limit = ChunkSize * 10;
+        List<Spending> buffer = new(limit);
 
-        IEnumerable<Spending> bulk = rows
-            .Select(data => DtoAdapter.ToSpending(data, CreateId, categories[data.CategoryName.ToLower()]));
+        foreach (var row in rows)
+        {
+            if (buffer.Count > limit - 1)
+            {
+                db.Spendings.AddRange(buffer);
+                createdEntry += await db.SaveChangesAsync();
+                buffer.Clear();
+            }
 
-        db.Spendings.AddRange(bulk);
-        int createdEntry = await db.SaveChangesAsync();
+            string categoryName = row.CategoryName.ToLower();
 
-        return (categoryCount, createdEntry);
+            if (categories.TryGetValue(categoryName, out Category? category))
+            {
+                buffer.Add(DtoAdapter.ToSpending(row, CreateId, category));
+            }
+            else
+            {
+                Category newCategory = new Category
+                {
+                    Id = CreateId(),
+                    Description = categoryName,
+                };
+                categories.Add(categoryName, newCategory);
+                createdCategory++;
+                db.Categories.Add(newCategory);
+                buffer.Add(DtoAdapter.ToSpending(row, CreateId, newCategory));
+            }
+        }
+
+        if (buffer.Count > 0)
+        {
+            db.Spendings.AddRange(buffer);
+            createdEntry += await db.SaveChangesAsync();
+            buffer.Clear();
+        }
+
+        return (createdCategory, createdEntry);
+
     }
 }

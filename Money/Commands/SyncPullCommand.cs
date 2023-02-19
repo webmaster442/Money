@@ -69,12 +69,11 @@ internal sealed class SyncPullCommand : SyncCommandBase
             return Constants.Success;
         }
 
-        var chunks = ReadFromDisk(_settings.GitRepoPathUsedForSyncOnDisk, lastOnDisk).Chunk(_writeOnlyData.ChunkSize * 8);
+        IEnumerable<DataRowBackup> onDiskData = ReadFromDisk(_settings.GitRepoPathUsedForSyncOnDisk, lastOnDisk);
 
-        foreach (var chunk in chunks)
-        {
-            await _writeOnlyData.ImportBackupAsync(chunk);
-        }
+        var (createdCategory, createdEntry) = await _writeOnlyData.ImportBackupAsync(onDiskData);
+
+        Ui.Success(Resources.SuccesImport, createdCategory, createdEntry);
 
         return Constants.Success;
     }

@@ -46,6 +46,8 @@ internal sealed class SyncPushCommand : SyncCommandBase
 
         List<string> rowBuffer = new(200);
 
+        int recordCount = 0;
+
         await foreach (var data in _readonlyData.ExportBackupAsync(lastOnDisk))
         {
             currentFileName = $"{data.AddedOn.Year}-{data.AddedOn.Month}-{data.AddedOn.Day}.csv";
@@ -60,6 +62,7 @@ internal sealed class SyncPushCommand : SyncCommandBase
 
             string line = DtoAdapter.ToCsvLine(data);
             rowBuffer.Add(line);
+            ++recordCount;
         }
 
         if (rowBuffer.Count > 0)
@@ -67,6 +70,8 @@ internal sealed class SyncPushCommand : SyncCommandBase
             await WriteToFile(currentFileName, rowBuffer);
             rowBuffer.Clear();
         }
+
+        Ui.Success(Resources.SuccessExport, recordCount, _settings.GitRepoPathUsedForSyncOnDisk);
 
         return await Push(lastOnDB, _settings.GitRepoPathUsedForSyncOnDisk);
     }
