@@ -59,17 +59,18 @@ public sealed class ReadOnlyData : DataAccessBase, IReadonlyData
         return GetSpendingsCount(db);
     }
 
-    public Task<List<DataRowUi>> Find(string what,
-                                    string? category,
-                                    DateOnly? startDate,
-                                    DateOnly? endDate,
-                                    bool isRegex)
+    public async IAsyncEnumerable<DataRowUi> Find(string what,
+                                            string? category,
+                                            DateOnly? startDate,
+                                            DateOnly? endDate,
+                                            bool isRegex)
     {
         using MoneyContext db = ConnectDatabase();
 
         IQueryable<Spending> query = db
             .Spendings
             .Include(s => s.Category)
+            .OrderBy(s => s.Date)
             .AsQueryable();
 
         if (startDate != null)
@@ -90,9 +91,10 @@ public sealed class ReadOnlyData : DataAccessBase, IReadonlyData
             query = query.Where(x => Regex.IsMatch(x.Description, what));
         }
 
-        return query
-            .Select(spending => DtoAdapter.ToDataRowUi(spending))
-            .ToListAsync();
+        await foreach (var spending in query.AsAsyncEnumerable())
+        {
+            yield return DtoAdapter.ToDataRowUi(spending);
+        }
     }
 
     public Task<List<DataRowExcel>> ExportAsync(DateOnly? start = null, DateOnly? end = null)

@@ -17,16 +17,14 @@ internal class ExportReportCommand : AsyncCommand<ExportSetting>
 
         Data.Dto.Statistics stats = await _readonlyData.GetStatisticsAsync(settings.StartDate!.Value,
                                                            settings.EndDate!.Value);
-        List<Data.Dto.DataRowUi> data = await _readonlyData.Find(string.Empty,
-                                            string.Empty,
-                                            settings.StartDate,
-                                            settings.EndDate,
-                                            false);
+        var data = await _readonlyData
+            .Find(string.Empty, string.Empty, settings.StartDate, settings.EndDate, false)
+            .ToListAsync();
 
         string html = ReportFactory.CreateReport(data,
-                                              stats,
-                                              settings.StartDate!.Value,
-                                              settings.EndDate!.Value);
+                                                 stats,
+                                                 settings.StartDate!.Value,
+                                                 settings.EndDate!.Value);
         try
         {
             File.WriteAllText(settings.FileName, html);

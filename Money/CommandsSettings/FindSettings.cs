@@ -43,9 +43,6 @@ internal sealed class FindSettings : CommandSettings
             return ValidationResult.Error(Resources.ErrorDateValidate);
         }
 
-        if (string.IsNullOrWhiteSpace(SearchTerm))
-            return ValidationResult.Error(Resources.ErrorNoSearchTermGiven);
-
         return ValidationResult.Success();
     }
 }

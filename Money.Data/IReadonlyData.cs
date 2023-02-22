@@ -12,11 +12,11 @@ public interface IReadonlyData
     IAsyncEnumerable<DataRowBackup> ExportBackupAsync();
     IAsyncEnumerable<DataRowBackup> ExportBackupAsync(DateTime startDate);
     Task<int> GetSpendingsCount();
-    Task<List<DataRowUi>> Find(string what,
-                               string? category,
-                               DateOnly? startDate,
-                               DateOnly? endDate,
-                               bool isRegex);
+    IAsyncEnumerable<DataRowUi> Find(string what,
+                                     string? category,
+                                     DateOnly? startDate,
+                                     DateOnly? endDate,
+                                     bool isRegex);
 
     Task<DateTime> GetLastInsertDate();
     Task<DateTime> GetFirstInsertDate();
