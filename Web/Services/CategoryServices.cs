@@ -8,10 +8,40 @@ using Money.Web.Models;
 
 namespace Money.Web.Services
 {
-    internal sealed class CategoryServices : UserServiceBase, IEntityService<CategoryViewModel>
+    internal sealed class CategoryServices : UserServiceBase
     {
         public CategoryServices(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
+        }
+
+        public async Task<bool> Create(ClaimsPrincipal claims, CategoryViewModel viewModel)
+        {
+            var newCategory = new Category
+            {
+                Description = viewModel.Description,
+                Name = viewModel.Name,
+                User = GetUser(claims)
+            };
+
+            _applicationDbContext.Categories.Add(newCategory);
+            return await _applicationDbContext.SaveChangesAsync() == 1;
+        }
+
+        public async Task<bool> Edit(ClaimsPrincipal claims, CategoryViewModel viewModel)
+        {
+            if (claims.Identity == null)
+                throw new InvalidOperationException("Claims not set correctly");
+
+            var category = await _applicationDbContext.Categories
+                .Include(c => c.User)
+                .Where(c => c.User.UserName == claims.Identity.Name)
+                .Where(c => c.Id == viewModel.Id)
+                .FirstAsync();
+
+            category.Name = viewModel.Name;
+            category.Description = viewModel.Description;
+
+            return await _applicationDbContext.SaveChangesAsync() == 1;
         }
 
         public async Task<List<CategoryViewModel>> Get(ClaimsPrincipal claims)
@@ -49,36 +79,6 @@ namespace Money.Web.Services
                     Id = c.Id,
                 })
                 .FirstOrDefaultAsync();
-        }
-
-        public async Task<bool> Edit(ClaimsPrincipal claims, CategoryViewModel viewModel)
-        {
-            if (claims.Identity == null)
-                throw new InvalidOperationException("Claims not set correctly");
-
-            var category = await _applicationDbContext.Categories
-                .Include(c => c.User)
-                .Where(c => c.User.UserName == claims.Identity.Name)
-                .Where(c => c.Id == viewModel.Id)
-                .FirstAsync();
-
-            category.Name = viewModel.Name;
-            category.Description = viewModel.Description;
-
-            return await _applicationDbContext.SaveChangesAsync() == 1;
-        }
-
-        public async Task<bool> Create(ClaimsPrincipal claims, CategoryViewModel viewModel)
-        {
-            var newCategory = new Category
-            {
-                Description = viewModel.Description,
-                Name = viewModel.Name,
-                User = GetUser(claims)
-            };
-
-            _applicationDbContext.Categories.Add(newCategory);
-            return await _applicationDbContext.SaveChangesAsync() == 1;
         }
     }
 }
