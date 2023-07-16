@@ -41,7 +41,7 @@ namespace Money.Web.Pages.Categories
             }
             catch (DbUpdateException)
             {
-                return RedirectToPage("/ErrorDb");
+                return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.CategoryExists });
             }
 
             return RedirectToPage("./Index");

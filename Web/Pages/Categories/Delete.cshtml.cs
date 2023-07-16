@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 using Money.Web.Data.Entity;
+using Money.Web.Services;
 
 namespace Money.Web.Pages.Categories
 {
@@ -24,14 +25,14 @@ namespace Money.Web.Pages.Categories
         {
             if (id == null || _context.Categories == null)
             {
-                return NotFound();
+                return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.CategoryNotFound });
             }
 
             var category = await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
 
             if (category == null)
             {
-                return NotFound();
+                return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.CategoryNotFound });
             }
             else
             {

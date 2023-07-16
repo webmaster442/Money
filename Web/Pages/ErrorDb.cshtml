@@ -1,13 +1,12 @@
 ﻿@page
-@model ErrorModel
+@model ErrorDbModel
 @{
     ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<h1 class="text-danger">An error occurred while processing your request.</h1>
 
-<h3>Failed to update the db</h3>
+<h2>Failed to update the db - @Model.Error</h2>
 <p>
     The changes you made were not saved.
 </p>

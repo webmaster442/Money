@@ -25,13 +25,13 @@ namespace Money.Web.Pages.Categories
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.CategoryNotFound });
             }
 
             var category = await _categoryServices.Get(HttpContext.User, id.Value);
             if (category == null)
             {
-                return NotFound();
+                return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.CategoryNotFound });
             }
             Category = category;
             return Page();
@@ -50,12 +50,12 @@ namespace Money.Web.Pages.Categories
             {
                 if (!await _categoryServices.Edit(HttpContext.User, Category))
                 {
-                    return RedirectToPage("/ErrorDb");
+                    return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.CategoryEditError });
                 }
             }
             catch (DbUpdateException)
             {
-                return RedirectToPage("/ErrorDb");
+                return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.CategoryEditError });
             }
 
             return RedirectToPage("./Index");
