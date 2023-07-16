@@ -14,7 +14,7 @@ namespace Money.Web.Services
         {
         }
 
-        public SpendingViewModel NewSpending(ClaimsPrincipal claims)
+        public CreateSpendingViewModel NewSpending(ClaimsPrincipal claims)
         {
             if (claims.Identity == null)
                 throw new InvalidOperationException("Claims not set correctly");
@@ -25,9 +25,13 @@ namespace Money.Web.Services
                 .Select(c => new CategorySelectorViewModel(c.Id, c.Name))
                 .ToList();
 
-            return new SpendingViewModel
+            return new CreateSpendingViewModel
             {
-                Categories = categories,
+                CategorySelector = categories,
+                Spending = new SpendingViewModel
+                {
+                    Date = DateTime.Now,
+                }
             };
         }
 
@@ -52,7 +56,7 @@ namespace Money.Web.Services
                 AddedOn = DateTime.Now,
                 Ammount = viewModel.Ammount,
                 User = GetUser(claims),
-                Category = GetCategory(claims, viewModel.CategoryId),
+                Category = GetCategory(claims, viewModel.Category),
             };
             _applicationDbContext.Spendings.Add(newSpending);
             return await _applicationDbContext.SaveChangesAsync() == 1;
@@ -72,6 +76,29 @@ namespace Money.Web.Services
             spending.Ammount = viewModel.Ammount;
 
             return await _applicationDbContext.SaveChangesAsync() == 1;
+        }
+
+        public async Task<List<ListSpendingViewModel>> Get(ClaimsPrincipal claims, DateTime startDate, DateTime endDate)
+        {
+            if (claims.Identity == null)
+                throw new InvalidOperationException("Claims not set correctly");
+
+            return await _applicationDbContext.Spendings
+                .Include(s => s.User)
+                .Include(s => s.Category)
+                .Where(s => s.User.UserName == claims.Identity.Name)
+                .Where(s => s.Date >= startDate)
+                .Where(s => s.Date <= endDate)
+                .Select(s => new ListSpendingViewModel
+                {
+                    AddedOn = s.AddedOn,
+                    Date = s.Date,
+                    Ammount = s.Ammount,
+                    Category = s.Category.Name,
+                    Id = s.Id,
+                    Description = s.Description,
+                })
+                .ToListAsync();
         }
     }
 }

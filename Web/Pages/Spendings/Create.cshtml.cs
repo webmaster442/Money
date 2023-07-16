@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-using Money.Web.Data.Entity;
 using Money.Web.Models;
 using Money.Web.Services;
 
@@ -21,25 +20,25 @@ namespace Money.Web.Pages.Spendings
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Spending = _spendingService.NewSpending(HttpContext.User);
+            Model = _spendingService.NewSpending(HttpContext.User);
             return Page();
         }
 
         [BindProperty]
-        public SpendingViewModel Spending { get; set; }
+        public CreateSpendingViewModel Model { get; set; } = default!;
 
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid || Spending == null)
+            if (!ModelState.IsValid || Model.Spending == null)
             {
                 return Page();
             }
 
             try
             {
-                await _spendingService.Create(HttpContext.User, Spending);
+                await _spendingService.Create(HttpContext.User, Model.Spending);
             }
             catch (DbUpdateException)
             {

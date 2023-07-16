@@ -2,14 +2,27 @@
 @model Money.Web.Pages.Spendings.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Spendings";
 }
 
-<h1>Index</h1>
+<h1>Spendings</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a class="btn btn-primary" asp-page="Create">Create New</a>
 </p>
+<hr />
+<h4>Filtering</h4>
+<form method="get">
+    <div class="form-check form-check-inline">
+        <input name="start" asp-for="StartDate" asp-format="{0:yyyy-MM-dd}" />
+        -
+        <input name="end" asp-for="EndDate" asp-format="{0:yyyy-MM-dd}" />
+    <input type="submit" class="btn btn-secondary" value="Filter"/>
+    </div>
+</form>
+
+<hr/>
+
 <table class="table">
     <thead>
         <tr>
@@ -17,13 +30,16 @@
                 @Html.DisplayNameFor(model => model.Spending[0].Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Spending[0].AddedOn)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Spending[0].Description)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Spending[0].Category)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Spending[0].Ammount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Spending[0].AddedOn)
             </th>
             <th></th>
         </tr>
@@ -35,18 +51,20 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AddedOn)
+                @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.Category)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Ammount)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                @Html.DisplayFor(modelItem => item.AddedOn)
+            </td>
+            <td>
+                <a class="btn btn-secondary asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
