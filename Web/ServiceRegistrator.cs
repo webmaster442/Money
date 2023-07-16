@@ -7,6 +7,7 @@ namespace Money.Web
         internal static void RegisterServices(IServiceCollection services)
         {
             services.AddSingleton<VersionService>();
+            services.AddScoped<CategoryServices>();
         }
     }
 }
