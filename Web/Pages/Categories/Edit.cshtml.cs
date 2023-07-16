@@ -28,7 +28,7 @@ namespace Money.Web.Pages.Categories
                 return NotFound();
             }
 
-            var category = await _categoryServices.GetCategory(HttpContext.User, id.Value);
+            var category = await _categoryServices.Get(HttpContext.User, id.Value);
             if (category == null)
             {
                 return NotFound();
@@ -48,7 +48,7 @@ namespace Money.Web.Pages.Categories
 
             try
             {
-                if (!await _categoryServices.Modify(HttpContext.User, Category))
+                if (!await _categoryServices.Edit(HttpContext.User, Category))
                 {
                     return RedirectToPage("/ErrorDb");
                 }

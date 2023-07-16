@@ -20,7 +20,7 @@ namespace Money.Web.Pages.Categories
 
         public async Task OnGetAsync()
         {
-            Category = await _categoryServices.GetCategories(HttpContext.User);
+            Category = await _categoryServices.Get(HttpContext.User);
         }
     }
 }
