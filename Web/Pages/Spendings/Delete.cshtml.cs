@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Money.Web.Data;
+
 using Money.Web.Data.Entity;
 
 namespace Money.Web.Pages.Spendings
@@ -23,7 +18,7 @@ namespace Money.Web.Pages.Spendings
         }
 
         [BindProperty]
-      public Spending Spending { get; set; } = default!;
+        public Spending Spending { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -38,7 +33,7 @@ namespace Money.Web.Pages.Spendings
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Spending = spending;
             }

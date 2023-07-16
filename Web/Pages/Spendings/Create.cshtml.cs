@@ -1,46 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Money.Web.Data;
+using Microsoft.EntityFrameworkCore;
+
 using Money.Web.Data.Entity;
+using Money.Web.Models;
+using Money.Web.Services;
 
 namespace Money.Web.Pages.Spendings
 {
     [Authorize]
     internal class CreateModel : PageModel
     {
-        private readonly Money.Web.Data.ApplicationDbContext _context;
+        private readonly SpendingService _spendingService;
 
-        public CreateModel(Money.Web.Data.ApplicationDbContext context)
+        public CreateModel(SpendingService spendingService)
         {
-            _context = context;
+            _spendingService = spendingService;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
+            Spending = _spendingService.NewSpending(HttpContext.User);
             return Page();
         }
 
         [BindProperty]
-        public Spending Spending { get; set; } = default!;
-        
+        public SpendingViewModel Spending { get; set; }
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Spendings == null || Spending == null)
+            if (!ModelState.IsValid || Spending == null)
             {
                 return Page();
             }
 
-            _context.Spendings.Add(Spending);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _spendingService.Create(HttpContext.User, Spending);
+            }
+            catch (DbUpdateException)
+            {
+                return RedirectToPage("/ErrorDb");
+            }
 
             return RedirectToPage("./Index");
         }

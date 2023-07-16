@@ -14,16 +14,16 @@ namespace Money.Web.Services
         {
         }
 
-        public async Task<SpendingViewModel> NewSpending(ClaimsPrincipal claims)
+        public SpendingViewModel NewSpending(ClaimsPrincipal claims)
         {
             if (claims.Identity == null)
                 throw new InvalidOperationException("Claims not set correctly");
 
-            var categories = await _applicationDbContext.Categories
+            var categories = _applicationDbContext.Categories
                 .Include(c => c.User)
                 .Where(c => c.User.UserName == claims.Identity.Name)
                 .Select(c => new CategorySelectorViewModel(c.Id, c.Name))
-                .ToListAsync();
+                .ToList();
 
             return new SpendingViewModel
             {

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Money.Web.Data;
+
 using Money.Web.Data.Entity;
 
 namespace Money.Web.Pages.Spendings
@@ -33,7 +27,7 @@ namespace Money.Web.Pages.Spendings
                 return NotFound();
             }
 
-            var spending =  await _context.Spendings.FirstOrDefaultAsync(m => m.Id == id);
+            var spending = await _context.Spendings.FirstOrDefaultAsync(m => m.Id == id);
             if (spending == null)
             {
                 return NotFound();
@@ -74,7 +68,7 @@ namespace Money.Web.Pages.Spendings
 
         private bool SpendingExists(int id)
         {
-          return (_context.Spendings?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Spendings?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
