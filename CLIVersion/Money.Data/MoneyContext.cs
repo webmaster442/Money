@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Diagnostics;
+
+using Microsoft.EntityFrameworkCore;
 
 using Money.Data.Entities;
 
@@ -35,6 +37,8 @@ internal sealed class MoneyContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlite($"Data Source={_dbLocator.DatabasePath}");
+        optionsBuilder.EnableSensitiveDataLogging();
+        optionsBuilder.LogTo(log => Debug.WriteLine(log));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
