@@ -1,10 +1,15 @@
 ﻿@page
-@model IndexModel
+@inject Money.Web.Services.VersionService versionService
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Money";
+    ViewData["Version"] = versionService.GetVersion();
 }
-
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 style="font-size: 72pt;">💰</h1>
+    <h1 class="display-4">Money - A Simple expense management app</h1>
+    <p>v: @ViewData["Version"]</p>
+</div>
+<div class="text-center">
+    <a class="btn btn-outline-primary btn-lg" role="button" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    <a class="btn btn-outline-secondary btn-lg" role="button" asp-area="Identity" asp-page="/Account/Register">Register</a>
 </div>
