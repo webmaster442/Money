@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Money.Web.Data.Entity;
 using System.Diagnostics;
 
-namespace Web.Data;
+namespace Money.Web.Data;
 
 internal class ApplicationDbContext : IdentityDbContext
 {

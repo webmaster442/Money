@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Web.Data;
+
+using Money.Web.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
