@@ -1,5 +1,6 @@
 ﻿@page
 @inject Money.Web.Services.VersionService versionService
+@inject SignInManager<IdentityUser> SignInManager
 @{
     ViewData["Title"] = "Money";
     ViewData["Version"] = versionService.GetVersion();
@@ -9,7 +10,14 @@
     <h1 class="display-4">Money - A Simple expense management app</h1>
     <p>v: @ViewData["Version"]</p>
 </div>
-<div class="text-center">
-    <a class="btn btn-outline-primary btn-lg" role="button" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    <a class="btn btn-outline-secondary btn-lg" role="button" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    <div class="text-center">
+    @if (SignInManager.IsSignedIn(User))
+    {
+
+    }
+    else
+    {
+        <a class="btn btn-outline-primary btn-lg" role="button" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        <a class="btn btn-outline-secondary btn-lg" role="button" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    }
 </div>
