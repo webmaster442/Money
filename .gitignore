@@ -475,3 +475,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+/Web/app.db
+/Web/app.db-shm
+/Web/app.db-wal

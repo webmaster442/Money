@@ -4,7 +4,7 @@ namespace Money.Web.Data.Entity
 {
     internal sealed class Spending
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         public DateTime Date { get; set; }
         public DateTime AddedOn { get; set; }
         public string Description { get; set; }
