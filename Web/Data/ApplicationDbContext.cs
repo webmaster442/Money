@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System.Diagnostics;
+
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+
 using Money.Web.Data.Entity;
-using System.Diagnostics;
-using Money.Web.Models;
 
 namespace Money.Web.Data;
 

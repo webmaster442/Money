@@ -6,7 +6,7 @@
         public string Description { get; set; }
         public long Id { get; set; }
 
-        public CategoryViewModel() 
+        public CategoryViewModel()
         {
             Name = string.Empty;
             Description = string.Empty;

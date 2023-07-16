@@ -9,10 +9,10 @@ namespace Money.Web.Data.Entity
         public string Description { get; set; }
         public IdentityUser User { get; set; } = null!;
 
-        public Category() 
+        public Category()
         {
             Name = string.Empty;
             Description = string.Empty;
-        }   
+        }
     }
 }

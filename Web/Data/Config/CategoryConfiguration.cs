@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
 using Money.Web.Data.Entity;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Money.Web.Data.Config
 {
@@ -9,7 +9,7 @@ namespace Money.Web.Data.Config
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.HasKey(category  => category.Id);
+            builder.HasKey(category => category.Id);
             builder.Property(category => category.Name).IsRequired();
             builder.HasIndex(category => category.Name).IsUnique();
 

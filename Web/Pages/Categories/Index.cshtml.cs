@@ -16,7 +16,7 @@ namespace Money.Web.Pages.Categories
             _categoryServices = categoryServices;
         }
 
-        public IList<CategoryViewModel> Category { get;set; } = default!;
+        public IList<CategoryViewModel> Category { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

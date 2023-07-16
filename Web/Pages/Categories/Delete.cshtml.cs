@@ -18,7 +18,7 @@ namespace Money.Web.Pages.Categories
         }
 
         [BindProperty]
-      public Category Category { get; set; } = default!;
+        public Category Category { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(long? id)
         {
@@ -33,7 +33,7 @@ namespace Money.Web.Pages.Categories
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Category = category;
             }

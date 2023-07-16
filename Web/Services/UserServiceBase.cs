@@ -10,7 +10,7 @@ namespace Money.Web.Services
     {
         protected readonly ApplicationDbContext _applicationDbContext;
 
-        public UserServiceBase(ApplicationDbContext applicationDbContext) 
+        public UserServiceBase(ApplicationDbContext applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
         }
