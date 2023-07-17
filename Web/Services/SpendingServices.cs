@@ -8,31 +8,10 @@ using Money.Web.Models;
 
 namespace Money.Web.Services
 {
-    internal class SpendingService : UserServiceBase
+    internal class SpendingServices : UserServiceBase
     {
-        public SpendingService(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
+        public SpendingServices(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
-        }
-
-        public CreateSpendingViewModel NewSpending(ClaimsPrincipal claims)
-        {
-            if (claims.Identity == null)
-                throw new InvalidOperationException("Claims not set correctly");
-
-            var categories = _applicationDbContext.Categories
-                .Include(c => c.User)
-                .Where(c => c.User.UserName == claims.Identity.Name)
-                .Select(c => new CategorySelectorViewModel(c.Id, c.Name))
-                .ToList();
-
-            return new CreateSpendingViewModel
-            {
-                CategorySelector = categories,
-                Spending = new SpendingViewModel
-                {
-                    Date = DateTime.Now,
-                }
-            };
         }
 
         private Category GetCategory(ClaimsPrincipal claims, int categoryId)

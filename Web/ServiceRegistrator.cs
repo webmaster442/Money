@@ -8,7 +8,7 @@ namespace Money.Web
         {
             services.AddSingleton<VersionService>();
             services.AddScoped<CategoryServices>();
-            services.AddScoped<SpendingService>();
+            services.AddScoped<SpendingServices>();
             services.AddScoped<ErrorCodeService>();
         }
     }

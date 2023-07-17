@@ -11,34 +11,45 @@ namespace Money.Web.Pages.Spendings
     [Authorize]
     internal class CreateModel : PageModel
     {
-        private readonly SpendingService _spendingService;
+        private readonly CategoryServices _categoryServices;
+        private readonly SpendingServices _spendingService;
 
-        public CreateModel(SpendingService spendingService)
+        public CreateModel(CategoryServices categoryServices, SpendingServices spendingService)
         {
+            _categoryServices = categoryServices;
             _spendingService = spendingService;
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Model = _spendingService.NewSpending(HttpContext.User);
+            Spending = new SpendingViewModel
+            {
+                Date = DateTime.Now.Date,
+            };
+
+            CategorySelector = await _categoryServices.GetCategorySelector(HttpContext.User);
+
             return Page();
         }
 
         [BindProperty]
-        public CreateSpendingViewModel Model { get; set; } = default!;
+        public IList<CategorySelectorViewModel> CategorySelector { get; set; } = default!;
+
+        [BindProperty]
+        public SpendingViewModel Spending { get; set; } = default!;
 
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid || Model.Spending == null)
+            if (!ModelState.IsValid || Spending == null)
             {
                 return Page();
             }
 
             try
             {
-                await _spendingService.Create(HttpContext.User, Model.Spending);
+                await _spendingService.Create(HttpContext.User, Spending);
             }
             catch (DbUpdateException)
             {

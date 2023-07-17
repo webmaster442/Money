@@ -13,9 +13,9 @@ namespace Money.Web.Pages.Spendings
 
     internal class IndexModel : PageModel
     {
-        private readonly SpendingService _spendingService;
+        private readonly SpendingServices _spendingService;
 
-        public IndexModel(SpendingService spendingService)
+        public IndexModel(SpendingServices spendingService)
         {
             _spendingService = spendingService;
         }

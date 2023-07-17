@@ -14,6 +14,19 @@ namespace Money.Web.Services
         {
         }
 
+        public async Task<List<CategorySelectorViewModel>> GetCategorySelector(ClaimsPrincipal claims)
+        {
+            if (claims.Identity == null)
+                throw new InvalidOperationException("Claims not set correctly");
+
+            return await _applicationDbContext.Categories
+                .Include(c => c.User)
+                .Where(c => c.User.UserName == claims.Identity.Name)
+                .Select(c => new CategorySelectorViewModel(c.Id, c.Name))
+                .ToListAsync();
+        }
+
+
         public async Task<bool> Create(ClaimsPrincipal claims, CategoryViewModel viewModel)
         {
             var newCategory = new Category
