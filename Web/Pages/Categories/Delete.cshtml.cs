@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
-using Money.Web.Data.Entity;
+using Money.Web.Models;
 using Money.Web.Services;
 
 namespace Money.Web.Pages.Categories
@@ -11,24 +10,24 @@ namespace Money.Web.Pages.Categories
     [Authorize]
     internal class DeleteModel : PageModel
     {
-        private readonly Money.Web.Data.ApplicationDbContext _context;
+        private readonly CategoryServices _categoryServices;
 
-        public DeleteModel(Money.Web.Data.ApplicationDbContext context)
+        public DeleteModel(CategoryServices categoryServices)
         {
-            _context = context;
+            _categoryServices = categoryServices;
         }
 
         [BindProperty]
-        public Category Category { get; set; } = default!;
+        public CategoryViewModel Category { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(long? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null)
             {
                 return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.CategoryNotFound });
             }
 
-            var category = await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
+            var category = await _categoryServices.Get(HttpContext.User, id.Value);
 
             if (category == null)
             {
@@ -43,19 +42,15 @@ namespace Money.Web.Pages.Categories
 
         public async Task<IActionResult> OnPostAsync(long? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null)
             {
-                return NotFound();
-            }
-            var category = await _context.Categories.FindAsync(id);
-
-            if (category != null)
-            {
-                Category = category;
-                _context.Categories.Remove(Category);
-                await _context.SaveChangesAsync();
+                return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.CategoryNotFound });
             }
 
+            if (!await _categoryServices.Delete(HttpContext.User, Category))
+            {
+                return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.CategoryNotFound });
+            }
             return RedirectToPage("./Index");
         }
     }
