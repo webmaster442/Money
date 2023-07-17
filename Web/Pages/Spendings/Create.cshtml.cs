@@ -20,6 +20,13 @@ namespace Money.Web.Pages.Spendings
             _spendingService = spendingService;
         }
 
+        [BindProperty]
+        public IList<CategorySelectorViewModel> CategorySelector { get; set; } = default!;
+
+        [BindProperty]
+        public SpendingViewModel Spending { get; set; } = default!;
+
+
         public async Task<IActionResult> OnGetAsync()
         {
             Spending = new SpendingViewModel
@@ -31,13 +38,6 @@ namespace Money.Web.Pages.Spendings
 
             return Page();
         }
-
-        [BindProperty]
-        public IList<CategorySelectorViewModel> CategorySelector { get; set; } = default!;
-
-        [BindProperty]
-        public SpendingViewModel Spending { get; set; } = default!;
-
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()

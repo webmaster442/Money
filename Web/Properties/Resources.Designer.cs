@@ -61,7 +61,7 @@ namespace Money.Web.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Category edit failed. Maybe it was deleted.
+        ///   Looks up a localized string similar to Category edit failed. Maybe it was deleted?.
         /// </summary>
         internal static string CategoryEditError {
             get {
@@ -79,11 +79,29 @@ namespace Money.Web.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Category not found. Maybe it was deleted.
+        ///   Looks up a localized string similar to Category not found. Maybe it was deleted?.
         /// </summary>
         internal static string CategoryNotFound {
             get {
                 return ResourceManager.GetString("CategoryNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editing of spending failed. Maybe it was deleted?.
+        /// </summary>
+        internal static string SpendingEditError {
+            get {
+                return ResourceManager.GetString("SpendingEditError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spending not found. Maybe it was deleted?.
+        /// </summary>
+        internal static string SpendingNotFound {
+            get {
+                return ResourceManager.GetString("SpendingNotFound", resourceCulture);
             }
         }
     }

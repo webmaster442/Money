@@ -8,6 +8,8 @@ namespace Money.Web.Services
         Unknown,
         CategoryNotFound,
         CategoryEditError,
+        SpendingNotFound,
+        SpendingEditError,
     }
 
     public class ErrorCodeService

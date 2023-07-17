@@ -53,6 +53,10 @@ namespace Money.Web.Services
                 .FirstAsync();
 
             spending.Ammount = viewModel.Ammount;
+            spending.Date = viewModel.Date;
+            spending.Description = viewModel.Description;
+            spending.Category = GetCategory(claims, viewModel.Category);
+            spending.AddedOn = DateTime.Now;
 
             return await _applicationDbContext.SaveChangesAsync() == 1;
         }
@@ -78,6 +82,27 @@ namespace Money.Web.Services
                     Description = s.Description,
                 })
                 .ToListAsync();
+        }
+
+        internal async Task<SpendingViewModel?> Get(ClaimsPrincipal claims, int id)
+        {
+            if (claims.Identity == null)
+                throw new InvalidOperationException("Claims not set correctly");
+
+            return await _applicationDbContext.Spendings
+                .Include(s => s.User)
+                .Include(s => s.Category)
+                .Where(s => s.User.UserName == claims.Identity.Name)
+                .Where(s => s.Id == id)
+                .Select(s => new SpendingViewModel
+                {
+                    Date = s.Date,
+                    Description = s.Description,
+                    Ammount = s.Ammount,
+                    Category = s.Category.Id,
+                    Id = s.Id,
+                })
+                .FirstOrDefaultAsync();
         }
     }
 }

@@ -3,36 +3,45 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-using Money.Web.Data.Entity;
+using Money.Web.Models;
+using Money.Web.Services;
 
 namespace Money.Web.Pages.Spendings
 {
     [Authorize]
     internal class EditModel : PageModel
     {
-        private readonly Money.Web.Data.ApplicationDbContext _context;
+        private readonly CategoryServices _categoryServices;
+        private readonly SpendingServices _spendingService;
 
-        public EditModel(Money.Web.Data.ApplicationDbContext context)
+        public EditModel(CategoryServices categoryServices, SpendingServices spendingService)
         {
-            _context = context;
+            _categoryServices = categoryServices;
+            _spendingService = spendingService;
         }
 
         [BindProperty]
-        public Spending Spending { get; set; } = default!;
+        public IList<CategorySelectorViewModel> CategorySelector { get; set; } = default!;
+
+        [BindProperty]
+        public SpendingViewModel Spending { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Spendings == null)
+            if (id == null)
             {
-                return NotFound();
+                return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.SpendingNotFound });
             }
 
-            var spending = await _context.Spendings.FirstOrDefaultAsync(m => m.Id == id);
+            var spending = await _spendingService.Get(HttpContext.User, id.Value);
+
             if (spending == null)
             {
-                return NotFound();
+                return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.SpendingNotFound });
             }
+
             Spending = spending;
+            CategorySelector = await _categoryServices.GetCategorySelector(HttpContext.User);
             return Page();
         }
 
@@ -45,30 +54,19 @@ namespace Money.Web.Pages.Spendings
                 return Page();
             }
 
-            _context.Attach(Spending).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                if (!await _spendingService.Edit(HttpContext.User, Spending))
+                {
+                    return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.SpendingEditError });
+                }
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateException)
             {
-                if (!SpendingExists(Spending.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.SpendingEditError });
             }
 
             return RedirectToPage("./Index");
-        }
-
-        private bool SpendingExists(int id)
-        {
-            return (_context.Spendings?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
