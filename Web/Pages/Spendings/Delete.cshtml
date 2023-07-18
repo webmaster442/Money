@@ -2,27 +2,20 @@
 @model Money.Web.Pages.Spendings.DeleteModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete Spending";
 }
 
-<h1>Delete</h1>
+<h1>Delete Spending</h1>
 
 <h3>Are you sure you want to delete this?</h3>
+<hr />
 <div>
-    <h4>Spending</h4>
-    <hr />
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Spending.Date)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Spending.Date)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Spending.AddedOn)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Spending.AddedOn)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Spending.Description)
@@ -41,6 +34,6 @@
     <form method="post">
         <input type="hidden" asp-for="Spending.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
+        <a class="btn btn-success" asp-page="./Index">Back to List</a>
     </form>
 </div>

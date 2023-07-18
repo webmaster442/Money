@@ -1,37 +1,37 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
-using Money.Web.Data.Entity;
+using Money.Web.Models;
+using Money.Web.Services;
 
 namespace Money.Web.Pages.Spendings
 {
     [Authorize]
     internal class DeleteModel : PageModel
     {
-        private readonly Money.Web.Data.ApplicationDbContext _context;
+        private readonly SpendingServices _spendingServices;
 
-        public DeleteModel(Money.Web.Data.ApplicationDbContext context)
+        public DeleteModel(SpendingServices spendingServices)
         {
-            _context = context;
+            _spendingServices = spendingServices;
         }
 
         [BindProperty]
-        public Spending Spending { get; set; } = default!;
+        public SpendingViewModel Spending { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Spendings == null)
+            if (id == null)
             {
-                return NotFound();
+                return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.SpendingNotFound });
             }
 
-            var spending = await _context.Spendings.FirstOrDefaultAsync(m => m.Id == id);
+            var spending = await _spendingServices.Get(HttpContext.User, id.Value);
 
             if (spending == null)
             {
-                return NotFound();
+                return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.SpendingNotFound });
             }
             else
             {
@@ -42,19 +42,15 @@ namespace Money.Web.Pages.Spendings
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Spendings == null)
+            if (id == null)
             {
-                return NotFound();
-            }
-            var spending = await _context.Spendings.FindAsync(id);
-
-            if (spending != null)
-            {
-                Spending = spending;
-                _context.Spendings.Remove(Spending);
-                await _context.SaveChangesAsync();
+                return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.SpendingNotFound });
             }
 
+            if (!await _spendingServices.Delete(HttpContext.User, Spending))
+            {
+                return RedirectToPage("/ErrorDb", new { ErrorCode = ErrorCode.SpendingNotFound });
+            }
             return RedirectToPage("./Index");
         }
     }

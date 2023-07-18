@@ -61,6 +61,22 @@ namespace Money.Web.Services
             return await _applicationDbContext.SaveChangesAsync() == 1;
         }
 
+        public async Task<bool> Delete(ClaimsPrincipal claims, SpendingViewModel viewModel)
+        {
+            if (claims.Identity == null)
+                throw new InvalidOperationException("Claims not set correctly");
+
+            var category = await _applicationDbContext.Spendings.FindAsync(viewModel.Id);
+
+            if (category != null)
+            {
+                _applicationDbContext.Spendings.Remove(category);
+                return await _applicationDbContext.SaveChangesAsync() == 1;
+            }
+
+            return false;
+        }
+
         public async Task<List<ListSpendingViewModel>> Get(ClaimsPrincipal claims, DateTime startDate, DateTime endDate)
         {
             if (claims.Identity == null)
