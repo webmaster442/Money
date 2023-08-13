@@ -9,6 +9,14 @@
     }
 </style>
 <h1>📊 Statistics</h1>
+<form method="get">
+    <div class="form-check form-check-inline">
+        <input name="start" asp-for="StartDate" asp-format="{0:yyyy-MM-dd}" />
+        -
+        <input name="end" asp-for="EndDate" asp-format="{0:yyyy-MM-dd}" />
+        <input type="submit" class="btn btn-secondary" value="Filter" />
+    </div>
+</form>
 <hr />
 <div class="report">
     <p>Number of spendings: @Model.Statistics.SpendingCount</p>
