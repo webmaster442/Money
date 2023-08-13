@@ -88,6 +88,15 @@ namespace Money.Web.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Imprt error. File in not correct format?.
+        /// </summary>
+        internal static string ImportError {
+            get {
+                return ResourceManager.GetString("ImportError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Editing of spending failed. Maybe it was deleted?.
         /// </summary>
         internal static string SpendingEditError {

@@ -2,7 +2,7 @@
 
 namespace Money.Web
 {
-    internal class ServiceRegistrator
+    internal static class ServiceRegistrator
     {
         internal static void RegisterServices(IServiceCollection services)
         {
@@ -10,6 +10,7 @@ namespace Money.Web
             services.AddScoped<CategoryServices>();
             services.AddScoped<SpendingServices>();
             services.AddScoped<ErrorCodeService>();
+            services.AddScoped<ImportExportService>();
         }
     }
 }

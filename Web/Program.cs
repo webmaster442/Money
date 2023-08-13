@@ -43,11 +43,6 @@ app.MapRazorPages();
 
 app.UseStatusCodePages("text/html", "<h1>Error! Status Code {0}</h1>");
 
-app.Map("/export", HandleExport);
-
-static async Task HandleExport(HttpContext context, ImportExportService importExportService)
-{
-    await importExportService.CreateExportFile(context.User, context.Response);
-}
+SpecialRoutes.RegisterRoutes(app);
 
 app.Run();

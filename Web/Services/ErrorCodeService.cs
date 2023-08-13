@@ -10,6 +10,7 @@ namespace Money.Web.Services
         CategoryEditError,
         SpendingNotFound,
         SpendingEditError,
+        ImportError,
     }
 
     public class ErrorCodeService

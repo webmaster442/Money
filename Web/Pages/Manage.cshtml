@@ -1,0 +1,19 @@
+﻿@page
+@model Money.Web.Pages.ImportExportModel
+@{
+}
+<h1>⚙ Manage</h1>
+<hr />
+<h2>Export</h2>
+<a href="./downloadExport" class="btn btn-dark">Download exported data...</a>
+
+<hr/>
+<h2>Import</h2>
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3 mt-3">
+        <label for="csvFile" class="form-label">File:</label>
+        <input id="csvFile" accept=".csv" type="file" asp-for="Upload" />
+        <input type="submit" />
+    </div>
+</form>
+<a href="./downloadImportTemplate" class="btn btn-dark">Download import template...</a>

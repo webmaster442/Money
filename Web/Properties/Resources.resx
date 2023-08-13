@@ -126,6 +126,9 @@
   <data name="CategoryNotFound" xml:space="preserve">
     <value>Category not found. Maybe it was deleted?</value>
   </data>
+  <data name="ImportError" xml:space="preserve">
+    <value>Imprt error. File in not correct format?</value>
+  </data>
   <data name="SpendingEditError" xml:space="preserve">
     <value>Editing of spending failed. Maybe it was deleted?</value>
   </data>
