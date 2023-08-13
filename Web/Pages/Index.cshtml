@@ -10,10 +10,13 @@
     <h1 class="display-4">Money - A Simple expense management app</h1>
     <p>v: @ViewData["Version"]</p>
 </div>
-    <div class="text-center">
+<div class="text-center">
     @if (SignInManager.IsSignedIn(User))
     {
-
+        <a class="btn btn-outline-primary btn-lg" role="button" asp-page="/Stat">📊 Statistics</a>
+        <a class="btn btn-outline-primary btn-lg" role="button" asp-page="/Spendings/Create">➕ Create a Spending...</a>
+        <a class="btn btn-outline-primary btn-lg" role="button" asp-page="/Categories/Index">🗳 Categories</a>
+        <a class="btn btn-outline-primary btn-lg" role="button" asp-page="/Spendings/Index">💲 Spendings</a>
     }
     else
     {
