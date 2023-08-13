@@ -100,6 +100,28 @@ namespace Money.Web.Services
                 .ToListAsync();
         }
 
+        public async Task<List<ListSpendingViewModel>> GetByCategory(ClaimsPrincipal claims, int categoryId)
+        {
+            if (claims.Identity == null)
+                throw new InvalidOperationException("Claims not set correctly");
+
+            return await _applicationDbContext.Spendings
+                .Include(s => s.User)
+                .Include(s => s.Category)
+                .Where(s => s.Category.Id == categoryId)
+                .Where(s => s.User.UserName == claims.Identity.Name)
+                .Select(s => new ListSpendingViewModel
+                {
+                    AddedOn = s.AddedOn,
+                    Date = s.Date,
+                    Ammount = s.Ammount,
+                    Category = s.Category.Name,
+                    Id = s.Id,
+                    Description = s.Description,
+                })
+                .ToListAsync();
+        }
+
         internal async Task<SpendingViewModel?> Get(ClaimsPrincipal claims, int id)
         {
             if (claims.Identity == null)

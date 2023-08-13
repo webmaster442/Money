@@ -1,0 +1,50 @@
+﻿@page
+@model Money.Web.Pages.Categories.CategorySpendingModel
+@{
+    ViewData["Title"] = "Spendings for category";
+}
+<h1>💲 Spendings of @Model.Spending[0].Category</h1>
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Spending[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Spending[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Spending[0].Ammount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Spending[0].AddedOn)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Spending)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ammount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddedOn)
+                </td>
+                <td>
+                    <a class="btn btn-secondary" asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
