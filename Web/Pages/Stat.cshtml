@@ -1,0 +1,38 @@
+﻿@page
+@model Money.Web.Pages.StatModel
+@{
+    ViewData["Title"] = "Statistics";
+}
+<style type="text/css">
+    .report {
+        font-family: monospace
+    }
+</style>
+<h1>📊 Statistics</h1>
+<hr />
+<div class="report">
+    <p>Number of spendings: @Model.Statistics.SpendingCount</p>
+    <p>Sum spenings: @Model.Statistics.SumSpending</p>
+    <p>Average spenings: @Model.Statistics.AverageSpending</p>
+    <p>Day with most spendings:  @Model.Statistics.DayWithMostSpendings</p>
+    <p>Day with least spendings:  @Model.Statistics.DayWithLeastSpendings</p>
+    <p>Biggest spending: @Model.Statistics.Maximum.ToString()</p>
+    <p>Smallest spending: @Model.Statistics.Minimum.ToString()</p>
+    <h2>Spendigs / day</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Spendings</th>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Statistics.SpendigsPerDay)
+            {
+               <tr>
+                   <td>@item.Key</td>
+                   <td>@item.Value</td>
+               </tr>
+            }
+            </tbody>
+    </table>
+</div>

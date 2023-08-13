@@ -110,14 +110,7 @@ namespace Money.Web.Services
                 .Include(s => s.Category)
                 .Where(s => s.User.UserName == claims.Identity.Name)
                 .Where(s => s.Id == id)
-                .Select(s => new SpendingViewModel
-                {
-                    Date = s.Date,
-                    Description = s.Description,
-                    Ammount = s.Ammount,
-                    Category = s.Category.Id,
-                    Id = s.Id,
-                })
+                .Select(s => CreateViewModel(s))
                 .FirstOrDefaultAsync();
         }
     }

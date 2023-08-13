@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,19 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Money.Web.Models;
 using Money.Web.Services;
 
-namespace Money.Web.Pages.Spendings
+namespace Money.Web.Pages
 {
     [Authorize]
-    internal class IndexModel : PageModel
+    internal class StatModel : PageModel
     {
-        private readonly SpendingServices _spendingService;
+        private readonly StatisticsService _statisticsService;
 
-        public IndexModel(SpendingServices spendingService)
+        public StatModel(StatisticsService statisticsService)
         {
-            _spendingService = spendingService;
+            _statisticsService = statisticsService;
         }
-
-        public IList<ListSpendingViewModel> Spending { get; set; } = default!;
 
         [BindProperty(SupportsGet = true)]
         [DataType(DataType.Date)]
@@ -29,12 +27,14 @@ namespace Money.Web.Pages.Spendings
         [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
 
+        public StatisticsViewModel Statistics { get; set; } = default!;
+
         public async Task OnGetAsync(DateTime? start, DateTime? end)
         {
             EndDate = end ?? DateTime.Now.Date;
             StartDate = start ?? DateTime.Now.Subtract(TimeSpan.FromDays(31)).Date;
 
-            Spending = await _spendingService.Get(HttpContext.User, StartDate, EndDate);
+            Statistics = await _statisticsService.Get(HttpContext.User, StartDate, EndDate);
         }
     }
 }

@@ -16,5 +16,10 @@ namespace Money.Web.Models
         {
             Description = string.Empty;
         }
+
+        public override string ToString()
+        {
+            return $"{Date} - {Description}; - {Ammount}";
+        }
     }
 }

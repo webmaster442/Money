@@ -11,6 +11,7 @@ namespace Money.Web
             services.AddScoped<SpendingServices>();
             services.AddScoped<ErrorCodeService>();
             services.AddScoped<ImportExportService>();
+            services.AddScoped<StatisticsService>();
         }
     }
 }
