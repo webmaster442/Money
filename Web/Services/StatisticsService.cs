@@ -29,9 +29,10 @@ namespace Money.Web.Services
 
             int count = 0;
             double sumSpending = 0;
-            SpendingViewModel minimum = new SpendingViewModel { Ammount = double.MaxValue };
-            SpendingViewModel maximum = new SpendingViewModel { Ammount = double.MinValue };
-            Dictionary<DateOnly, double> spendingsPerDay = new Dictionary<DateOnly, double>();
+            SpendingViewModel minimum = new() { Ammount = double.MaxValue };
+            SpendingViewModel maximum = new() { Ammount = double.MinValue };
+            Dictionary<DateOnly, double> spendingsPerDay = new();
+            Dictionary<string, double> spendigsPerCategory = new();
 
             await foreach (var spending in query)
             {
@@ -50,6 +51,11 @@ namespace Money.Web.Services
                 else
                     spendingsPerDay.Add(spendingDay, spending.Ammount);
 
+                if (spendigsPerCategory.ContainsKey(spending.Category.Name))
+                    spendigsPerCategory[spending.Category.Name] += spending.Ammount;
+                else
+                    spendigsPerCategory.Add(spending.Category.Name, spending.Ammount);
+
                 ++count;
             }
 
@@ -59,6 +65,7 @@ namespace Money.Web.Services
                 SumSpending = sumSpending,
                 Minimum = minimum,
                 SpendigsPerDay = spendingsPerDay,
+                SpendigsPerCategory = spendigsPerCategory,
                 SpendingCount = count
             };
         }
